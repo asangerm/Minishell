@@ -3,18 +3,19 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
+#    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/03/18 15:33:35 by asangerm         ###   ########.fr        #
+#    Updated: 2024/03/18 18:46:45 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Name of the program
 NAME	=	minishell
+INC		=	-I./includes
 
 # Flags
-CC		=	gcc
+CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra
 
 # Directories
@@ -47,7 +48,7 @@ $(LIBFT)		:	$(LIB_DIR)
 # Compile .c to .o files
 $(OBJ_DIR)%.o	:	$(SRC_DIR)%.c | $(OBJ_DIR)
 	@echo "\033[0;33mCompiling project src -> ⏳\033[0m"
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 	@echo "\033[0;32mSrc's project successfuly compiled -> ✅\033[0m\n"
 
 # Create the obj directory
