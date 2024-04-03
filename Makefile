@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
+#    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/03/27 18:40:58 by nfradet          ###   ########.fr        #
+#    Updated: 2024/04/02 18:46:07 by asangerm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ_DIR	=	obj/
 LIB_DIR	=	libft/
 
 # .c and .o files
-PARSING =   args.c
+PARSING =   parsing.c
 SRC		=	$(PARSING) \
 			main.c
 OBJ		=	$(SRC:%.c=$(OBJ_DIR)%.o)
