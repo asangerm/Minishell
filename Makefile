@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/04/04 23:01:55 by nfradet          ###   ########.fr        #
+#    Updated: 2024/04/04 23:03:17 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,9 @@ OBJ_DIR	=	obj/
 LIB_DIR	=	libft/
 
 # .c and .o files
-PARSING =   args.c parsing.c
+PARSING =   args.c     \
+			parsing.c  \
+			history.c
 SRC		=	$(PARSING) \
 			main.c
 OBJ		=	$(SRC:%.c=$(OBJ_DIR)%.o)
