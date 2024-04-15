@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/04/15 16:02:36 by nfradet          ###   ########.fr        #
+#    Updated: 2024/04/15 17:39:59 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,9 +26,7 @@ LIB_DIR	=	libft/
 # .c and .o files
 ENV		=	env.c		\
 			utils.c
-PARSING =   args.c		\
-			parsing.c	\
-			history.c
+PARSING =   args.c
 SRC		=	$(PARSING)	\
 			$(ENV)		\
 			main.c

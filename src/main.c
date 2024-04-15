@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/15 17:03:05 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/04/15 19:19:03 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,26 +34,22 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-	char 	*line;
-	char 	*last_line;
-	t_data	data;
+	// char 	*line;
+	// t_data	data;
+	t_keyval	kv;
 
-	ft_initenv(&data, env);
+	extract_var(&kv, argv[1]);
+	// ft_initenv(&data, env);
 	// ft_lstiter(data.env, &aff_str);
-	// ft_printf("%s\n", find_var(argv[2], argv[1]));
+	ft_printf("key : %s, val : %s\n", kv.key, kv.val);
 	// ft_printf("%s\n", ft_getenv(&data, argv[1]));
 
-	parse_env(&data);
-	rl_clear_history();
-	last_line = NULL;
-	while (1)
-	{
-		line = readline("minishell$ ");
-		parse(line);
-		//prompt = ft_split(line, ' ');
-		//print_prompt(prompt);
-		last_line = ft_add_history(line, last_line);
-		free(line);
-	}
+	// rl_clear_history();
+	// while (1)
+	// {
+	// 	line = readline("minishell$ ");
+	// 	add_history(line);
+	// 	free(line);
+	// }
 	return (0);
 }
