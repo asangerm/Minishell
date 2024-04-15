@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 22:38:51 by nfradet           #+#    #+#             */
-/*   Updated: 2024/04/04 22:50:01 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/04/05 23:33:40 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_maxlen(char *s1, char *s2)
 
 static int	ft_is_added_to_history(char *line, char *last_line)
 {
-	if (ft_strncmp(line, "\0", 1) == 0)
+	if (ft_strncmp(line, "\0", 1) == 0 || line[0] == ' ')
 		return (0);
 	else if (last_line == NULL)
 		return (1);

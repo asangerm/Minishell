@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/04/04 23:06:58 by nfradet          ###   ########.fr        #
+#    Updated: 2024/04/15 16:02:36 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,15 +19,18 @@ CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra
 
 # Directories
-VPATH   =   src src/parsing
+VPATH   =   src src/parsing src/env
 OBJ_DIR	=	obj/
 LIB_DIR	=	libft/
 
 # .c and .o files
-PARSING =   args.c     \
-			parsing.c  \
+ENV		=	env.c		\
+			utils.c
+PARSING =   args.c		\
+			parsing.c	\
 			history.c
-SRC		=	$(PARSING) \
+SRC		=	$(PARSING)	\
+			$(ENV)		\
 			main.c
 OBJ		=	$(SRC:%.c=$(OBJ_DIR)%.o)
 
