@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/19 17:21:48 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/04/20 01:12:26 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,8 @@ char	*file_finder(int i, char *line)
 	}
 	else
 	{
-		while (line[j] != '\0' && line[j++] != ' ')
-		{
-		}
+		while (line[j] != '\0' && line[j] != ' ')
+			j++;
 	}
 	return (word_maker(line, i, j, l));
 }
@@ -95,6 +94,22 @@ void	redirection_handler(t_prompt **prompt)
 		tmp = tmp->next;
 	}
 }
+/*
+	Fonction qui s'occupe de récup et stocker la commande
+	et les arguments du prompt
+*/
+void	cmd_handler(t_prompt **prompt)
+{
+	t_prompt	*tmp;
+
+	tmp = *prompt;
+	while (tmp)
+	{
+		tmp->cmd = cmd_finder(tmp->line);
+		tmp->args = args_finder(tmp->line);
+		tmp = tmp->next;
+	}
+}
 
 /*
 	Cette fonction est la fonction qui execute toutes les autres,
@@ -106,5 +121,5 @@ void	parse(char *line, t_prompt **prompt)
 {
 	chain_creator(line, prompt);
 	redirection_handler(prompt);
-	chain_display(prompt);
+	cmd_handler(prompt);
 }

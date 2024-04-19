@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/19 16:59:25 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/04/20 00:16:03 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@ typedef struct s_prompt
 	struct s_prompt	*next;
 }	t_prompt;
 
-/* parsing.c */
+/* parsing_0.c */
 
+void		cmd_handler(t_prompt **prompt);
 char		*file_finder(int i, char *line);
 void		parse(char *line, t_prompt **prompt);
 void		redirection_handler(t_prompt **prompt);
 char		*word_maker(char *line, int i, int j, int l);
+
+/* parsing_1.c */
+
+char		*cmd_finder(char *line);
+char		**args_finder(char *line);
 
 /* utils_chain_0.c */
 
