@@ -6,7 +6,7 @@
 #    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/04/20 00:19:13 by asangerm         ###   ########.fr        #
+#    Updated: 2024/04/25 15:50:50 by asangerm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,10 @@ LIB_DIR	=	libft/
 
 # .c and .o files
 PARSING =   parsing_0.c \
-			parsing_1.c \
 			utils_chain_0.c \
-			utils_chain_1.c
+			utils_chain_1.c \
+			handlers_0.c \
+			utils_str_0.c
 SRC		=	$(PARSING) \
 			main.c
 OBJ		=	$(SRC:%.c=$(OBJ_DIR)%.o)

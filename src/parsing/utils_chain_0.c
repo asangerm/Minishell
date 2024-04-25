@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/19 17:24:39 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:54:22 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,26 +51,16 @@ t_prompt	*last_prompt(t_prompt **prompt)
 */
 void	free_content(t_prompt *chain)
 {
-	int	i;
-
 	if (chain->cmd)
 		free(chain->cmd);
 	if (chain->file_in)
-		free(chain->file_in);
+		free_str(&(chain->file_in));
 	if (chain->file_out)
-		free(chain->file_out);
+		free_str(&(chain->file_out));
 	if (chain->line)
 		free(chain->line);
 	if (chain->args)
-	{
-		i = 0;
-		while (chain->args[i])
-		{
-			free(chain->args[i]);
-			i++;
-		}
-		free(chain->args);
-	}
+		free_str(&(chain->args));
 }
 
 /*
@@ -84,7 +74,7 @@ void	free_chain(t_prompt **prompt)
 	current = *prompt;
 	while (current)
 	{
-		next = current-> next;
+		next = current->next;
 		free_content(current);
 		free(current);
 		current = next;

@@ -6,67 +6,82 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/20 01:12:26 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/04/25 16:56:08 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*
-	Cette fonction alloue et renvoie le nom du fichier de
-	redirection de manière clean, oue je me sauce ya quoi?
+	extrait un char * d'un bout de line entre double quotes
 */
-char	*word_maker(char *line, int i, int j, int l)
+char	*double_quote(char *line, int *i)
 {
+	int		j;
 	char	*word;
-	int		k;
 
-	word = malloc(sizeof(char) * (j - i - 1));
-	if (line[j - 1] == '\"')
-		j -= 2;
-	else if (line[j - 1] == ' ')
-		j--;
-	k = i + l;
-	while (i++ != j)
-		word[i - k + (l - 1)] = line[i + (l - 1)];
-	word[i - k - (l - 1)] = '\0';
+	(*i)++;
+	j = *i;
+	while (line[j] && line[j] != '\"')
+		j++;
+	word = malloc(sizeof(char) * (j - *i + 1));
+	j = *i;
+	while (line[*i] && line[*i] != '\"')
+	{
+		word[*i - j] = line[*i];
+		(*i)++;
+	}
+	word[*i - j] = '\0';
+	(*i)++;
 	return (word);
 }
 
 /*
-	Cette fonction recherche dans le prompt si il y a des des
-	redirections et renvoie le fichier ciblé par la redirection
+	extrait un char * d'un bout de line entre deux espaces
 */
-char	*file_finder(int i, char *line)
+char	*word_maker(char *line, int *i)
 {
-	int		j;
-	int		l;
+	char		*word;
+	int			j;
 
-	j = i + 1;
-	l = 0;
-	while (line[j] == ' ')
+	j = *i;
+	while (line[j] && line[j] != ' ')
 		j++;
-	i = j;
-	if (line[j++] == '\"')
+	word = malloc(sizeof(char) * (j - *i + 1));
+	j = *i;
+	while (line[*i] && line[*i] != ' ')
 	{
-		while (line[j++] != '\"')
-		{
-		}
-		l = 1;
+		word[*i - j] = line[*i];
+		(*i)++;
 	}
-	else
-	{
-		while (line[j] != '\0' && line[j] != ' ')
-			j++;
-	}
-	return (word_maker(line, i, j, l));
+	word[*i - j] = '\0';
+	return (word);
 }
 
 /*
-	Cette fonction permet de venir stocker dans la structure
-	prompt les fichiers d'entrée et de sortie si ils existent
+	Determine quel type de donnée est le bout de line
 */
-void	redirection_handler(t_prompt **prompt)
+void	big_if(char *line, t_prompt *prompt, int *i)
+{
+	while (line[*i])
+	{
+		if (line[*i] == '>')
+			file_out_handler(line, prompt, i);
+		else if (line[*i] == '<')
+			file_in_handler(line, prompt, i);
+		else if (!prompt->cmd)
+			cmd_handler(line, prompt, i);
+		else
+			args_handler(line, prompt, i);
+		while (line[*i] && line[*i] == ' ')
+			(*i)++;
+	}
+}
+
+/*
+	parcours les prompt pour les découper
+*/
+void	lexer(t_prompt **prompt)
 {
 	t_prompt	*tmp;
 	int			i;
@@ -75,38 +90,9 @@ void	redirection_handler(t_prompt **prompt)
 	while (tmp)
 	{
 		i = 0;
-		while (tmp->line[i])
-		{
-			if (tmp->line[i] == '>' )
-			{
-				if (tmp->file_out)
-					free(tmp->file_out);
-				tmp->file_out = file_finder(i, tmp->line);
-			}
-			if (tmp->line[i] == '<' )
-			{
-				if (tmp->file_in)
-					free(tmp->file_in);
-				tmp->file_in = file_finder(i, tmp->line);
-			}
+		while (tmp->line[i] == ' ')
 			i++;
-		}
-		tmp = tmp->next;
-	}
-}
-/*
-	Fonction qui s'occupe de récup et stocker la commande
-	et les arguments du prompt
-*/
-void	cmd_handler(t_prompt **prompt)
-{
-	t_prompt	*tmp;
-
-	tmp = *prompt;
-	while (tmp)
-	{
-		tmp->cmd = cmd_finder(tmp->line);
-		tmp->args = args_finder(tmp->line);
+		big_if(tmp->line, tmp, &i);
 		tmp = tmp->next;
 	}
 }
@@ -120,6 +106,5 @@ void	cmd_handler(t_prompt **prompt)
 void	parse(char *line, t_prompt **prompt)
 {
 	chain_creator(line, prompt);
-	redirection_handler(prompt);
-	cmd_handler(prompt);
+	lexer(prompt);
 }
