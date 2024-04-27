@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/04/27 19:49:05 by nfradet          ###   ########.fr        #
+#    Updated: 2024/04/27 20:01:27 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,11 @@ ENV		 =	env.c		\
 PARSING	 =  args.c
 BUILTINS =  builtins.c	\
 			export.c	\
-			unset.c
+			unset_0.c \
+			utils_chain_0.c \
+			utils_chain_1.c \
+			handlers_0.c \
+			utils_str_0.c
 SRC		 =	$(PARSING)	\
 			$(ENV)		\
 			$(BUILTINS) \
