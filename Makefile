@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/04/27 20:01:27 by nfradet          ###   ########.fr        #
+#    Updated: 2024/04/27 20:24:32 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,19 +27,23 @@ LIB_DIR	=	libft/
 FREE	 =	free.c
 ENV		 =	env.c		\
 			utils.c
-PARSING	 =  args.c
-BUILTINS =  builtins.c	\
-			export.c	\
-			unset_0.c \
+
+PARSING	 =  handlers_0.c \
+			parsing_0.c  \
 			utils_chain_0.c \
 			utils_chain_1.c \
-			handlers_0.c \
 			utils_str_0.c
+
+BUILTINS =  builtins.c	\
+			export.c	\
+			unset.c
+
 SRC		 =	$(PARSING)	\
 			$(ENV)		\
 			$(BUILTINS) \
-			$(FREE) \
+			$(FREE) 	\
 			main.c
+
 OBJ		 =	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 # .a files
