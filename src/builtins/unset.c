@@ -12,17 +12,21 @@
 
 #include "minishell.h"
 
-void	del_node(t_list *head, t_list *node)
+void	del_node(t_list **head, t_list *node)
 {
 	t_list	*prev;
 
-	while (head->next && head->next != node)
+	if (node == NULL)
+		return;
+	if ((*head) == node)
+		(*head) = node->next;
+	else
 	{
-		head = head->next;
+		prev = (*head);
+		while (prev->next && prev->next != node)
+			prev = prev->next;
+		prev->next = node->next;
 	}
-		ft_printf("egal ? %d\n", head->next == node);
-	prev = node;
-	prev->next = node->next;
 	ft_lstdelone(node, &ft_free_keyval);
 }
 
@@ -37,16 +41,8 @@ void	ft_unset(t_data *data, char **arg)
 	{
 		kv = extract_var(arg[i]);
 		key = get_key(data, kv->key);
-		if (key != NULL)
-		{
-			ft_free_keyval(key->content);
-			key->content = (void*)kv;
-		}
-		else
-		{
-			key = ft_lstnew((void*)kv);
-			ft_lstadd_back(&data->env, key);
-		}
+		if (key != NULL && ft_strncmp(kv->key, "_", ft_strlen(kv->key) != 0))
+			del_node(&data->env, get_key(data, arg[i]));
 		i++;
 	}
 }

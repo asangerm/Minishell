@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
+#    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/04/26 17:54:09 by marvin           ###   ########.fr        #
+#    Updated: 2024/04/27 19:49:05 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ FREE	 =	free.c
 ENV		 =	env.c		\
 			utils.c
 PARSING	 =  args.c
-BUILTINS =  export.c	\
+BUILTINS =  builtins.c	\
+			export.c	\
 			unset.c
 SRC		 =	$(PARSING)	\
 			$(ENV)		\

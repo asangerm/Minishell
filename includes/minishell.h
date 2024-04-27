@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/26 17:55:15 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/27 19:49:26 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void		ft_export(t_data *data, char **arg);
 int			is_sorted(t_list *lst);
 void		swap(t_list **list);
 t_list		*sort_env(t_data *data);
+void		ft_unset(t_data *data, char **arg);
+void		ft_exe_builtin(t_data *data, char *cmd, char **args);
 
-void		del_node(t_list *head, t_list *node);
-t_list		*get_key(t_data *data, char *key);
 
 
 /* Free directory */

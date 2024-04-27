@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/26 17:58:32 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/27 19:48:11 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **env)
 	t_data	data;
 
 	ft_initenv(&data, env);
-	del_node(data.env, get_key(&data, argv[1]));
+	ft_unset(&data, &argv[1]);
 	aff_env(data.env, 1);
 	// rl_clear_history();
 	// while (1)
