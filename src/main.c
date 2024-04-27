@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/15 19:19:03 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/04/26 17:58:32 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,13 @@ void	aff_str(void *str)
 int	main(int argc, char **argv, char **env)
 {
 	(void)argc;
-	(void)argv;
-	(void)env;
-	// char 	*line;
-	// t_data	data;
-	t_keyval	kv;
+	// (void)argv;
+	// (void)env;
+	t_data	data;
 
-	extract_var(&kv, argv[1]);
-	// ft_initenv(&data, env);
-	// ft_lstiter(data.env, &aff_str);
-	ft_printf("key : %s, val : %s\n", kv.key, kv.val);
-	// ft_printf("%s\n", ft_getenv(&data, argv[1]));
-
+	ft_initenv(&data, env);
+	del_node(data.env, get_key(&data, argv[1]));
+	aff_env(data.env, 1);
 	// rl_clear_history();
 	// while (1)
 	// {

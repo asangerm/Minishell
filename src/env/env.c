@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/04/15 19:20:46 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/04/26 16:15:57 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,17 @@ int	ft_strlen_until(char *str, char stop_char)
 	return (i);
 }
 
-void	extract_var(t_keyval *keyval, char *var)
+t_keyval	*extract_var(char *var)
 {
-	int	i;
-	int	j;
+	int			i;
+	int			j;
+	t_keyval	*keyval;
 
+	keyval = malloc(sizeof(t_keyval));
+	keyval->val = NULL;
 	keyval->key = malloc(sizeof(char) * (ft_strlen_until(var, '=') + 1));
-	keyval->val = malloc(sizeof(char) * (ft_strlen(var) - ft_strlen_until(var, '=')));
+	if (ft_strlen(var) - ft_strlen_until(var, '=') > 0)
+		keyval->val = malloc(sizeof(char) * (ft_strlen(var) - ft_strlen_until(var, '=')));
 	i = 0;
 	while (var[i] && var[i] != '=')
 	{
@@ -44,12 +48,13 @@ void	extract_var(t_keyval *keyval, char *var)
 		i++;
 		j++;
 	}
+	return (keyval);
 }
 
 void	ft_initenv(t_data *data, char **env)
 {
 	int			i;
-	t_keyval	tmp;
+	t_keyval	*tmp;
 	t_list		*new;
 
 	i = 0;
@@ -57,23 +62,9 @@ void	ft_initenv(t_data *data, char **env)
 	data->env = NULL;
 	while (env[i] != NULL)
 	{
-		extract_var(&tmp, env[i]);
-		new = ft_lstnew((void *)&tmp);
+		tmp = extract_var(env[i]);
+		new = ft_lstnew(tmp);
 		ft_lstadd_back(&(data->env), new);
 		i++;
 	}
-}
-
-char	*ft_getenv(t_data *data, char *arg)
-{
-	t_list	*lst;
-	
-	lst = data->env;
-	while (lst)
-	{
-		if (find_var(data->env->content, arg) == 0)
-			return ((char *)data->env->content + ft_strlen(arg) + 1);
-		lst = lst->next;
-	}
-	return (NULL);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
+#    By: marvin <marvin@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/04/15 17:39:59 by nfradet          ###   ########.fr        #
+#    Updated: 2024/04/26 17:54:09 by marvin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,21 +19,26 @@ CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra
 
 # Directories
-VPATH   =   src src/parsing src/env
+VPATH   =   src src/parsing src/env src/builtins src/free
 OBJ_DIR	=	obj/
 LIB_DIR	=	libft/
 
 # .c and .o files
-ENV		=	env.c		\
+FREE	 =	free.c
+ENV		 =	env.c		\
 			utils.c
-PARSING =   args.c
-SRC		=	$(PARSING)	\
+PARSING	 =  args.c
+BUILTINS =  export.c	\
+			unset.c
+SRC		 =	$(PARSING)	\
 			$(ENV)		\
+			$(BUILTINS) \
+			$(FREE) \
 			main.c
-OBJ		=	$(SRC:%.c=$(OBJ_DIR)%.o)
+OBJ		 =	$(SRC:%.c=$(OBJ_DIR)%.o)
 
 # .a files
-LIBFT	=	$(LIB_DIR)libft.a
+LIBFT	 =	$(LIB_DIR)libft.a
 
 # The main rule
 all				:	$(NAME)
