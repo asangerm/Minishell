@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/27 20:25:37 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/04/28 18:06:32 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,12 @@ typedef struct s_data
 }	t_data;
 
 /* Parsing directory */
-char		*ft_add_history(char *line, char *last_line);
 int			ft_maxlen(char *s1, char *s2);
 void		aff_env(t_list *env, int type);
 
 /* Env directory */
 t_keyval	*extract_var(char *var);
 void		ft_initenv(t_data *data, char **env);
-char		*ft_getenv(t_data *data, char *arg);
-int			find_var(char *src, char *to_find);
 t_list		*cpy_env(t_data *data);
 
 /* Builtins directory */

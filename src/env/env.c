@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/04/26 16:15:57 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/28 19:11:00 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,21 @@ int	ft_strlen_until(char *str, char stop_char)
 t_keyval	*extract_var(char *var)
 {
 	int			i;
-	int			j;
 	t_keyval	*keyval;
 
 	keyval = malloc(sizeof(t_keyval));
 	keyval->val = NULL;
 	keyval->key = malloc(sizeof(char) * (ft_strlen_until(var, '=') + 1));
-	if (ft_strlen(var) - ft_strlen_until(var, '=') > 0)
-		keyval->val = malloc(sizeof(char) * (ft_strlen(var) - ft_strlen_until(var, '=')));
 	i = 0;
 	while (var[i] && var[i] != '=')
 	{
 		keyval->key[i] = var[i];
 		i++;
 	}
-	if (var[i])
+	if (var[i] && var[i + 1] == '\"')
 		i++;
-	j = 0;
-	while (var[i])
-	{
-		keyval->val[j] = var[i];
-		i++;
-		j++;
-	}
+	if (ft_strlen(var) - ft_strlen_until(var, '=') > 0)
+		keyval->val = double_quote(var, &i);
 	return (keyval);
 }
 
