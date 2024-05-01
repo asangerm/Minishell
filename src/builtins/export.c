@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/04/30 15:39:27 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/01 12:04:54 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ t_list	*get_key(t_data *data, char *key)
 
 	str = NULL;
 	i = data->env;
-		ft_printf("%s\n", key);
 	while (i && key)
 	{
 		str = ((t_keyval*)i->content)->key;
@@ -143,6 +142,7 @@ void	ft_export(t_data *data, t_string *args)
 	{
 		env_cpy = sort_env(data);
 		aff_env(env_cpy, 2);
+		ft_lstclear(&env_cpy, &ft_free_keyval);
 	}
 	else
 	{

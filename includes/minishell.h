@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/29 15:40:13 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/01 12:01:28 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ typedef	struct s_keyval
 
 typedef struct s_data
 {
-	char	**paths;
+	// char	**paths;
 	t_list	*env;
-	t_list	*variables;
+	// t_list	*variables;
 }	t_data;
 
 /* Parsing directory */
@@ -55,6 +55,7 @@ void		aff_env(t_list *env, int type);
 t_keyval	*extract_var(char *var);
 void		ft_initenv(t_data *data, char **env);
 t_list		*cpy_env(t_data *data);
+int			ft_strlen_until(char *str, char stop_char);
 
 /* Builtins directory */
 void  	 	ft_exe_builtin(t_data *data, char *cmd, t_string *args);

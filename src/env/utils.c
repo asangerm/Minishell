@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:15:54 by nfradet           #+#    #+#             */
-/*   Updated: 2024/04/30 15:36:54 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:35:12 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	aff_env(t_list *env, int type)
 		kv = (t_keyval*)lst->content;
 		if (type == 1)
 		{
-			if (kv->val != NULL && kv->key != NULL)
+			if (kv && kv->val != NULL && kv->key != NULL)
 				ft_printf("%s=%s\n", kv->key, kv->val);
 		}
 		else if (type == 2)
@@ -42,7 +42,6 @@ void	aff_env(t_list *env, int type)
 				ft_printf("declare -x %s\n", kv->key);
 			else if (ft_strncmp(kv->key, "_", ft_strlen(kv->key)) != 0)
 				ft_printf("declare -x %s=\"%s\"\n", kv->key, kv->val);
-			ft_lstclear(&env, &ft_free_keyval);
 		}
 		lst = lst->next;
 	}
@@ -70,7 +69,7 @@ t_keyval	*cpy_keyval(t_keyval *kv)
 
 	cpy = malloc(sizeof(t_keyval));
 	cpy->key = NULL;
-	cpy->key = NULL;
+	cpy->val = NULL;
 	if (kv->key != NULL)
 		cpy->key = ft_strdup(kv->key);
 	if (kv->val != NULL)

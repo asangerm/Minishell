@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/04/30 13:44:35 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/01 11:35:23 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@ t_keyval	*extract_var(char *var)
 	keyval = malloc(sizeof(t_keyval));
 	keyval->val = NULL;
 	keyval->key = malloc(sizeof(char) * (len_until + 1));
+	if (keyval->key == NULL)
+		return (free(keyval), NULL);
 	i = 0;
 	while (var[i] && var[i] != '=')
 	{
 		keyval->key[i] = var[i];
 		i++;
 	}
+	keyval->key[i] = '\0';
 	if (var[i] && var[i + 1] == '\"')
 		i++;
 	if (ft_strlen(var) - len_until > 0)
@@ -53,12 +56,16 @@ void	ft_initenv(t_data *data, char **env)
 
 	i = 0;
 	new = NULL;
+	tmp = NULL;
 	data->env = NULL;
 	while (env[i] != NULL)
 	{
 		tmp = extract_var(env[i]);
-		new = ft_lstnew(tmp);
-		ft_lstadd_back(&(data->env), new);
+		if (tmp && tmp->key)
+		{
+			new = ft_lstnew(tmp);
+			ft_lstadd_back(&(data->env), new);
+		}
 		i++;
 	}
 }

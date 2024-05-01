@@ -37,12 +37,12 @@ void	ft_unset(t_data *data, t_string *args)
 	t_string	*i;
 
 	i = args;
-	while (i)
+	while (i != NULL)
 	{
 		kv = extract_var(i->str);
 		key = get_key(data, kv->key);
 		if (key != NULL && ft_strncmp(kv->key, "_", ft_strlen(kv->key)) != 0)
 			del_node(&data->env, key);
-		i++;
+		i = i->next;
 	}
 }
