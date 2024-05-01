@@ -30,19 +30,19 @@ void	del_node(t_list **head, t_list *node)
 	ft_lstdelone(node, &ft_free_keyval);
 }
 
-void	ft_unset(t_data *data, char **arg)
+void	ft_unset(t_data *data, t_string *args)
 {
 	t_list		*key;
 	t_keyval	*kv;
-	int			i;
+	t_string	*i;
 
-	i = 0;
-	while (arg && arg[i])
+	i = args;
+	while (i)
 	{
-		kv = extract_var(arg[i]);
+		kv = extract_var(i->str);
 		key = get_key(data, kv->key);
-		if (key != NULL && ft_strncmp(kv->key, "_", ft_strlen(kv->key) != 0))
-			del_node(&data->env, get_key(data, arg[i]));
+		if (key != NULL && ft_strncmp(kv->key, "_", ft_strlen(kv->key)) != 0)
+			del_node(&data->env, key);
 		i++;
 	}
 }

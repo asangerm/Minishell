@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/28 18:36:57 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:37:41 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ int	main(int argc, char **argv, char **env)
 	{
 		line = readline("minishell:~home/minishell$ ");
 		add_history(line);
-		ft_export(&data, &line);
-		aff_env(data.env, 1);
 		parse(line, &prompt);
-		chain_display(&prompt);
+		ft_exe_builtin(&data, prompt->cmd, prompt->args);
+		// chain_display(&prompt);
 		free_chain(&prompt);
 	}
+	ft_lstclear(&(data.env), &ft_free_keyval);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/28 18:06:32 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/04/29 15:40:13 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ void		ft_initenv(t_data *data, char **env);
 t_list		*cpy_env(t_data *data);
 
 /* Builtins directory */
-void		ft_export(t_data *data, char **arg);
+void  	 	ft_exe_builtin(t_data *data, char *cmd, t_string *args);
+void		ft_export(t_data *data, t_string *args);
+void		ft_unset(t_data *data, t_string *args);
+t_list		*get_key(t_data *data, char *key);
+t_list		*sort_env(t_data *data);
 int			is_sorted(t_list *lst);
 void		swap(t_list **list);
-t_list		*sort_env(t_data *data);
-void		ft_unset(t_data *data, char **arg);
-void		ft_exe_builtin(t_data *data, char *cmd, char **args);
-t_list		*get_key(t_data *data, char *key);
 
 /* Free directory */
 void		ft_free_keyval(void *kv);

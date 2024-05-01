@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/04/26 16:56:35 by marvin           ###   ########.fr       */
+/*   Updated: 2024/04/30 15:39:27 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /**
- * is_sorted
  * @param env l'environnement sous forme de liste chainee
  * @return int 1 si la liste est triee dans l'ordre lexicographie,
  * 0 sinon.
@@ -53,10 +52,10 @@ void	swap(t_list **list)
 }
 
 /**
- * * sort_env
- * @param data structure t_data qui contient l'environnement
- * creer une copie de l'environnement et le trie dans
+ * @brief creer une copie de l'environnement et le trie dans
  * l'ordre lexicographique
+ * 
+ * @param data structure t_data qui contient l'environnement
  * @return (t_list*) une copie triee de l'environnement 
 */
 t_list	*sort_env(t_data *data)
@@ -84,10 +83,10 @@ t_list	*sort_env(t_data *data)
 }
 
 /**
- * * get_key
- * @param data structure t_data qui contient l'environnement
- * @param key chaine qui correspond a une variable d'environnement
- * Cherche dans l'environnement la variable 'key'
+ * @brief Cherche dans l'environnement la variable 'key'
+ * 
+ * @param data structure t_data qui contient l'environnement.
+ * @param key chaine qui correspond a une variable d'environnement.
  * @return (t_list*) le pointeur vers le noeud de l'env si une var correspond,
  * 					 NULL sinon 
 */
@@ -95,9 +94,12 @@ t_list	*get_key(t_data *data, char *key)
 {
 	t_list	*i;
 	char	*str;
+	(void)key;
 
+	str = NULL;
 	i = data->env;
-	while (i)
+		ft_printf("%s\n", key);
+	while (i && key)
 	{
 		str = ((t_keyval*)i->content)->key;
 		if (ft_strncmp(str, key, ft_maxlen(str, key)) == 0)
@@ -126,23 +128,29 @@ void	export_arg(t_data *data, char *arg)
 	}
 }
 
-void	ft_export(t_data *data, char **arg)
+/**
+ * @brief Reproduit le comportement de la commande export en bash
+ * 
+ * @param data Structure qui contient l'environnement
+ * @param args Liste chainee contenant les arguments
+ */
+void	ft_export(t_data *data, t_string *args)
 {
 	t_list		*env_cpy;
-	int			i;
+	t_string	*i;
 
-	if (arg == NULL)
+	if (args == NULL)
 	{
 		env_cpy = sort_env(data);
 		aff_env(env_cpy, 2);
 	}
 	else
 	{
-		i = 0;
-		while (arg[i])
+		i = args;
+		while (i)
 		{
-			export_arg(data, arg[i]);
-			i++;
+			export_arg(data, i->str);
+			i = i->next;
 		}
 	}
 }
