@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/02 15:14:08 by nfradet          ###   ########.fr        #
+#    Updated: 2024/05/02 18:37:01 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ LIB_DIR	=	libft/
 # .c and .o files
 FREE	 =	free.c
 PIPES	 =	pipes.c		\
+PIPES	 =	pipes_utils.c	\
 			files_handler.c
 ENV		 =	env.c		\
 			utils.c

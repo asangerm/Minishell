@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/02 16:42:17 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/02 19:08:02 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,28 @@ void	ft_redirection_pipes(t_data *data, t_pipe *pipe, int i)
 	}
 }
 
+void	ft_exe_cmds(t_data *data, char *cmd)
+{
+	char	**paths;
+	char	*path;
+	t_list	*tmp;
+	int		i;
+
+	tmp = get_key(data, "PATH");
+	if (tmp != NULL)
+		paths = ft_split(((t_keyval*)tmp->content)->val, ':');
+	i = 0;
+	while (paths[i])
+	{
+		path = check_path(paths[i], cmd);
+		if (path != NULL)
+		{
+			// if (execve(path, cmd, ))
+			return (1);
+		}
+	}
+}
+
 void	ft_handle_pipes(t_data *data, t_prompt *prompt)
 {
 	t_prompt	*ind;
@@ -96,6 +118,7 @@ void	ft_handle_pipes(t_data *data, t_prompt *prompt)
 		{
 			ft_redirection_pipes(data, pipes, i);
 			ft_redirection_files(ft_open_files(prompt));
+			ft_exe_cmds(data, ind->cmd);
 			break ;
 		}
 		ind = ind->next;
