@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:43:02 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/01 15:50:09 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/02 13:47:53 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,17 @@ void	free_str(t_string **str)
 		current = next;
 	}
 	*str = NULL;
+}
+
+int	lst_str_len(t_string *str)
+{
+	int	len;
+
+	len = 0;
+	while (str)
+	{
+		len++;
+		str = str->next;
+	}
+	return (len);
 }

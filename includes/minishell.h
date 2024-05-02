@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/01 15:39:37 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/02 16:27:56 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,13 @@
 # define MINISHELL_H
 
 # include "../libft/src/libft.h"
+#include <sys/stat.h>
+#include <fcntl.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/types.h>
+# include <unistd.h>
 
 typedef struct s_string
 {
@@ -40,9 +44,16 @@ typedef	struct s_keyval
 	char	*val;
 }	t_keyval;
 
+typedef struct s_pipe
+{
+	int	fd[2];
+}	t_pipe;
+
 typedef struct s_data
 {
 	// char	**paths;
+	int		nb_cmd;
+	t_pipe	*pipes;
 	t_list	*env;
 	char	*pwd;
 	// t_list	*variables;
@@ -66,6 +77,9 @@ t_list		*get_key(t_data *data, char *key);
 t_list		*sort_env(t_data *data);
 int			is_sorted(t_list *lst);
 void		swap(t_list **list);
+
+/* Pipes */
+t_pipe		ft_open_files(t_prompt *prompt);
 
 /* Free directory */
 void		ft_free_keyval(void *kv);
