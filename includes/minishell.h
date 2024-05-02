@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/01 12:01:28 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/01 15:39:37 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 {
 	// char	**paths;
 	t_list	*env;
+	char	*pwd;
 	// t_list	*variables;
 }	t_data;
 
@@ -99,5 +100,6 @@ t_string	*new_str(char *line);
 void		free_str(t_string **str);
 t_string	*last_str(t_string **str);
 void		str_add_back(t_string **str, t_string *new);
+int			lst_str_len(t_string *str);
 
 #endif
