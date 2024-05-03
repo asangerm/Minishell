@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/02 15:17:09 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/03 18:59:29 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ int	main(int argc, char **argv, char **env)
 {
 	char		*line;
 	t_prompt	*prompt;
-	t_pipe		files;
 	t_data		data;
 
 	(void)argc;
@@ -47,9 +46,12 @@ int	main(int argc, char **argv, char **env)
 		line = readline("minishell:~home/minishell$ ");
 		add_history(line);
 		parse(line, &prompt);
-		// files = ft_open_files(prompt);
-		ft_printf("%d | %d\n", files.fd[0], files.fd[1]);
-		ft_exe_builtin(&data, prompt->cmd, prompt->args);
+		ft_init_nb_cmd(&data, prompt);
+		if (data.nb_cmd == 1)
+			ft_exec_no_pipe(&data, prompt);
+		else if (ft_handle_pipes(&data, prompt) == 0)
+			return (0);
+		// ft_exe_builtin(&data, prompt->cmd, prompt->args);
 		chain_display(&prompt);
 		free_chain(&prompt);
 	}

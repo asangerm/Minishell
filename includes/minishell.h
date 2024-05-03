@@ -6,16 +6,16 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/02 18:36:39 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/03 15:22:35 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
-
 # include "../libft/src/libft.h"
-#include <sys/stat.h>
-#include <fcntl.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -51,7 +51,7 @@ typedef struct s_pipe
 
 typedef struct s_data
 {
-	// char	**paths;
+	char	**paths;
 	int		nb_cmd;
 	t_pipe	*pipes;
 	t_list	*env;
@@ -81,6 +81,15 @@ void		swap(t_list **list);
 /* Pipes */
 t_pipe		ft_open_files(t_prompt *prompt);
 char		*check_path(char *path, char *cmd);
+char		**ft_cmd_to_tab(t_prompt *prompt);
+char		**ft_lst_to_tab(t_list *env);
+void		ft_redirection_files(t_pipe files);
+int			ft_handle_pipes(t_data *data, t_prompt *prompt);
+void		routine_pere(t_pipe *pipes, int nb);
+void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
+void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
+int			ft_exe_cmd(t_data *data, t_prompt *prompt);
+void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
 
 /* Free directory */
 void		ft_free_keyval(void *kv);
