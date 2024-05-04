@@ -22,3 +22,8 @@ void	ft_free_keyval(void *kv)
 		free(cast->val);
 	free(cast);
 }
+
+void	ft_handle_errors(char *err_msg)
+{
+	ft_printf("%s\n", err_msg);
+}

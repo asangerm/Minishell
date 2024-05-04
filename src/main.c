@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/03 18:59:29 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/04 15:20:04 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	while (1)
 	{
-		line = readline("minishell:~home/minishell$ ");
+		ft_printf("minishell:~%s$ ", data.pwd);
+		line = readline(NULL);
 		add_history(line);
 		parse(line, &prompt);
 		ft_init_nb_cmd(&data, prompt);
@@ -51,8 +52,7 @@ int	main(int argc, char **argv, char **env)
 			ft_exec_no_pipe(&data, prompt);
 		else if (ft_handle_pipes(&data, prompt) == 0)
 			return (0);
-		// ft_exe_builtin(&data, prompt->cmd, prompt->args);
-		chain_display(&prompt);
+		// chain_display(&prompt);
 		free_chain(&prompt);
 	}
 	ft_lstclear(&(data.env), &ft_free_keyval);

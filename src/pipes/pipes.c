@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/03 18:01:36 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:16:25 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,13 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
  */
 int	ft_handle_pipes(t_data *data, t_prompt *prompt)
 {
-	t_prompt	*ind;
 	pid_t		pid;
 	t_pipe		*pipes;
 	int			i;
 
 	pipes = ft_create_pipes(data);
-	ind = prompt;
 	i = 0;
-	while (ind)
+	while (prompt)
 	{
 		pid = fork();
 		if (pid == -1)
@@ -128,11 +126,12 @@ int	ft_handle_pipes(t_data *data, t_prompt *prompt)
 		else if (pid == 0)
 		{
 			ft_redirection_pipes(data, pipes, i);
-			ft_redirection_files(ft_open_files(ind));
-			ft_exe_cmd(data, ind);
+			ft_redirection_files(ft_open_files(prompt));
+			if (ft_exe_builtin(data, prompt->cmd, prompt->args) == 0)
+				ft_exe_cmd(data, prompt);
 			return (0);
 		}
-		ind = ind->next;
+		prompt = prompt->next;
 		i++;
 	}
 	routine_pere(pipes, data->nb_cmd);
@@ -148,8 +147,8 @@ void	ft_exec_no_pipe(t_data *data, t_prompt *prompt)
 	if (pid == 0)
 	{
 		ft_redirection_files(ft_open_files(prompt));
-		// ft_printf("test\n");
-		ft_exe_cmd(data, prompt);
+		if (ft_exe_builtin(data, prompt->cmd, prompt->args) == 0)
+				ft_exe_cmd(data, prompt);
 	}
 	else
 		waitpid(-1, &status, 0);
