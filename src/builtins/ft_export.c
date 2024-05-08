@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/01 15:31:08 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/07 14:53:23 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,36 @@ t_list	*get_key(t_data *data, char *key)
 	return (NULL);
 }
 
-void	export_arg(t_data *data, char *arg)
+int	check_exp_args(t_keyval *kv)
+{
+	int	i;
+
+	i = 0;
+	if (kv->key[i] == '\0')
+		return (1);
+	while (kv->key[i])
+	{
+		if (ft_isalpha(kv->key[i]) == 0 && kv->key[i] != '_')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	export_arg(t_data *data, char *arg)
 {
 	t_list		*key;
 	t_keyval	*kv;
 
 	kv = extract_var(arg);
+	if (check_exp_args(kv) == 1)
+	{
+		if (kv->key)
+			free(kv->key);
+		if (kv->val)
+			free(kv->val);	
+		return (free(kv), 1);
+	}
 	key = get_key(data, kv->key);
 	if (key != NULL)
 	{
@@ -125,6 +149,7 @@ void	export_arg(t_data *data, char *arg)
 		key = ft_lstnew((void*)kv);
 		ft_lstadd_back(&data->env, key);
 	}
+	return (0);
 }
 
 /**
@@ -133,7 +158,7 @@ void	export_arg(t_data *data, char *arg)
  * @param data Structure qui contient l'environnement
  * @param args Liste chainee contenant les arguments
  */
-void	ft_export(t_data *data, t_string *args)
+int	ft_export(t_data *data, t_string *args)
 {
 	t_list		*env_cpy;
 	t_string	*i;
@@ -149,8 +174,10 @@ void	ft_export(t_data *data, t_string *args)
 		i = args;
 		while (i)
 		{
-			export_arg(data, i->str);
+			if (export_arg(data, i->str) == 1)
+				return (builtins_err_handler(EXPORT_ERR, i->str));
 			i = i->next;
 		}
 	}
+	return (0);
 }

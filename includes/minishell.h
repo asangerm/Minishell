@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/04 14:16:00 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/07 14:48:01 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <unistd.h>
+
+#define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
 
 typedef struct s_string
 {
@@ -71,7 +73,8 @@ int			ft_strlen_until(char *str, char stop_char);
 
 /* Builtins directory */
 int  	 	ft_exe_builtin(t_data *data, char *cmd, t_string *args);
-void		ft_export(t_data *data, t_string *args);
+int			builtins_err_handler(char *err_msg, char *variable);
+int			ft_export(t_data *data, t_string *args);
 void		ft_unset(t_data *data, t_string *args);
 t_list		*get_key(t_data *data, char *key);
 t_list		*sort_env(t_data *data);

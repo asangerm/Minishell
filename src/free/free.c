@@ -23,7 +23,11 @@ void	ft_free_keyval(void *kv)
 	free(cast);
 }
 
-void	ft_handle_errors(char *err_msg)
+int	builtins_err_handler(char *err_msg, char *variable)
 {
-	ft_printf("%s\n", err_msg);
+	if (variable != NULL)
+		ft_printf(err_msg, variable);
+	else
+		ft_printf(err_msg);
+	return (1);
 }
