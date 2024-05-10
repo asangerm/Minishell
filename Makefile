@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/07 14:57:29 by nfradet          ###   ########.fr        #
+#    Updated: 2024/05/10 12:02:49 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,8 +41,7 @@ PARSING	 =  handlers_0.c \
 
 BUILTINS =  builtins.c	\
 			ft_export.c	\
-			ft_unset.c	\
-			ft_env.c
+			ft_unset.c
 
 SRC		 =	$(PARSING)	\
 			$(ENV)		\
