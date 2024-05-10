@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/07 14:48:01 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/10 16:52:13 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@
 # include <sys/types.h>
 # include <unistd.h>
 
-#define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
+# define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
+# define BOLD_GREEN "\033[1;32m"
+# define BOLD_BLUE	"\033[1;34m"
+# define NORMAL_WHITE	"\033[0m"
 
 typedef struct s_string
 {

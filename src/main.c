@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/06 11:51:14 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/10 16:52:25 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	while (1)
 	{
-		tmp = ft_strjoin("minishell:~", data.pwd);
-		display = ft_strjoin(tmp, "$ ");
+		tmp = ft_strjoin(BOLD_GREEN"minishell:"BOLD_BLUE"~", data.pwd);
+		display = ft_strjoin(tmp, NORMAL_WHITE"$ ");
 		// ft_printf("minishell:~%s$ ", data.pwd);
 		line = readline(display);
 		add_history(line);
