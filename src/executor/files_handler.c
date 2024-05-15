@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:04:27 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/04 13:57:08 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/15 16:02:21 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	ft_open_file_in(t_string *file_in)
 	{
 		while (file_in->next)
 		{
-			fd = open(file_in->str, O_RDONLY, 0666);
+			fd = open(file_in->str, O_RDONLY);
 			if (fd == -1)
 				exit(EXIT_FAILURE);
 			close(fd);
 			file_in = file_in->next;
 		}
-		fd = open(file_in->str, O_RDONLY, 0666);
+		fd = open(file_in->str, O_RDONLY);
 		if (fd == -1)
 			exit(EXIT_FAILURE);
 	}

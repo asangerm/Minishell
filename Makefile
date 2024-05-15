@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/10 12:02:49 by nfradet          ###   ########.fr        #
+#    Updated: 2024/05/15 15:51:04 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,14 +19,14 @@ CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra
 
 # Directories
-VPATH   =   src src/parsing src/env src/builtins src/free src/pipes
+VPATH   =   src src/parsing src/env src/builtins src/free src/executor
 OBJ_DIR	=	obj/
 LIB_DIR	=	libft/
 
 # .c and .o files
 FREE	 =	free.c
 
-PIPES	 =	pipes.c		\
+EXECUTOR =	pipes.c		\
 			pipes_utils.c	\
 			files_handler.c
 
@@ -47,7 +47,7 @@ SRC		 =	$(PARSING)	\
 			$(ENV)		\
 			$(BUILTINS) \
 			$(FREE) 	\
-			$(PIPES) 	\
+			$(EXECUTOR)	\
 			main.c
 
 OBJ		 =	$(SRC:%.c=$(OBJ_DIR)%.o)

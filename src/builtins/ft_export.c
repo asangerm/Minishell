@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/10 16:05:22 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/10 16:46:18 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,6 @@ void	ft_do_export(t_data *data, t_keyval *kv)
 	int		len;
 
 	var = cut_plus(kv->key);
-	// ft_printf("%s\n", var);
 	key = get_key(data, var);
 	free(var);
 	if (key != NULL)
