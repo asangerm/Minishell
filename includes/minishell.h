@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/10 16:52:13 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:22:20 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ typedef struct s_string
 	struct s_string	*next;
 }	t_string;
 
+typedef	struct s_keyval
+{
+	char	*key;
+	char	*val;
+}	t_keyval;
+
 typedef struct s_prompt
 {
 	char			*line;
@@ -40,14 +46,9 @@ typedef struct s_prompt
 	t_string		*args;
 	t_string		*file_in;
 	t_string		*file_out;
+	t_list			*var;
 	struct s_prompt	*next;
 }	t_prompt;
-
-typedef	struct s_keyval
-{
-	char	*key;
-	char	*val;
-}	t_keyval;
 
 typedef struct s_pipe
 {
@@ -99,12 +100,14 @@ void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
 
 /* Free directory */
 void		ft_free_keyval(void *kv);
+void		var_display(t_list **var);
 
 /* handlers_0.c */
 void		cmd_handler(char *line, t_prompt *prompt, int *i);
+void		var_handler(char *line, t_prompt *prompt, int *i);
 void		args_handler(char *line, t_prompt *prompt, int *i);
-void		file_out_handler(char *line, t_prompt *prompt, int *i);
 void		file_in_handler(char *line, t_prompt *prompt, int *i);
+void		file_out_handler(char *line, t_prompt *prompt, int *i);
 
 /* parsing_0.c */
 void		lexer(t_prompt **prompt);
@@ -121,7 +124,9 @@ t_prompt	*last_prompt(t_prompt **prompt);
 void		prompt_add_back(t_prompt **prompt, t_prompt *new);
 
 /* utils_chain_1.c */
+int			test_equal(char *line, int *i);
 void		chain_display(t_prompt **prompt);
+char		**split_var(char *word, int i, int j);
 void		tab_display(t_string **tab, char *type);
 void		chain_creator(char *line, t_prompt **prompt);
 

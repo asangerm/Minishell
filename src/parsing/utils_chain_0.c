@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_chain_0.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/27 20:20:28 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/16 18:18:25 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_prompt	*new_prompt(char *line)
 	new->file_in = NULL;
 	new->file_out = NULL;
 	new->next = NULL;
+	new->var = NULL;
 	return (new);
 }
 
@@ -61,6 +62,8 @@ void	free_content(t_prompt *chain)
 		free(chain->line);
 	if (chain->args)
 		free_str(&(chain->args));
+	if (chain->var)
+		ft_lstclear(&(chain->var), &ft_free_keyval);
 }
 
 /*

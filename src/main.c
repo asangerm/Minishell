@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/10 16:52:25 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:39:36 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, char **argv, char **env)
 			ft_exec_no_pipe(&data, prompt);
 		else if (ft_handle_pipes(&data, prompt) == 0)
 			return (0);
-		// chain_display(&prompt);
+		chain_display(&prompt);
 		free(tmp);
 		free(display);
 		free_chain(&prompt);

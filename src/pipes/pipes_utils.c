@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:34:55 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/03 15:58:02 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/16 18:39:04 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ void	routine_pere(t_pipe *pipes, int nb_fork)
 void	ft_init_nb_cmd(t_data *data, t_prompt * prompt)
 {
 	int	len;
+	t_prompt	*tmp;
 
 	len = 0;
-	while (prompt)
+	tmp = prompt;
+	while (tmp)
 	{
 		len++;
-		prompt = prompt->next;
+		tmp = tmp->next;
 	}
 	data->nb_cmd = len;
 }

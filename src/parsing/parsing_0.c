@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/25 16:56:08 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:20:59 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ void	big_if(char *line, t_prompt *prompt, int *i)
 			file_out_handler(line, prompt, i);
 		else if (line[*i] == '<')
 			file_in_handler(line, prompt, i);
+		else if (!prompt->cmd && test_equal(line, i))
+			var_handler(line, prompt, i);
 		else if (!prompt->cmd)
 			cmd_handler(line, prompt, i);
 		else
