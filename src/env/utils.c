@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:15:54 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/01 11:35:12 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/17 15:10:42 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void	aff_env(t_list *env, int type)
 	while (lst)
 	{
 		kv = (t_keyval*)lst->content;
-		if (type == 1)
+		if (type == 1 && kv->is_exported == true)
 		{
 			if (kv && kv->val != NULL && kv->key != NULL)
 				ft_printf("%s=%s\n", kv->key, kv->val);
 		}
-		else if (type == 2)
+		else if (type == 2 && kv->is_exported == true)
 		{
 			if (kv->val != NULL && kv->val[0] ==  '\0')
 				ft_printf("declare -x %s=\"\"\n", kv->key);
@@ -74,6 +74,7 @@ t_keyval	*cpy_keyval(t_keyval *kv)
 		cpy->key = ft_strdup(kv->key);
 	if (kv->val != NULL)
 		cpy->val = ft_strdup(kv->val);
+	cpy->is_exported = kv->is_exported;		
 	return (cpy);
 }
 

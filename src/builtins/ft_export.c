@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/10 16:46:18 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:12:13 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,36 +150,11 @@ char	*cut_plus(char *key)
 	return (cpy);
 }
 
-void	ft_do_export(t_data *data, t_keyval *kv)
-{
-	t_list	*key;
-	char	*var;
-	int		len;
-
-	var = cut_plus(kv->key);
-	key = get_key(data, var);
-	free(var);
-	if (key != NULL)
-	{
-		len = ft_strlen(((t_keyval *)key->content)->val) + ft_strlen(kv->val);
-		if (kv->key[ft_strlen(kv->key) - 1] == '+')
-			ft_strlcat(((t_keyval *)key->content)->val, kv->val, len + 1);
-		else
-		{
-			ft_free_keyval((t_keyval*)key->content);
-			key->content = (void*)kv;
-		}
-	}
-	else
-	{
-		key = ft_lstnew((void*)kv);
-		ft_lstadd_back(&data->env, key);
-	}
-}
-
 int	export_arg(t_data *data, char *arg)
 {
 	t_keyval	*kv;
+	char		*var;
+	t_list		*key;
 
 	kv = extract_var(arg);
 	if (check_exp_args(kv) == 1)
@@ -190,7 +165,14 @@ int	export_arg(t_data *data, char *arg)
 			free(kv->val);	
 		return (free(kv), 1);
 	}
-	ft_do_export(data, kv);
+	kv->is_exported = true;
+	var = cut_plus(kv->key);
+	key = get_key(data, var);
+	if (key != NULL && ((t_keyval *)key->content)->is_exported == false)
+		((t_keyval *)key->content)->is_exported = true;
+	else
+		add_var_to_env(data, kv);
+	free(var);
 	return (0);
 }
 
@@ -217,7 +199,7 @@ int	ft_export(t_data *data, t_string *args)
 		while (i)
 		{
 			if (export_arg(data, i->str) == 1)
-				return (builtins_err_handler(EXPORT_ERR, i->str));
+				builtins_err_handler(EXPORT_ERR, i->str);
 			i = i->next;
 		}
 	}

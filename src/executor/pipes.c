@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/15 17:18:30 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/17 14:55:54 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	ft_handle_pipes(t_data *data, t_prompt *prompt)
 			exit(EXIT_FAILURE);
 		else if (pid == 0)
 		{
+			ft_handle_var_env(data, prompt);
 			ft_redirection_pipes(data, pipes, i);
 			ft_redirection_files(ft_open_files(prompt));
 			if (ft_exe_builtin(data, prompt->cmd, prompt->args) == 0)
@@ -140,16 +141,11 @@ int	ft_handle_pipes(t_data *data, t_prompt *prompt)
 
 void	ft_exec_no_pipe(t_data *data, t_prompt *prompt)
 {
-	int	pid;
-	int	status;
-
-	pid = fork();
-	if (pid == 0)
+	ft_handle_var_env(data, prompt);
+	ft_redirection_files(ft_open_files(prompt));
+	if (prompt->cmd != NULL)
 	{
-		ft_redirection_files(ft_open_files(prompt));
 		if (ft_exe_builtin(data, prompt->cmd, prompt->args) == 0)
 				ft_exe_cmd(data, prompt);
 	}
-	else
-		waitpid(-1, &status, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/17 12:25:52 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/17 14:48:50 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@
 # define BOLD_BLUE	"\033[1;34m"
 # define NORMAL_WHITE	"\033[0m"
 
+typedef enum
+{
+	true = 1,
+	false = 0
+}	t_bool;
+
 typedef struct s_string
 {
 	char			*str;
@@ -37,6 +43,7 @@ typedef	struct s_keyval
 {
 	char	*key;
 	char	*val;
+	t_bool	is_exported;
 }	t_keyval;
 
 typedef struct s_prompt
@@ -70,33 +77,37 @@ int			ft_maxlen(char *s1, char *s2);
 void		aff_env(t_list *env, int type);
 
 /* Env directory */
-t_keyval	*extract_var(char *var);
-void		ft_initenv(t_data *data, char **env);
 t_list		*cpy_env(t_data *data);
+t_keyval	*extract_var(char *var);
+t_keyval	*cpy_keyval(t_keyval *kv);
+void		ft_initenv(t_data *data, char **env);
 int			ft_strlen_until(char *str, char stop_char);
+void		add_var_to_env(t_data *data, t_keyval *kv);
+void		ft_handle_var_env(t_data *data, t_prompt *prompt);
 
 /* Builtins directory */
-int  	 	ft_exe_builtin(t_data *data, char *cmd, t_string *args);
-int			builtins_err_handler(char *err_msg, char *variable);
-int			ft_export(t_data *data, t_string *args);
-void		ft_unset(t_data *data, t_string *args);
-t_list		*get_key(t_data *data, char *key);
-t_list		*sort_env(t_data *data);
-int			is_sorted(t_list *lst);
 void		swap(t_list **list);
+char		*cut_plus(char *key);
+int			is_sorted(t_list *lst);
+t_list		*sort_env(t_data *data);
+t_list		*get_key(t_data *data, char *key);
+void		ft_unset(t_data *data, t_string *args);
+int			ft_export(t_data *data, t_string *args);
+int			builtins_err_handler(char *err_msg, char *variable);
+int  	 	ft_exe_builtin(t_data *data, char *cmd, t_string *args);
 
 /* Pipes */
-t_pipe		ft_open_files(t_prompt *prompt);
-char		*check_path(char *path, char *cmd);
-char		**ft_cmd_to_tab(t_prompt *prompt);
 char		**ft_lst_to_tab(t_list *env);
+t_pipe		ft_open_files(t_prompt *prompt);
+char		**ft_cmd_to_tab(t_prompt *prompt);
 void		ft_redirection_files(t_pipe files);
-int			ft_handle_pipes(t_data *data, t_prompt *prompt);
+char		*check_path(char *path, char *cmd);
 void		routine_pere(t_pipe *pipes, int nb);
-void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
-void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
 int			ft_exe_cmd(t_data *data, t_prompt *prompt);
+void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
 void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
+int			ft_handle_pipes(t_data *data, t_prompt *prompt);
+void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
 
 /* Free directory */
 void		ft_free_keyval(void *kv);

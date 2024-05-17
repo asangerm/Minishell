@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/16 19:16:52 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/17 15:17:35 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	var_handler(char *line, t_prompt *prompt, int *i)
 	kv = malloc(sizeof(t_keyval));
 	kv->key = ft_strdup(splitted[0]);
 	kv->val = ft_strdup(splitted[1]);
+	kv->is_exported = false;
 	new = ft_lstnew((void *)kv);
 	ft_lstadd_back(&(prompt->var), new);
 	free(splitted[0]);
