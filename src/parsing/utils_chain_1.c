@@ -6,11 +6,56 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:54:28 by asangerm          #+#    #+#             */
-/*   Updated: 2024/04/25 15:55:03 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/16 19:21:45 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	test_equal(char *line, int *i)
+{
+	int		j;
+	int		k;
+	char	*word;
+
+	k = *i;
+	if (line[*i] == '\"')
+		word = double_quote(line, i);
+	else
+		word = word_maker(line, i);
+	(*i) = k;
+	j = 0;
+	while (word[j])
+	{
+		if (word[j] == '=')
+			return (1);
+		j++;
+	}
+	return (0);
+}
+
+char	**split_var(char *word, int i, int j)
+{
+	char	**splitted;
+	char	*key;
+	char	*val;
+
+	splitted = malloc(sizeof(char *) * 2);
+	while (word[j] && word[j] != '=')
+		j++;
+	key = malloc(sizeof(char) * j + 1);
+	while (word[i] && word[i] != '=')
+	{
+		key[i] = word[i];
+		i++;
+	}
+	key[i] = '\0';
+	i++;
+	val = word_maker(word, &i);
+	splitted[0] = key;
+	splitted[1] = val;
+	return (splitted);
+}
 
 /*
 	Permet d'afficher le contenu des listes t_string du prompt
@@ -54,6 +99,7 @@ void	chain_display(t_prompt **prompt)
 		tab_display(&(tmp->file_in), "file_in");
 		tab_display(&(tmp->file_out), "file_out");
 		tab_display(&(tmp->args), "args");
+		var_display(&(tmp->var));
 		tmp = tmp->next;
 		i++;
 	}
