@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/20 18:03:15 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/20 20:54:01 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ t_pipe		ft_open_files(t_prompt *prompt);
 char		**ft_cmd_to_tab(t_prompt *prompt);
 void		ft_redirection_files(t_pipe files);
 char		*check_path(char *path, char *cmd);
-void		routine_pere(t_pipe *pipes, int nb);
 int			ft_exe_cmd(t_data *data, t_prompt *prompt);
 int			ft_executor(t_data *data, t_prompt *prompt);
 void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
 void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
+void		routine_pere(t_data *data, t_pipe *pipes, int nb_fork);
 void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
 
 /* Free directory */

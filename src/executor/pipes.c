@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/20 18:09:57 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/20 21:27:06 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ char	*get_path(t_data *data, char *cmd)
 	char	*path;
 
 	i = 0;
+	// ft_printf("%s : %d\n",cmd, access(cmd, F_OK | X_OK));
 	if (access(cmd, F_OK | X_OK) == 0)
 		return (cmd);
-	while (data->paths[i])
+	while (data->paths && data->paths[i])
 	{
 		path = check_path(data->paths[i], cmd);
 		if (path != NULL)
@@ -104,9 +105,8 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 	tmp = get_key(data, "PATH");
 	if (tmp != NULL)
 		data->paths = ft_split(((t_keyval*)tmp->content)->val, ':');
-	else
-		return (0);
 	path = get_path(data, prompt->cmd);
+	// ft_printf("%s\n", path);
 	if (path != NULL)
 	{
 		free_chain(&prompt);
@@ -119,8 +119,6 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 
 int	ft_redir_n_exec(t_data *data, t_prompt *prompt, t_pipe *pipes, int i)
 {
-	data->inout_save[0] = dup(STDIN_FILENO);
-	data->inout_save[1] = dup(STDOUT_FILENO);
 	ft_handle_var_env(data, prompt);
 	if (pipes != NULL)
 	{
@@ -132,8 +130,6 @@ int	ft_redir_n_exec(t_data *data, t_prompt *prompt, t_pipe *pipes, int i)
 	{
 		ft_exe_cmd(data, prompt);
 	}
-	dup2(data->inout_save[0], STDIN_FILENO);
-	dup2(data->inout_save[1], STDOUT_FILENO);
 	return (0);
 }
 
@@ -152,6 +148,8 @@ int	ft_executor(t_data *data, t_prompt *prompt)
 	t_pipe		*pipes;
 	int			i;
 
+	data->inout_save[0] = dup(STDIN_FILENO);
+	data->inout_save[1] = dup(STDOUT_FILENO);
 	pipes = ft_create_pipes(data);
 	i = 0;
 	while (prompt)
@@ -160,10 +158,15 @@ int	ft_executor(t_data *data, t_prompt *prompt)
 		if (pid == -1)
 			exit(EXIT_FAILURE);
 		else if (pid == 0)
+		{
 			ft_redir_n_exec(data, prompt, pipes, i);
+			ft_free_data(data);
+			free_chain(&prompt);
+			exit(0);
+		}
 		prompt = prompt->next;
 		i++;
 	}
-	routine_pere(pipes, data->nb_cmd);
+	routine_pere(data, pipes, data->nb_cmd);
 	return (1);
 }
