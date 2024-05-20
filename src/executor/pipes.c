@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/17 14:55:54 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/20 18:09:57 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ t_pipe	*ft_create_pipes(t_data *data)
 	t_pipe	*pipes;
 	int		i;
 
+	if (data->nb_cmd == 1)
+		return (NULL);
 	pipes = malloc(sizeof(t_pipe) * (data->nb_cmd - 1));
 	i = 0;
 	while (i < data->nb_cmd - 1)
@@ -72,13 +74,30 @@ void	ft_redirection_pipes(t_data *data, t_pipe *pipe, int i)
 	}
 }
 
+char	*get_path(t_data *data, char *cmd)
+{
+	int		i;
+	char	*path;
+
+	i = 0;
+	if (access(cmd, F_OK | X_OK) == 0)
+		return (cmd);
+	while (data->paths[i])
+	{
+		path = check_path(data->paths[i], cmd);
+		if (path != NULL)
+			return (path);
+		i++;
+	}
+	return (NULL);
+}
+
 int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 {
 	char	**cmd;
 	char	**env;
 	char	*path;
 	t_list	*tmp;
-	int		i;
 
 	env = ft_lst_to_tab(data->env);
 	cmd = ft_cmd_to_tab(prompt);
@@ -87,17 +106,34 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 		data->paths = ft_split(((t_keyval*)tmp->content)->val, ':');
 	else
 		return (0);
-	i = 0;
-	while (data->paths[i])
+	path = get_path(data, prompt->cmd);
+	if (path != NULL)
 	{
-		path = check_path(data->paths[i], prompt->cmd);
-		if (path != NULL)
-		{
-			execve(path, cmd, env);
+		free_chain(&prompt);
+		ft_free_data(data);
+		if (execve(path, cmd, env) == -1)
 			return (1);
-		}
-		i++;
 	}
+	return (0);
+}
+
+int	ft_redir_n_exec(t_data *data, t_prompt *prompt, t_pipe *pipes, int i)
+{
+	data->inout_save[0] = dup(STDIN_FILENO);
+	data->inout_save[1] = dup(STDOUT_FILENO);
+	ft_handle_var_env(data, prompt);
+	if (pipes != NULL)
+	{
+		ft_redirection_pipes(data, pipes, i);
+		free(pipes);
+	}
+	ft_redirection_files(ft_open_files(prompt));
+	if (ft_exe_builtin(data, prompt->cmd, prompt->args) == 0)
+	{
+		ft_exe_cmd(data, prompt);
+	}
+	dup2(data->inout_save[0], STDIN_FILENO);
+	dup2(data->inout_save[1], STDOUT_FILENO);
 	return (0);
 }
 
@@ -110,7 +146,7 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
  * @param data struct t_data contenant l'environnement
  * @param prompt struct t_prompt contenant le prompt parse
  */
-int	ft_handle_pipes(t_data *data, t_prompt *prompt)
+int	ft_executor(t_data *data, t_prompt *prompt)
 {
 	pid_t		pid;
 	t_pipe		*pipes;
@@ -124,28 +160,10 @@ int	ft_handle_pipes(t_data *data, t_prompt *prompt)
 		if (pid == -1)
 			exit(EXIT_FAILURE);
 		else if (pid == 0)
-		{
-			ft_handle_var_env(data, prompt);
-			ft_redirection_pipes(data, pipes, i);
-			ft_redirection_files(ft_open_files(prompt));
-			if (ft_exe_builtin(data, prompt->cmd, prompt->args) == 0)
-				ft_exe_cmd(data, prompt);
-			return (0);
-		}
+			ft_redir_n_exec(data, prompt, pipes, i);
 		prompt = prompt->next;
 		i++;
 	}
 	routine_pere(pipes, data->nb_cmd);
 	return (1);
-}
-
-void	ft_exec_no_pipe(t_data *data, t_prompt *prompt)
-{
-	ft_handle_var_env(data, prompt);
-	ft_redirection_files(ft_open_files(prompt));
-	if (prompt->cmd != NULL)
-	{
-		if (ft_exe_builtin(data, prompt->cmd, prompt->args) == 0)
-				ft_exe_cmd(data, prompt);
-	}
 }

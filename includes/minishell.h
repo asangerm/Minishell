@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/17 14:48:50 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/20 18:03:15 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct s_data
 	t_pipe	*pipes;
 	t_list	*env;
 	char	*pwd;
-	// t_list	*variables;
+	int		inout_save[2];
 }	t_data;
 
 /* Parsing directory */
@@ -104,14 +104,15 @@ void		ft_redirection_files(t_pipe files);
 char		*check_path(char *path, char *cmd);
 void		routine_pere(t_pipe *pipes, int nb);
 int			ft_exe_cmd(t_data *data, t_prompt *prompt);
+int			ft_executor(t_data *data, t_prompt *prompt);
 void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
 void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
-int			ft_handle_pipes(t_data *data, t_prompt *prompt);
 void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
 
 /* Free directory */
 void		ft_free_keyval(void *kv);
 void		var_display(t_list **var);
+void		ft_free_data(t_data *data);
 
 /* handlers_0.c */
 void		cmd_handler(char *line, t_prompt *prompt, int *i);

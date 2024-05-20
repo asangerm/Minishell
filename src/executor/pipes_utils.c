@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:34:55 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/17 12:26:25 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/20 17:33:15 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ char	**ft_cmd_to_tab(t_prompt *prompt)
 
 	args = prompt->args;
 	tab = malloc(sizeof(char *) * (lst_str_len(prompt->args) + 2));
-	tab[0] = prompt->cmd;
+	tab[0] = ft_strdup(prompt->cmd);
 	i = 1;
 	while (args)
 	{
-		tab[i] = args->str;
+		tab[i] = ft_strdup(args->str);
 		args = args->next;
 		i++;
 	}
