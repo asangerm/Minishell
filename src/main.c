@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/16 18:39:36 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:57:25 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char **argv, char **env)
 		// ft_printf("minishell:~%s$ ", data.pwd);
 		line = readline(display);
 		add_history(line);
-		parse(line, &prompt);
+		parse(line, &prompt, &data);
 		ft_init_nb_cmd(&data, prompt);
 		if (data.nb_cmd == 1)
 			ft_exec_no_pipe(&data, prompt);

@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/16 19:22:20 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:58:23 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,14 @@ void		file_out_handler(char *line, t_prompt *prompt, int *i);
 void		lexer(t_prompt **prompt);
 char		*word_maker(char *line, int *i);
 char		*double_quote(char *line, int *i);
-void		parse(char *line, t_prompt **prompt);
+void		parse(char *line, t_prompt **prompt,t_data *data);
 void		big_if(char *line, t_prompt *prompt, int *i);
+
+/* parsing_1.c */
+char	*ft_strcat(char *str1, char *str2);
+char	*gimme_str(char *line, int j, int i);
+char	*semicolon_handler(char *line, t_data *data, int i, int j);
+char	*word_env_check(char *line, int *i, t_data *data);
 
 /* utils_chain_0.c */
 t_prompt	*new_prompt(char *line);
