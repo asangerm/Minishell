@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/20 21:27:06 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/21 17:25:54 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,6 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 	// ft_printf("%s\n", path);
 	if (path != NULL)
 	{
-		free_chain(&prompt);
-		ft_free_data(data);
 		if (execve(path, cmd, env) == -1)
 			return (1);
 	}
@@ -123,13 +121,11 @@ int	ft_redir_n_exec(t_data *data, t_prompt *prompt, t_pipe *pipes, int i)
 	if (pipes != NULL)
 	{
 		ft_redirection_pipes(data, pipes, i);
-		free(pipes);
+		// free(pipes);
 	}
 	ft_redirection_files(ft_open_files(prompt));
 	if (ft_exe_builtin(data, prompt->cmd, prompt->args) == 0)
-	{
 		ft_exe_cmd(data, prompt);
-	}
 	return (0);
 }
 
@@ -160,13 +156,21 @@ int	ft_executor(t_data *data, t_prompt *prompt)
 		else if (pid == 0)
 		{
 			ft_redir_n_exec(data, prompt, pipes, i);
-			ft_free_data(data);
-			free_chain(&prompt);
-			exit(0);
+			// ft_free_data(data);
+			// free_chain(&prompt);
+			exit(EXIT_SUCCESS);
 		}
 		prompt = prompt->next;
 		i++;
 	}
 	routine_pere(data, pipes, data->nb_cmd);
 	return (1);
+}
+
+void	ft_handle_execution(t_data *data, t_prompt *prompt)
+{
+	if (data->nb_cmd == 1)
+		ft_redir_n_exec(data, prompt, NULL, 0);
+	else
+		ft_executor(data, prompt);
 }

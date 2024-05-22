@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:34:55 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/20 21:11:26 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/21 17:16:49 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,18 @@ char	**ft_lst_to_tab(t_list *env)
 {
 	char	*tmp;
 	char	**tab;
+	t_list	*lst;
 	int		i;
 
 	i = 0;
+	lst = env;
 	tab = malloc(sizeof(char *) * (ft_lstsize(env) + 1));
-	while (i < ft_lstsize(env))
+	while (lst && i < ft_lstsize(env))
 	{
 		tmp = ft_strjoin(((t_keyval *)env->content)->key, "=");
 		tab[i] = ft_strjoin(tmp, ((t_keyval *)env->content)->val);
 		free(tmp);
+		lst = lst->next;
 		i++;
 	}
 	tab[i] = NULL;
@@ -73,7 +76,7 @@ void	routine_pere(t_data *data, t_pipe *pipes, int nb_fork)
 	// dup2(data->inout_save[0], STDIN_FILENO);
 	// dup2(data->inout_save[1], STDOUT_FILENO);
 	close_pipes_excpt(pipes, nb_fork - 1, -1, -1);
-	free(pipes);
+	// free(pipes);
 	i = 0;
 	while (i < nb_fork)
 	{

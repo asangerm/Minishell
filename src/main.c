@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/20 21:21:32 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/21 17:08:56 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	main(int argc, char **argv, char **env)
 		parse(line, &prompt);
 		ft_init_nb_cmd(&data, prompt);
 		if (data.nb_cmd >= 1)
-			ft_executor(&data, prompt);
+			ft_handle_execution(&data, prompt);
 		// chain_display(&prompt);
 		free(tmp);
 		free(display);
