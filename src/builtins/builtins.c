@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:41:02 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/07 14:49:06 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/22 14:40:51 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@ int ft_exe_builtin(t_data *data, char *cmd, t_string *args)
 		return (aff_env(data->env, 1), 1);
     else if (ft_strncmp(cmd, "pwd", ft_maxlen(cmd, "pwd")) == 0)
         return (ft_printf("%s\n", data->pwd), 1);
+    else if (ft_strncmp(cmd, "echo", ft_maxlen(cmd, "echo")) == 0)
+        return (ft_echo(args), 1);
     return (0);
 }
