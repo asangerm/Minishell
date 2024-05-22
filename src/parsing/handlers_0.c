@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/17 15:17:35 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:12:47 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void	args_handler(char *line, t_prompt *prompt, int *i)
 		word = double_quote(line, i);
 	else
 		word = word_maker(line, i);
+	if (ft_strlen(word) == 0)
+		return;
 	new = new_str(word);
 	str_add_back(&(prompt->args), new);
 }

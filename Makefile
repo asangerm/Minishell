@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/22 17:05:06 by nfradet          ###   ########.fr        #
+#    Updated: 2024/05/22 17:11:27 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ PARSING	 =  handlers_0.c \
 			utils_str_0.c
 
 BUILTINS =  builtins.c	\
+			ft_echo.c	\
 			ft_export.c	\
 			ft_unset.c	\
 			export_utils.c
