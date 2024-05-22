@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/16 19:20:59 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/21 18:58:32 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,8 +105,11 @@ void	lexer(t_prompt **prompt)
 	fichiers de sortie et d'entrée de chaque prompt séparé par des
 	pipes
 */
-void	parse(char *line, t_prompt **prompt)
+void	parse(char *line, t_prompt **prompt, t_data *data)
 {
-	chain_creator(line, prompt);
+	char	*new_line;
+
+	new_line = semicolon_handler(line, data, 0, 0);
+	chain_creator(new_line, prompt);
 	lexer(prompt);
 }

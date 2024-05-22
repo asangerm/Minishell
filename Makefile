@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/05/22 14:15:05 by nfradet           #+#    #+#              #
-#    Updated: 2024/05/22 14:17:34 by nfradet          ###   ########.fr        #
+#    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
+#    Updated: 2024/05/22 17:05:06 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ ENV		 =	env.c		\
 
 PARSING	 =  handlers_0.c \
 			parsing_0.c  \
+			parsing_1.c \
 			utils_chain_0.c \
 			utils_chain_1.c \
 			utils_str_0.c
