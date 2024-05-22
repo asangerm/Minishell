@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:54:28 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/16 19:21:45 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/22 17:53:56 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	test_equal(char *line, int *i)
 	while (word[j])
 	{
 		if (word[j] == '=')
-			return (1);
+			return (free(word), 1);
 		j++;
 	}
-	return (0);
+	return (free(word), 0);
 }
 
 char	**split_var(char *word, int i, int j)
@@ -119,8 +119,16 @@ void	chain_creator(char *line, t_prompt **prompt)
 	i = 0;
 	while (split_line[i])
 	{
-		tmp = new_prompt(split_line[i]);
+		tmp = new_prompt(ft_strdup(split_line[i]));
 		prompt_add_back(prompt, tmp);
 		i++;
 	}
+	i = 0;
+	while (split_line[i])
+	{
+		
+		free(split_line[i]);
+		i++;
+	}
+	free(split_line);
 }
