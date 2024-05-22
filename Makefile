@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/15 15:51:04 by nfradet          ###   ########.fr        #
+#    Created: 2024/05/22 14:15:05 by nfradet           #+#    #+#              #
+#    Updated: 2024/05/22 14:17:34 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,8 @@ FREE	 =	free.c
 
 EXECUTOR =	pipes.c		\
 			pipes_utils.c	\
-			files_handler.c
+			files_handler.c	\
+			execution.c
 
 ENV		 =	env.c		\
 			utils.c
@@ -41,7 +42,8 @@ PARSING	 =  handlers_0.c \
 
 BUILTINS =  builtins.c	\
 			ft_export.c	\
-			ft_unset.c
+			ft_unset.c	\
+			export_utils.c
 
 SRC		 =	$(PARSING)	\
 			$(ENV)		\

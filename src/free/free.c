@@ -23,22 +23,30 @@ void	ft_free_keyval(void *kv)
 	free(cast);
 }
 
-void	ft_free_data(t_data *data)
+void	ft_free_tab(char **tab)
 {
-	int		i;
-	// char	**paths;
+	int	i;
 
 	i = 0;
-	while (data->paths && data->paths[i])
+	while (tab && tab[i])
 	{
-		free(data->paths[i]);
+		free(tab[i]);
 		i++;
 	}
-	free(data->paths[i]);
-	free(data->paths);
+	if (tab)
+	{
+		free(tab[i]);
+		free(tab);
+	}
+}
+
+void	ft_free_data(t_data *data)
+{
+	if (data->pipes != NULL)
+		free(data->pipes);
+	ft_free_tab(data->paths);
 	ft_lstclear(&data->env, &ft_free_keyval);
 	free(data->pwd);
-
 }
 
 int	builtins_err_handler(char *err_msg, char *variable)

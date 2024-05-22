@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/21 17:08:56 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:40:30 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,16 +48,17 @@ int	main(int argc, char **argv, char **env)
 		tmp = ft_strjoin(BOLD_GREEN"minishell:"BOLD_BLUE"~", data.pwd);
 		display = ft_strjoin(tmp, NORMAL_WHITE"$ ");
 		line = readline(display);
+		free(tmp);
+		free(display);
 		add_history(line);
 		parse(line, &prompt);
 		ft_init_nb_cmd(&data, prompt);
 		if (data.nb_cmd >= 1)
 			ft_handle_execution(&data, prompt);
 		// chain_display(&prompt);
-		free(tmp);
-		free(display);
 		free_chain(&prompt);
 	}
-	ft_lstclear(&(data.env), &ft_free_keyval);
+	ft_free_data(&data);
+	rl_clear_history();
 	return (0);
 }

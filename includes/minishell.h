@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/21 17:08:44 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:24:23 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,27 +90,31 @@ void		swap(t_list **list);
 char		*cut_plus(char *key);
 int			is_sorted(t_list *lst);
 t_list		*sort_env(t_data *data);
+int			ft_is_builtin(t_prompt *prompt);
 t_list		*get_key(t_data *data, char *key);
 void		ft_unset(t_data *data, t_string *args);
-int			ft_export(t_data *data, t_string *args);
+void		ft_export(t_data *data, t_string *args);
 int			builtins_err_handler(char *err_msg, char *variable);
 int  	 	ft_exe_builtin(t_data *data, char *cmd, t_string *args);
 
-/* Pipes */
+/* Executor */
 char		**ft_lst_to_tab(t_list *env);
+void		ft_create_pipes(t_data *data);
 t_pipe		ft_open_files(t_prompt *prompt);
 char		**ft_cmd_to_tab(t_prompt *prompt);
 void		ft_redirection_files(t_pipe files);
 char		*check_path(char *path, char *cmd);
+void		routine_pere(t_data *data, int nb_fork);
+void		ft_redirection_pipes(t_data *data, int i);
 int			ft_exe_cmd(t_data *data, t_prompt *prompt);
 int			ft_executor(t_data *data, t_prompt *prompt);
 void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
 void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
 void		ft_handle_execution(t_data *data, t_prompt *prompt);
-void		routine_pere(t_data *data, t_pipe *pipes, int nb_fork);
 void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
 
 /* Free directory */
+void		ft_free_tab(char **tab);
 void		ft_free_keyval(void *kv);
 void		var_display(t_list **var);
 void		ft_free_data(t_data *data);

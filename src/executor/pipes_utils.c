@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:34:55 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/21 17:16:49 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/22 16:33:52 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,13 @@ char	**ft_cmd_to_tab(t_prompt *prompt)
 	return (tab);
 }
 
-void	routine_pere(t_data *data, t_pipe *pipes, int nb_fork)
+void	routine_pere(t_data *data, int nb_fork)
 {
 	int		i;
 	int		status;
-	(void)	data;
 
-	// dup2(data->inout_save[0], STDIN_FILENO);
-	// dup2(data->inout_save[1], STDOUT_FILENO);
-	close_pipes_excpt(pipes, nb_fork - 1, -1, -1);
-	// free(pipes);
+	close_pipes_excpt(data->pipes, nb_fork - 1, -1, -1);
+	free(data->pipes);
 	i = 0;
 	while (i < nb_fork)
 	{
