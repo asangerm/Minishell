@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:45:15 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/22 16:57:19 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/22 18:03:43 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_handle_execution(t_data *data, t_prompt *prompt)
 	{
 		ft_handle_var_env(data, prompt);
 		ft_redirection_files(ft_open_files(prompt));
-		ft_exe_builtin(data, prompt->cmd, prompt->args);	
+		ft_exe_builtin(data, prompt->cmd, prompt->args);
 		dup2(data->inout_save[0], STDIN_FILENO);
 		dup2(data->inout_save[1], STDOUT_FILENO);
 	}
