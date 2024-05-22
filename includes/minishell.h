@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/22 17:12:39 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/22 17:13:44 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void		ft_handle_var_env(t_data *data, t_prompt *prompt);
 void		swap(t_list **list);
 char		*cut_plus(char *key);
 int			is_sorted(t_list *lst);
+void		ft_echo(t_string *args);
 t_list		*sort_env(t_data *data);
 int			ft_is_builtin(t_prompt *prompt);
 t_list		*get_key(t_data *data, char *key);
