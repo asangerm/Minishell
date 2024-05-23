@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/21 18:58:32 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/22 19:36:22 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void	parse(char *line, t_prompt **prompt, t_data *data)
 
 	new_line = semicolon_handler(line, data, 0, 0);
 	chain_creator(new_line, prompt);
+	free(new_line);
 	lexer(prompt);
 }

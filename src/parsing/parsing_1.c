@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:49:32 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/21 18:58:10 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:11:09 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ char	*gimme_str(char *line, int j, int i)
 	char	*newstr;
 	int		k;
 
+	if (i - j == 0)
+		return (NULL);
 	newstr = malloc(sizeof(char) * (i - j + 1));
 	k = 0;
 	while (k < (i - j))
@@ -91,7 +93,8 @@ char	*semicolon_handler(char *line, t_data *data, int i, int j)
 				new_line = ft_strcat(new_line, tmp);
 			j = i;
 		}
-		i++;
+		if ((int)ft_strlen(line) > i)
+			i++;
 	}
 	if (j == 0)
 		return (line);
