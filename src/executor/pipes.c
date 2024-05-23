@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/22 16:30:09 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/23 13:36:11 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,7 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 		if (execve(path, cmd, env) == -1)
 			return (1);
 	}
+	ft_free_tab(cmd);
+	ft_free_tab(env);
 	return (0);
 }

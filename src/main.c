@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/22 17:05:14 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/23 13:27:33 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	(void)env;
+	// (void)env;
 	prompt = NULL;
 	ft_initenv(&data, env);
 	rl_clear_history();
@@ -57,6 +57,7 @@ int	main(int argc, char **argv, char **env)
 			ft_handle_execution(&data, prompt);
 		// chain_display(&prompt);
 		free_chain(&prompt);
+		// free(line);
 	}
 	ft_free_data(&data);
 	rl_clear_history();
