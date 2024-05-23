@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/22 16:26:27 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:14:02 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	ft_initenv(t_data *data, char **env)
 	tmp = NULL;
 	data->env = NULL;
 	data->paths = NULL;
-    data->pwd = getcwd(NULL, 0);
 	while (env[i] != NULL)
 	{
 		tmp = extract_var(env[i]);
@@ -131,7 +130,7 @@ void	ft_handle_var_env(t_data *data, t_prompt *prompt)
 		while (var != NULL)
 		{
 			kv = cpy_keyval((t_keyval *)var->content);
-			kv->is_exported = false;
+			kv->is_exported = ((t_keyval *)var->content)->is_exported;
 			add_var_to_env(data, kv);
 			var = var->next;
 		}

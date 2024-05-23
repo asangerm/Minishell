@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:34:55 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/22 16:33:52 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/23 13:36:48 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ char	*check_path(char *path, char *cmd)
 	free(tmp);
 	if (access(join, F_OK | X_OK) == 0)
 		return (join);
+	free(join);
 	return (NULL);
 }
 
