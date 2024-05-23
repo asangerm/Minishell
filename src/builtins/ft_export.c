@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/22 18:09:49 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/23 17:00:20 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ t_list	*get_key(t_data *data, char *key)
 {
 	t_list	*i;
 	char	*str;
-	(void)key;
 
 	str = NULL;
 	i = data->env;

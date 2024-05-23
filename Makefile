@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/22 17:11:27 by nfradet          ###   ########.fr        #
+#    Updated: 2024/05/23 16:35:48 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,32 +26,33 @@ LIB_DIR	=	libft/
 # .c and .o files
 FREE	 =	free.c
 
-EXECUTOR =	pipes.c		\
+EXECUTOR =	pipes.c			\
 			pipes_utils.c	\
 			files_handler.c	\
 			execution.c
 
-ENV		 =	env.c		\
+ENV		 =	env.c			\
 			utils.c
 
-PARSING	 =  handlers_0.c \
-			parsing_0.c  \
-			parsing_1.c \
+PARSING	 =  handlers_0.c	\
+			parsing_0.c  	\
+			parsing_1.c 	\
 			utils_chain_0.c \
 			utils_chain_1.c \
 			utils_str_0.c
 
-BUILTINS =  builtins.c	\
-			ft_echo.c	\
-			ft_export.c	\
-			ft_unset.c	\
+BUILTINS =  builtins.c		\
+			ft_echo.c		\
+			ft_cd.c			\
+			ft_export.c		\
+			ft_unset.c		\
 			export_utils.c
 
-SRC		 =	$(PARSING)	\
-			$(ENV)		\
-			$(BUILTINS) \
-			$(FREE) 	\
-			$(EXECUTOR)	\
+SRC		 =	$(PARSING)		\
+			$(ENV)			\
+			$(BUILTINS) 	\
+			$(FREE) 		\
+			$(EXECUTOR)		\
 			main.c
 
 OBJ		 =	$(SRC:%.c=$(OBJ_DIR)%.o)

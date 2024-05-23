@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/23 13:27:33 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:37:40 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	while (1)
 	{
+    	data.pwd = getcwd(NULL, 0);
 		tmp = ft_strjoin(BOLD_GREEN"minishell:"BOLD_BLUE"~", data.pwd);
 		display = ft_strjoin(tmp, NORMAL_WHITE"$ ");
 		line = readline(display);

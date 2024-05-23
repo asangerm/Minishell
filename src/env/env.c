@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/22 16:26:27 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/23 16:55:57 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	ft_initenv(t_data *data, char **env)
 	tmp = NULL;
 	data->env = NULL;
 	data->paths = NULL;
-    data->pwd = getcwd(NULL, 0);
 	while (env[i] != NULL)
 	{
 		tmp = extract_var(env[i]);
