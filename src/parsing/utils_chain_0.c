@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 17:20:34 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:42:57 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_prompt	*new_prompt(char *line)
 	new->args = NULL;
 	new->file_in = NULL;
 	new->file_out = NULL;
+	new->delim = NULL;
 	new->next = NULL;
 	new->var = NULL;
 	return (new);

@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 17:07:27 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/24 18:41:31 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_prompt
 	char			*cmd;
 	t_string		*args;
 	t_string		*file_in;
+	char			*delim;
 	t_string		*file_out;
 	t_list			*var;
 	struct s_prompt	*next;
