@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:54:28 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 01:24:43 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:10:48 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,13 @@ void	tab_display(t_string **tab, char *type)
 		tmp = *tab;
 		while (tmp)
 		{
-			ft_printf("	%s number %d = #%s#\n", type, j, tmp->str);
+			ft_printf("	%s number %d : str=#%s# & type=#%d#\n", type, j, tmp->str, tmp->type);
 			j++;
 			tmp = tmp->next;
 		}
 	}
 	else
-		ft_printf("	%s = >%s<\n", type, NULL);
+		ft_printf("	%s = #%s#\n", type, NULL);
 }
 
 /*
@@ -98,7 +98,6 @@ void	chain_display(t_prompt **prompt)
 		ft_printf("	cmd = #%s#\n", tmp->cmd);
 		tab_display(&(tmp->file_in), "file_in");
 		tab_display(&(tmp->file_out), "file_out");
-		tab_display(&(tmp->double_file_out), "double_file_out");
 		tab_display(&(tmp->args), "args");
 		var_display(&(tmp->var));
 		tmp = tmp->next;

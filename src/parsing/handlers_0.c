@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 01:28:39 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/24 17:50:30 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,27 +18,24 @@
 void	file_out_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
-	int			state;
 	t_string	*new;
+	int			type;
 
-	state = 1;
 	(*i)++;
+	type = 1;
 	if (line[*i] && line[*i] == '>')
-		{
-			state = 2;
-			(*i)++;
-		}
+	{
+		type = 2;
+		(*i)++;
+	}
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
 	if (line[*i] == '\"')
 		word = double_quote(line, i);
 	else
 		word = word_maker(line, i);
-	new = new_str(word);
-	if (state == 1)
-		str_add_back(&(prompt->file_out), new);
-	else
-		str_add_back(&(prompt->double_file_out), new);
+	new = new_str(word, type);
+	str_add_back(&(prompt->file_out), new);
 }
 
 /*
@@ -56,7 +53,7 @@ void	file_in_handler(char *line, t_prompt *prompt, int *i)
 		word = double_quote(line, i);
 	else
 		word = word_maker(line, i);
-	new = new_str(word);
+	new = new_str(word, 0);
 	str_add_back(&(prompt->file_in), new);
 }
 
@@ -85,7 +82,7 @@ void	args_handler(char *line, t_prompt *prompt, int *i)
 		word = word_maker(line, i);
 	if (ft_strlen(word) == 0)
 		return;
-	new = new_str(word);
+	new = new_str(word, 0);
 	str_add_back(&(prompt->args), new);
 }
 
