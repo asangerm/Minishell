@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/22 17:12:47 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/24 01:28:39 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,16 @@
 void	file_out_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
+	int			state;
 	t_string	*new;
 
+	state = 1;
 	(*i)++;
+	if (line[*i] && line[*i] == '>')
+		{
+			state = 2;
+			(*i)++;
+		}
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
 	if (line[*i] == '\"')
@@ -28,7 +35,10 @@ void	file_out_handler(char *line, t_prompt *prompt, int *i)
 	else
 		word = word_maker(line, i);
 	new = new_str(word);
-	str_add_back(&(prompt->file_out), new);
+	if (state == 1)
+		str_add_back(&(prompt->file_out), new);
+	else
+		str_add_back(&(prompt->double_file_out), new);
 }
 
 /*

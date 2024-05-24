@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/23 16:37:40 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/24 01:28:57 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ int	main(int argc, char **argv, char **env)
 		ft_init_nb_cmd(&data, prompt);
 		if (data.nb_cmd >= 1)
 			ft_handle_execution(&data, prompt);
-		// chain_display(&prompt);
+		chain_display(&prompt);
 		free_chain(&prompt);
+		free(data.pwd);
 		// free(line);
 	}
 	ft_free_data(&data);

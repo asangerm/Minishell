@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:54:28 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/22 17:53:56 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/24 01:24:43 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void	chain_display(t_prompt **prompt)
 		ft_printf("	cmd = #%s#\n", tmp->cmd);
 		tab_display(&(tmp->file_in), "file_in");
 		tab_display(&(tmp->file_out), "file_out");
+		tab_display(&(tmp->double_file_out), "double_file_out");
 		tab_display(&(tmp->args), "args");
 		var_display(&(tmp->var));
 		tmp = tmp->next;

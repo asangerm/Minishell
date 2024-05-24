@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/23 16:56:10 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/24 01:16:13 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_prompt
 	t_string		*args;
 	t_string		*file_in;
 	t_string		*file_out;
+	t_string		*double_file_out;
 	t_list			*var;
 	struct s_prompt	*next;
 }	t_prompt;
