@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:43:02 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 17:07:58 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:55:12 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 	lst_new pour un t_string
 */
-t_string	*new_str(char *line, int type)
+t_string	*new_str(char *line, t_bool type)
 {
 	t_string	*new;
 
