@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 18:51:03 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/26 23:04:08 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	file_out_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
 	t_string	*new;
-	int			type;
+	t_bool		type;
 
 	(*i)++;
-	type = 1;
+	type = false;
 	if (line[*i] && line[*i] == '>')
 	{
-		type = 2;
+		type = true;
 		(*i)++;
 	}
 	while (line[*i] && line[*i] == ' ')
@@ -45,14 +45,14 @@ void	file_in_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
 	t_string	*new;
-	int			type;
+	t_bool		type;
 
 	(*i)++;
-	type = 1;
+	type = false;
 	if (line[*i] && line[*i] == '<')
 		{
 			(*i)++;
-			type = 2;
+			type = true;
 		}
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
@@ -60,14 +60,14 @@ void	file_in_handler(char *line, t_prompt *prompt, int *i)
 		word = double_quote(line, i);
 	else
 		word = word_maker(line, i);
-	if (type == 1)
+	if (type == true)
 	{
-		new = new_str(word, 0);
-		return((void)str_add_back(&(prompt->file_in), new));
+		if (prompt->delim)
+			free(prompt->delim);
+		prompt->delim = ft_strdup(word);
 	}
-	if (prompt->delim)
-		free(prompt->delim);
-	prompt->delim = word;
+	new = new_str(word, type);
+	return((void)str_add_back(&(prompt->file_in), new));
 }
 
 /*

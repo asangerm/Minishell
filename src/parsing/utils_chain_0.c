@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 18:42:57 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:57:01 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	free_content(t_prompt *chain)
 		free_str(&(chain->file_in));
 	if (chain->file_out)
 		free_str(&(chain->file_out));
+	if (chain->delim)
+		free(chain->delim);
 	if (chain->line)
 		free(chain->line);
 	if (chain->args)

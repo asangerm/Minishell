@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 18:41:31 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/26 22:55:28 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef enum
 typedef struct s_string
 {
 	char			*str;
-	int				type;
+	t_bool			type;
 	struct s_string	*next;
 }	t_string;
 
@@ -159,7 +159,7 @@ void		tab_display(t_string **tab, char *type);
 void		chain_creator(char *line, t_prompt **prompt);
 
 /* utils_str_0.c */
-t_string	*new_str(char *line, int type);
+t_string	*new_str(char *line, t_bool type);
 void		free_str(t_string **str);
 t_string	*last_str(t_string **str);
 void		str_add_back(t_string **str, t_string *new);
