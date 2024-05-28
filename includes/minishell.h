@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/26 22:55:28 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/28 14:55:12 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 # define BOLD_GREEN "\033[1;32m"
 # define BOLD_BLUE	"\033[1;34m"
 # define NORMAL_WHITE	"\033[0m"
+# define READ_END 0
+# define WRITE_END 1
 
 typedef enum
 {
@@ -69,6 +71,7 @@ typedef struct s_data
 	char	**paths;
 	int		nb_cmd;
 	t_pipe	*pipes;
+	t_pipe	files_redir;
 	t_list	*env;
 	char	*pwd;
 	int		inout_save[2];
@@ -105,7 +108,6 @@ int  	 	ft_exe_builtin(t_data *data, char *cmd, t_string *args);
 /* Executor */
 char		**ft_lst_to_tab(t_list *env);
 void		ft_create_pipes(t_data *data);
-t_pipe		ft_open_files(t_prompt *prompt);
 char		**ft_cmd_to_tab(t_prompt *prompt);
 void		ft_redirection_files(t_pipe files);
 char		*check_path(char *path, char *cmd);
@@ -113,6 +115,7 @@ void		routine_pere(t_data *data, int nb_fork);
 void		ft_redirection_pipes(t_data *data, int i);
 int			ft_exe_cmd(t_data *data, t_prompt *prompt);
 int			ft_executor(t_data *data, t_prompt *prompt);
+t_pipe		ft_open_files(t_data *data, t_prompt *prompt);
 void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
 void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
 void		ft_handle_execution(t_data *data, t_prompt *prompt);
