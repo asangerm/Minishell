@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/28 15:25:43 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/28 22:04:52 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,23 @@ void	aff_str(void *str)
 	ft_printf("%s\n", (char *)str);
 }
 
+void	handle_sigint_cmd(int signal)
+{
+	if (signal == SIGINT)
+		write(1, "\n", 1);
+}
+
+void	handle_sigint(int signal)
+{
+	if (signal == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char		*line;
@@ -45,6 +62,7 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	while (1)
 	{
+		signal(SIGINT, handle_sigint);
     	data.pwd = getcwd(NULL, 0);
 		tmp = ft_strjoin(BOLD_GREEN"minishell:"BOLD_BLUE"~", data.pwd);
 		display = ft_strjoin(tmp, NORMAL_WHITE"$ ");
@@ -55,7 +73,10 @@ int	main(int argc, char **argv, char **env)
 		parse(line, &prompt, &data);
 		ft_init_nb_cmd(&data, prompt);
 		if (data.nb_cmd >= 1)
+		{
+			signal(SIGINT, handle_sigint_cmd);
 			ft_handle_execution(&data, prompt);
+		}
 		// chain_display(&prompt);
 		free_chain(&prompt);
 		free(data.pwd);

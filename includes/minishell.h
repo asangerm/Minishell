@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/28 14:55:12 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/28 21:54:06 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <readline/history.h>
 # include <sys/types.h>
 # include <unistd.h>
+# include <signal.h>
 
 # define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
 # define BOLD_GREEN "\033[1;32m"
