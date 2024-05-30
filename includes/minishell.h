@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/29 20:02:28 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/30 17:15:47 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@
 # include <signal.h>
 
 # define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
+# define CMD_NOT_FOUND "%s: command not found\n"
+# define NO_SUCH_FILE "-minishell: %s: No such file or directory\n"
 # define BOLD_GREEN "\033[1;32m"
 # define BOLD_BLUE	"\033[1;34m"
 # define NORMAL_WHITE	"\033[0m"
 # define READ_END 0
 # define WRITE_END 1
+
+extern int	last_signal;
 
 typedef enum
 {
@@ -76,6 +80,8 @@ typedef struct s_data
 	t_list	*env;
 	char	*pwd;
 	int		inout_save[2];
+	int		exit_status;
+	t_bool	is_exit;
 }	t_data;
 
 /* Parsing directory */
@@ -85,11 +91,12 @@ void		aff_env(t_list *env, int type);
 /* Env directory */
 t_list		*cpy_env(t_data *data);
 t_keyval	*extract_var(char *var);
+char		*kv_to_str(t_keyval *kv);
 t_keyval	*cpy_keyval(t_keyval *kv);
 void		ft_initenv(t_data *data, char **env);
 int			ft_strlen_until(char *str, char stop_char);
 void		add_var_to_env(t_data *data, t_keyval *kv);
-void		ft_handle_var_env(t_data *data, t_prompt *prompt);
+int			ft_handle_var_env(t_data *data, t_prompt *prompt);
 
 /* Builtins directory */
 void		swap(t_list **list);
@@ -113,7 +120,7 @@ void		ft_create_pipes(t_data *data);
 char		**ft_cmd_to_tab(t_prompt *prompt);
 void		ft_redirection_files(t_pipe files);
 char		*check_path(char *path, char *cmd);
-void		routine_pere(t_data *data, int nb_fork);
+int			custom_exit(t_data *data, int status);
 void		ft_redirection_pipes(t_data *data, int i);
 int			ft_exe_cmd(t_data *data, t_prompt *prompt);
 int			ft_executor(t_data *data, t_prompt *prompt);
@@ -121,6 +128,7 @@ t_pipe		ft_open_files(t_data *data, t_prompt *prompt);
 void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
 void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
 void		ft_handle_execution(t_data *data, t_prompt *prompt);
+void		routine_pere(t_data *data, int nb_fork, pid_t last_pid);
 void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
 
 /* Free directory */

@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/29 20:01:42 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/30 17:13:44 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	ft_initenv(t_data *data, char **env)
 	tmp = NULL;
 	data->env = NULL;
 	data->paths = NULL;
+	data->exit_status = 0;
+	data->is_exit = false;
 	data->inout_save[READ_END] = dup(STDIN_FILENO);
 	data->inout_save[WRITE_END] = dup(STDOUT_FILENO);
 	while (env[i] != NULL)
@@ -119,7 +121,7 @@ void	add_var_to_env(t_data *data, t_keyval *kv)
 	}
 }
 
-void	ft_handle_var_env(t_data *data, t_prompt *prompt)
+int	ft_handle_var_env(t_data *data, t_prompt *prompt)
 {
 	t_prompt	*tmp;
 	t_keyval	*kv;
@@ -134,8 +136,9 @@ void	ft_handle_var_env(t_data *data, t_prompt *prompt)
 			kv = cpy_keyval((t_keyval *)var->content);
 			if (check_exp_args(kv) == 1)
 			{
+				builtins_err_handler(CMD_NOT_FOUND, kv_to_str(kv));
 				ft_free_keyval(kv);
-				return ;
+				return (custom_exit(data, 127));
 			}
 			kv->is_exported = ((t_keyval *)var->content)->is_exported;
 			add_var_to_env(data, kv);
@@ -143,4 +146,5 @@ void	ft_handle_var_env(t_data *data, t_prompt *prompt)
 		}
 		tmp = tmp->next;
 	}
+	return (0);
 }

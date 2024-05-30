@@ -51,10 +51,18 @@ void	ft_free_data(t_data *data)
 
 int	builtins_err_handler(char *err_msg, char *variable)
 {
+	int	saved_stdout;
+
+	saved_stdout = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
 	if (variable != NULL)
+	{
 		ft_printf(err_msg, variable);
+		free(variable);
+	}
 	else
 		ft_printf(err_msg);
+	dup2(saved_stdout, STDOUT_FILENO);
 	return (1);
 }
 

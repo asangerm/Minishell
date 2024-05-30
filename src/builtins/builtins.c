@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:41:02 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/23 16:37:46 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/30 15:43:43 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_is_builtin(t_prompt *prompt)
 	if (prompt->cmd == NULL)
 		return (1);
 	else if (ft_strncmp(prompt->cmd, "export", 7) == 0)
+		return (1);
+	else if (ft_strncmp(prompt->cmd, "echo", 5) == 0)
 		return (1);
 	else if (ft_strncmp(prompt->cmd, "unset", 6) == 0)
 		return (1);

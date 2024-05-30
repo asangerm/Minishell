@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:45:15 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/29 19:41:23 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/30 17:22:42 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 int	ft_redir_n_exec(t_data *data, t_prompt *prompt, int i)
 {
-	char	*err;
-
+	last_signal = 0;
 	ft_handle_var_env(data, prompt);
 	if (data->pipes != NULL)
 		ft_redirection_pipes(data, i);
@@ -24,10 +23,8 @@ int	ft_redir_n_exec(t_data *data, t_prompt *prompt, int i)
 	{
 		if (ft_exe_cmd(data, prompt) == 0)
 		{
-			err = ft_strjoin(prompt->cmd, ": command not found\n");
-			write(STDERR_FILENO, err, ft_strlen(err));
-			free(err);
-			return (1);
+			builtins_err_handler(CMD_NOT_FOUND, ft_strdup(prompt->cmd));
+			exit(127);
 		}
 	}
 	return (0);
@@ -67,7 +64,7 @@ int	ft_executor(t_data *data, t_prompt *prompt)
 		cpy_prpt = cpy_prpt->next;
 		i++;
 	}
-	routine_pere(data, data->nb_cmd);
+	routine_pere(data, data->nb_cmd, pid);
 	return (1);
 }
 
@@ -75,10 +72,19 @@ void	ft_handle_execution(t_data *data, t_prompt *prompt)
 {
 	if (data->nb_cmd == 1 && ft_is_builtin(prompt) == 1)
 	{
+		last_signal = 0;
+		data->is_exit = false;
 		ft_handle_var_env(data, prompt);
+		if (last_signal != 0)
+			return ;
 		ft_redirection_files(ft_open_files(data, prompt));
+		if (last_signal != 0)
+			return ;
 		ft_exe_builtin(data, prompt->cmd, prompt->args);
 	}
 	else
+	{
+		data->is_exit = true;
 		ft_executor(data, prompt);
+	}
 }

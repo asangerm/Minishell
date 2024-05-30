@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:04:27 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/28 15:16:06 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/30 17:08:43 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,22 @@ int	ft_heredoc(t_data *data, char *limiter)
 	return (fd[READ_END]);
 }
 
+int	open_last_in(t_data *data, t_string *file_in)
+{
+	int	fd;
+
+	if (file_in->type)
+		fd = ft_heredoc(data, file_in->str);
+	else
+		fd = open(file_in->str, O_RDONLY);
+	if (fd == -1)
+	{
+		builtins_err_handler(NO_SUCH_FILE, ft_strdup(file_in->str));
+		return (custom_exit(data, EXIT_FAILURE));
+	}
+	return (fd);
+}
+
 int	ft_open_file_in(t_data *data, t_string *file_in)
 {
 	int	fd;
@@ -51,22 +67,20 @@ int	ft_open_file_in(t_data *data, t_string *file_in)
 			else
 				fd = open(file_in->str, O_RDONLY);
 			if (fd == -1)
-				exit(EXIT_FAILURE);
+			{
+				builtins_err_handler(NO_SUCH_FILE, ft_strdup(file_in->str));
+				return (custom_exit(data, EXIT_FAILURE));
+			}
 			close(fd);
 			fd = -1;
 			file_in = file_in->next;
 		}
-		if (file_in->type)
-			fd = ft_heredoc(data, file_in->str);
-		else
-			fd = open(file_in->str, O_RDONLY);
-		if (fd == -1)
-			exit(EXIT_FAILURE);
+		fd = open_last_in(data, file_in);
 	}
 	return (fd);
 }
 
-int	ft_open_file_out(t_string *file_out)
+int	ft_open_file_out(t_data *data, t_string *file_out)
 {
 	int	fd;
 
@@ -87,7 +101,7 @@ int	ft_open_file_out(t_string *file_out)
 		else
 			fd = open(file_out->str, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 		if (fd == -1)
-			exit(EXIT_FAILURE);
+			return (custom_exit(data, EXIT_FAILURE));
 	}
 	return (fd);
 }
@@ -97,7 +111,7 @@ t_pipe	ft_open_files(t_data *data, t_prompt *prompt)
 	t_pipe		files;
 
 	files.fd[READ_END] = ft_open_file_in(data, prompt->file_in);
-	files.fd[WRITE_END] = ft_open_file_out(prompt->file_out);
+	files.fd[WRITE_END] = ft_open_file_out(data, prompt->file_out);
 	return (files);
 }
 
@@ -113,6 +127,5 @@ void	ft_redirection_files(t_pipe files)
 		dup2(files.fd[WRITE_END], STDOUT_FILENO);
 		close(files.fd[WRITE_END]);
 	}
-
 }
 

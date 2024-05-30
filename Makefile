@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/23 16:35:48 by nfradet          ###   ########.fr        #
+#    Updated: 2024/05/30 14:19:41 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ FREE	 =	free.c
 EXECUTOR =	pipes.c			\
 			pipes_utils.c	\
 			files_handler.c	\
+			exec_utils.c			\
 			execution.c
 
 ENV		 =	env.c			\
