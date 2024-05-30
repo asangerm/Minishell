@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/28 14:55:12 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/30 14:22:43 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ void		file_out_handler(char *line, t_prompt *prompt, int *i);
 void		lexer(t_prompt **prompt);
 char		*word_maker(char *line, int *i);
 char		*double_quote(char *line, int *i);
+char		*simple_quote(char *line, int *i);
 void		parse(char *line, t_prompt **prompt,t_data *data);
 void		big_if(char *line, t_prompt *prompt, int *i);
 

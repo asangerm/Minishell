@@ -6,11 +6,32 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 01:26:42 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:34:26 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*simple_quote(char *line, int *i)
+{
+	int		j;
+	char	*word;
+
+	(*i)++;
+	j = *i;
+	while (line[j] && line[j] != '\'')
+		j++;
+	word = malloc(sizeof(char) * (j - *i + 1));
+	j = *i;
+	while (line[*i] && line[*i] != '\'')
+	{
+		word[*i - j] = line[*i];
+		(*i)++;
+	}
+	word[*i - j] = '\0';
+	(*i)++;
+	return (word);
+}
 
 /*
 	extrait un char * d'un bout de line entre double quotes
@@ -45,11 +66,11 @@ char	*word_maker(char *line, int *i)
 	int			j;
 
 	j = *i;
-	while (line[j] && line[j] != ' ')
+	while (line[j] && line[j] != ' ' && line[j] != '\"' && line[j] != '\'')
 		j++;
 	word = malloc(sizeof(char) * (j - *i + 1));
 	j = *i;
-	while (line[*i] && line[*i] != ' ')
+	while (line[*i] && line[*i] != ' ' && line[*i] != '\"' && line[*i] != '\'')
 	{
 		word[*i - j] = line[*i];
 		(*i)++;

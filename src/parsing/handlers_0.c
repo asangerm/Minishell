@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/26 23:04:08 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:38:47 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	args_handler(char *line, t_prompt *prompt, int *i)
 
 	if (line[*i] == '\"')
 		word = double_quote(line, i);
+	else if (line[*i] == '\'')
+		word = simple_quote(line, i);
 	else
 		word = word_maker(line, i);
 	if (ft_strlen(word) == 0)
