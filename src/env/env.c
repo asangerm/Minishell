@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/28 15:21:11 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/29 20:01:42 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,11 @@ void	ft_handle_var_env(t_data *data, t_prompt *prompt)
 		while (var != NULL)
 		{
 			kv = cpy_keyval((t_keyval *)var->content);
+			if (check_exp_args(kv) == 1)
+			{
+				ft_free_keyval(kv);
+				return ;
+			}
 			kv->is_exported = ((t_keyval *)var->content)->is_exported;
 			add_var_to_env(data, kv);
 			var = var->next;

@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:45:15 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/28 15:22:24 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/29 19:41:23 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_redir_n_exec(t_data *data, t_prompt *prompt, int i)
 {
+	char	*err;
+
 	ft_handle_var_env(data, prompt);
 	if (data->pipes != NULL)
 		ft_redirection_pipes(data, i);
@@ -22,7 +24,9 @@ int	ft_redir_n_exec(t_data *data, t_prompt *prompt, int i)
 	{
 		if (ft_exe_cmd(data, prompt) == 0)
 		{
-			ft_printf("%s: command not found\n", prompt->cmd);
+			err = ft_strjoin(prompt->cmd, ": command not found\n");
+			write(STDERR_FILENO, err, ft_strlen(err));
+			free(err);
 			return (1);
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/28 21:54:06 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/29 20:02:28 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ char		*cut_plus(char *key);
 int			is_sorted(t_list *lst);
 void		ft_echo(t_string *args);
 t_list		*sort_env(t_data *data);
+int			check_exp_args(t_keyval *kv);
 int			ft_is_builtin(t_prompt *prompt);
 t_list		*get_key(t_data *data, char *key);
 char		*get_value(t_list *env, char *key);
