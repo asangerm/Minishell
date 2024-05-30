@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/30 14:38:47 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:47:12 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	cmd_handler(char *line, t_prompt *prompt, int *i)
 /*
 	Ajoute un t_string args au prompt
 */
-void	args_handler(char *line, t_prompt *prompt, int *i)
+void	args_handler(char *line, t_prompt *prompt, int *i, t_bool space)
 {
 	t_string	*new;
 	char		*word;
@@ -97,7 +97,7 @@ void	args_handler(char *line, t_prompt *prompt, int *i)
 		word = word_maker(line, i);
 	if (ft_strlen(word) == 0)
 		return;
-	new = new_str(word, 0);
+	new = new_str(word, space);
 	str_add_back(&(prompt->args), new);
 }
 

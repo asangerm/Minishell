@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/30 14:22:43 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:46:23 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ void		ft_free_data(t_data *data);
 /* handlers_0.c */
 void		cmd_handler(char *line, t_prompt *prompt, int *i);
 void		var_handler(char *line, t_prompt *prompt, int *i);
-void		args_handler(char *line, t_prompt *prompt, int *i);
+void		args_handler(char *line, t_prompt *prompt, int *i, t_bool space);
 void		file_in_handler(char *line, t_prompt *prompt, int *i);
 void		file_out_handler(char *line, t_prompt *prompt, int *i);
 

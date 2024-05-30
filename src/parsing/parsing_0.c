@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/30 14:34:26 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:01:48 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,9 @@ char	*word_maker(char *line, int *i)
 */
 void	big_if(char *line, t_prompt *prompt, int *i)
 {
+	t_bool	space;
+
+	space = false;
 	while (line[*i])
 	{
 		if (line[*i] == '>')
@@ -95,7 +98,11 @@ void	big_if(char *line, t_prompt *prompt, int *i)
 		else if (!prompt->cmd)
 			cmd_handler(line, prompt, i);
 		else
-			args_handler(line, prompt, i);
+			args_handler(line, prompt, i, space);
+		if (line[*i] && line[*i] == ' ' && prompt->args)
+			space = true;
+		else
+			space = false;
 		while (line[*i] && line[*i] == ' ')
 			(*i)++;
 	}

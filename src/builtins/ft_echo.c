@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:35:49 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/22 15:00:34 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/30 17:00:38 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ void	ft_echo(t_string *args)
 	}
 	while (tmp)
 	{
-		ft_printf("%s", tmp->str);
-		if (tmp->next)
-			ft_printf(" ");
+		if (tmp->type == true)
+			ft_printf(" %s", tmp->str);
+		else
+			ft_printf("%s", tmp->str);
 		tmp = tmp->next;
 	}
 	if (n == 0)
