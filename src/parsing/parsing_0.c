@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/30 17:01:48 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/31 17:07:25 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,18 @@ void	big_if(char *line, t_prompt *prompt, int *i)
 			space = false;
 		while (line[*i] && line[*i] == ' ')
 			(*i)++;
+	}
+}
+
+void	string_tab_display(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		ft_printf("arg %d = #%s#\n", i, args[i]);
+		i++;
 	}
 }
 

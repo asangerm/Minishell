@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:49:32 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/23 18:11:09 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/05/31 15:26:41 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,42 @@ char	*semicolon_handler(char *line, t_data *data, int i, int j)
 	tmp = gimme_str(line, j, i);
 	new_line = ft_strcat(new_line, tmp);
 	return (new_line);
+}
+
+char	**args_cleaner(t_prompt *prompt)
+{
+	char		**args;
+	t_string	*tmp;
+	int			count;
+	char		*word;
+	int			i;
+
+	tmp = prompt->args;
+	count = 0;
+	if (tmp == NULL)
+		return (NULL);
+	else
+		count++;
+	while (tmp)
+	{
+		if (tmp->type == 1)
+			count++;
+		tmp=tmp->next;
+	}
+	args = malloc(sizeof(char *) * (count + 1));
+	tmp = prompt->args;
+	i = 0;
+	while(tmp)
+	{
+		word = NULL;
+		while ((tmp && tmp->type == 0) || (tmp && word == NULL))
+		{
+			word = ft_strcat(word, ft_strdup(tmp->str));
+			tmp = tmp->next;
+		}
+		args[i] = word;
+		i++;
+	}
+	args[i] = (void *)0;
+	return (args);
 }
