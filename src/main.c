@@ -6,7 +6,11 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2024/05/30 17:18:31 by nfradet          ###   ########.fr       */
+=======
+/*   Updated: 2024/05/31 14:03:04 by nfradet          ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +89,12 @@ int	main(int argc, char **argv, char **env)
 		{
 			signal(SIGINT, handle_sigint_cmd);
 			ft_handle_execution(&data, prompt);
+<<<<<<< Updated upstream
 		}
 		// chain_display(&prompt);
+=======
+		chain_display(&prompt);
+>>>>>>> Stashed changes
 		free_chain(&prompt);
 		free(data.pwd);
 		// free(line);
