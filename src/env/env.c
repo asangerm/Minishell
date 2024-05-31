@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/31 16:48:28 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/31 16:49:51 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	ft_initenv(t_data *data, char **env)
 	tmp = NULL;
 	data->env = NULL;
 	data->paths = NULL;
-	data->exit_status = 0;
 	data->is_exit = false;
 	data->inout_save[READ_END] = dup(STDIN_FILENO);
 	data->inout_save[WRITE_END] = dup(STDOUT_FILENO);
