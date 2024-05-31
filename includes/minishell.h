@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/30 17:15:47 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/31 16:48:29 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,24 @@ typedef struct s_data
 	t_list	*env;
 	char	*pwd;
 	int		inout_save[2];
-	int		exit_status;
 	t_bool	is_exit;
+	t_bool	is_in_exec;
 }	t_data;
 
 /* Parsing directory */
 int			ft_maxlen(char *s1, char *s2);
+void		handle_sigint_cmd(int signal);
 void		aff_env(t_list *env, int type);
+
 
 /* Env directory */
 t_list		*cpy_env(t_data *data);
 t_keyval	*extract_var(char *var);
 char		*kv_to_str(t_keyval *kv);
 t_keyval	*cpy_keyval(t_keyval *kv);
+void		update_shlvl(t_data *data);
 void		ft_initenv(t_data *data, char **env);
+void		modify_var(t_keyval *kv, t_list *key);
 int			ft_strlen_until(char *str, char stop_char);
 void		add_var_to_env(t_data *data, t_keyval *kv);
 int			ft_handle_var_env(t_data *data, t_prompt *prompt);

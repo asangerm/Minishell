@@ -6,7 +6,7 @@
 #    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/30 14:19:41 by nfradet          ###   ########.fr        #
+#    Updated: 2024/05/31 14:22:14 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ EXECUTOR =	pipes.c			\
 			execution.c
 
 ENV		 =	env.c			\
+			env_utils_2.c	\
 			utils.c
 
 PARSING	 =  handlers_0.c	\

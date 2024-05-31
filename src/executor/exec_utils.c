@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 14:13:44 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/30 17:19:07 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/31 16:25:06 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	custom_exit(t_data *data, int status)
 {
 	if (data->is_exit == true)
 	{
-		write(STDERR_FILENO, "exit\n", 5);
+		ft_free_data(data);
 		exit(status);
 	}
 	else

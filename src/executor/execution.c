@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:45:15 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/30 17:22:42 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/31 16:17:14 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	ft_executor(t_data *data, t_prompt *prompt)
 
 void	ft_handle_execution(t_data *data, t_prompt *prompt)
 {
+	signal(SIGINT, handle_sigint_cmd);
 	if (data->nb_cmd == 1 && ft_is_builtin(prompt) == 1)
 	{
 		last_signal = 0;

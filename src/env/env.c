@@ -6,21 +6,11 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/30 17:13:44 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/05/31 16:48:28 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ft_strlen_until(char *str, char stop_char)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != stop_char)
-		i++;
-	return (i);
-}
 
 t_keyval	*extract_var(char *var)
 {
@@ -74,6 +64,7 @@ void	ft_initenv(t_data *data, char **env)
 		}
 		i++;
 	}
+	update_shlvl(data);
 }
 
 void	modify_var(t_keyval *kv, t_list *key)
