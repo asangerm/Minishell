@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/31 14:47:48 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:38:30 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ char		*double_quote(char *line, int *i);
 char		*simple_quote(char *line, int *i);
 void		parse(char *line, t_prompt **prompt,t_data *data);
 void		big_if(char *line, t_prompt *prompt, int *i);
+char		*next_arg(char *line, int *i);
 
 /* parsing_1.c */
 char		*ft_strcat(char *str1, char *str2);

@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/31 17:07:25 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:41:08 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,25 @@ char	*double_quote(char *line, int *i)
 	word[*i - j] = '\0';
 	(*i)++;
 	return (word);
+}
+
+char	*next_arg(char *line, int *i)
+{
+	char		*word;
+	char		*str;
+
+	str = NULL;
+	while (line[*i] && line[*i] != ' ')
+	{
+		if (line[*i] == '\"')
+			word = double_quote(line, i);
+		else if (line[*i] == '\'')
+			word = simple_quote(line, i);
+		else
+			word = word_maker(line, i);
+		str = ft_strcat(str, word);
+	}
+	return (str);
 }
 
 /*
