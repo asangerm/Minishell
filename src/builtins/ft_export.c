@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/30 16:04:43 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/01 17:29:19 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	export_arg(t_data *data, char *arg)
 	char		*var;
 	t_list		*key;
 
-	kv = extract_var(arg);
+	kv = extract_var(arg, true);
 	if (check_exp_args(kv) == 1)
 	{
 		if (kv->key)
@@ -94,7 +94,6 @@ int	export_arg(t_data *data, char *arg)
 			free(kv->val);	
 		return (free(kv), 1);
 	}
-	kv->is_exported = true;
 	var = cut_plus(kv->key);
 	key = get_key(data, var);
 	if (key != NULL && ((t_keyval *)key->content)->is_exported == false)

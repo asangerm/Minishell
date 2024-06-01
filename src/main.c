@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/31 16:48:27 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/01 17:05:29 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,15 @@ char	*display_prompt(t_data	*data)
 	display = ft_strjoin(tmp, NORMAL_WHITE"$ ");
 	// update_signal_env(data);
 	line = readline(display);
+	free(tmp);
+	free(display);
 	if (line == NULL)
 	{
 		ft_printf("exit\n");
-		ft_free_data(data);
+		ft_lstclear(&data->env, &ft_free_keyval);
+		// ft_free_data(data);
 		exit(EXIT_SUCCESS);
 	}
-	free(tmp);
-	free(display);
 	add_history(line);
 	return (line);
 }

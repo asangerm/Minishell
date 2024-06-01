@@ -6,13 +6,13 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/31 16:49:51 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/01 17:38:57 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_keyval	*extract_var(char *var)
+t_keyval	*extract_var(char *var, t_bool is_exported)
 {
 	int			i;
 	int			len_until;
@@ -22,6 +22,7 @@ t_keyval	*extract_var(char *var)
 	keyval = malloc(sizeof(t_keyval));
 	keyval->val = NULL;
 	keyval->key = malloc(sizeof(char) * (len_until + 1));
+	keyval->is_exported = is_exported;
 	if (keyval->key == NULL)
 		return (free(keyval), NULL);
 	i = 0;
@@ -31,10 +32,10 @@ t_keyval	*extract_var(char *var)
 		i++;
 	}
 	keyval->key[i] = '\0';
-	if (var[i] && var[i + 1] == '\"')
+	if (var[i] && var[i] == '=')
 		i++;
 	if (ft_strlen(var) - len_until > 0)
-		keyval->val = double_quote(var, &i);
+		keyval->val = ft_strdup(&var[i]);
 	return (keyval);
 }
 
@@ -54,8 +55,7 @@ void	ft_initenv(t_data *data, char **env)
 	data->inout_save[WRITE_END] = dup(STDOUT_FILENO);
 	while (env[i] != NULL)
 	{
-		tmp = extract_var(env[i]);
-		tmp->is_exported = true;
+		tmp = extract_var(env[i], true);
 		if (tmp && tmp->key)
 		{
 			new = ft_lstnew(tmp);
@@ -99,6 +99,7 @@ void	add_var_to_env(t_data *data, t_keyval *kv)
 	key = get_key(data, var);
 	if (key != NULL && kv->val != NULL)
 	{
+		kv->is_exported = ((t_keyval *)key->content)->is_exported;
 		modify_var(kv, key);
 		free(var);
 	}
@@ -130,7 +131,6 @@ int	ft_handle_var_env(t_data *data, t_prompt *prompt)
 				ft_free_keyval(kv);
 				return (custom_exit(data, 127));
 			}
-			kv->is_exported = ((t_keyval *)var->content)->is_exported;
 			add_var_to_env(data, kv);
 			var = var->next;
 		}

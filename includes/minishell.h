@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/31 16:48:29 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/01 17:28:18 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void		aff_env(t_list *env, int type);
 
 /* Env directory */
 t_list		*cpy_env(t_data *data);
-t_keyval	*extract_var(char *var);
 char		*kv_to_str(t_keyval *kv);
 t_keyval	*cpy_keyval(t_keyval *kv);
 void		update_shlvl(t_data *data);
@@ -100,6 +99,7 @@ void		ft_initenv(t_data *data, char **env);
 void		modify_var(t_keyval *kv, t_list *key);
 int			ft_strlen_until(char *str, char stop_char);
 void		add_var_to_env(t_data *data, t_keyval *kv);
+t_keyval	*extract_var(char *var, t_bool is_exported);
 int			ft_handle_var_env(t_data *data, t_prompt *prompt);
 
 /* Builtins directory */

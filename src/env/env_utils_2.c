@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:48:22 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/31 14:20:58 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/01 17:28:32 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	update_shlvl(t_data *data)
 	{
 		kv = (t_keyval *)key->content;
 		tmp = ft_atoi(kv->val);
-		if (ft_all_digit(kv->val) != 1)
+		if (kv->val == NULL || ft_all_digit(kv->val) != 1)
 			new_val = 1;
 		else if (tmp < 0)
 			new_val = 0;
@@ -59,8 +59,9 @@ void	update_shlvl(t_data *data)
 			new_val = tmp + 1;
 		val_tmp = kv->val;
 		kv->val = ft_itoa(new_val);
-		free(val_tmp);
+		if (val_tmp)
+			free(val_tmp);
 	}
 	else
-		add_var_to_env(data, extract_var("SHLVL=1"));
+		add_var_to_env(data, extract_var("SHLVL=1", true));
 }
