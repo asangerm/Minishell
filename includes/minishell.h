@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/01 17:28:18 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/01 17:45:33 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ void		ft_free_data(t_data *data);
 /* handlers_0.c */
 void		cmd_handler(char *line, t_prompt *prompt, int *i);
 void		var_handler(char *line, t_prompt *prompt, int *i);
-void		args_handler(char *line, t_prompt *prompt, int *i);
+void		args_handler(char *line, t_prompt *prompt, int *i, t_bool space);
 void		file_in_handler(char *line, t_prompt *prompt, int *i);
 void		file_out_handler(char *line, t_prompt *prompt, int *i);
 
@@ -152,14 +152,17 @@ void		file_out_handler(char *line, t_prompt *prompt, int *i);
 void		lexer(t_prompt **prompt);
 char		*word_maker(char *line, int *i);
 char		*double_quote(char *line, int *i);
+char		*simple_quote(char *line, int *i);
 void		parse(char *line, t_prompt **prompt,t_data *data);
 void		big_if(char *line, t_prompt *prompt, int *i);
+char		*next_arg(char *line, int *i);
 
 /* parsing_1.c */
-char	*ft_strcat(char *str1, char *str2);
-char	*gimme_str(char *line, int j, int i);
-char	*semicolon_handler(char *line, t_data *data, int i, int j);
-char	*word_env_check(char *line, int *i, t_data *data);
+char		*ft_strcat(char *str1, char *str2);
+char		*gimme_str(char *line, int j, int i);
+char		*semicolon_handler(char *line, t_data *data, int i, int j);
+char		*word_env_check(char *line, int *i, t_data *data);
+char		**args_cleaner(t_prompt *prompt);
 
 /* utils_chain_0.c */
 t_prompt	*new_prompt(char *line);

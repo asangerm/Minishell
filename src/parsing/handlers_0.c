@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/01 17:40:25 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/01 17:46:16 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ void	file_out_handler(char *line, t_prompt *prompt, int *i)
 	}
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
-	if (line[*i] == '\"')
-		word = double_quote(line, i);
-	else
-		word = word_maker(line, i);
+	word = next_arg(line, i);
 	new = new_str(word, type);
 	str_add_back(&(prompt->file_out), new);
 }
@@ -56,10 +53,7 @@ void	file_in_handler(char *line, t_prompt *prompt, int *i)
 		}
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
-	if (line[*i] == '\"')
-		word = double_quote(line, i);
-	else
-		word = word_maker(line, i);
+	word = next_arg(line, i);
 	if (type == true)
 	{
 		if (prompt->delim)
@@ -75,27 +69,24 @@ void	file_in_handler(char *line, t_prompt *prompt, int *i)
 */
 void	cmd_handler(char *line, t_prompt *prompt, int *i)
 {
-	if (line[*i] == '\"')
-		prompt->cmd = double_quote(line, i);
-	else
-		prompt->cmd = word_maker(line, i);
+	char	*word;
+
+	word = next_arg(line, i);
+	prompt->cmd = word;
 }
 
 /*
 	Ajoute un t_string args au prompt
 */
-void	args_handler(char *line, t_prompt *prompt, int *i)
+void	args_handler(char *line, t_prompt *prompt, int *i, t_bool space)
 {
 	t_string	*new;
 	char		*word;
 
-	if (line[*i] == '\"')
-		word = double_quote(line, i);
-	else
-		word = word_maker(line, i);
+	word = next_arg(line, i);
 	if (ft_strlen(word) == 0)
 		return;
-	new = new_str(word, 0);
+	new = new_str(word, space);
 	str_add_back(&(prompt->args), new);
 }
 
@@ -106,10 +97,7 @@ void	var_handler(char *line, t_prompt *prompt, int *i)
 	t_list		*new;
 	t_keyval	*kv;
 
-	if (line[*i] == '\"')
-		word = double_quote(line, i);
-	else
-		word = word_maker(line, i);
+	word = next_arg(line, i);
 	splitted = split_var(word, 0, 0);
 	free(word);
 	kv = malloc(sizeof(t_keyval));

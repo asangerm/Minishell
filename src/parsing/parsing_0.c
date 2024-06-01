@@ -6,11 +6,32 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 01:26:42 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:41:08 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*simple_quote(char *line, int *i)
+{
+	int		j;
+	char	*word;
+
+	(*i)++;
+	j = *i;
+	while (line[j] && line[j] != '\'')
+		j++;
+	word = malloc(sizeof(char) * (j - *i + 1));
+	j = *i;
+	while (line[*i] && line[*i] != '\'')
+	{
+		word[*i - j] = line[*i];
+		(*i)++;
+	}
+	word[*i - j] = '\0';
+	(*i)++;
+	return (word);
+}
 
 /*
 	extrait un char * d'un bout de line entre double quotes
@@ -36,6 +57,25 @@ char	*double_quote(char *line, int *i)
 	return (word);
 }
 
+char	*next_arg(char *line, int *i)
+{
+	char		*word;
+	char		*str;
+
+	str = NULL;
+	while (line[*i] && line[*i] != ' ')
+	{
+		if (line[*i] == '\"')
+			word = double_quote(line, i);
+		else if (line[*i] == '\'')
+			word = simple_quote(line, i);
+		else
+			word = word_maker(line, i);
+		str = ft_strcat(str, word);
+	}
+	return (str);
+}
+
 /*
 	extrait un char * d'un bout de line entre deux espaces
 */
@@ -45,11 +85,11 @@ char	*word_maker(char *line, int *i)
 	int			j;
 
 	j = *i;
-	while (line[j] && line[j] != ' ')
+	while (line[j] && line[j] != ' ' && line[j] != '\"' && line[j] != '\'')
 		j++;
 	word = malloc(sizeof(char) * (j - *i + 1));
 	j = *i;
-	while (line[*i] && line[*i] != ' ')
+	while (line[*i] && line[*i] != ' ' && line[*i] != '\"' && line[*i] != '\'')
 	{
 		word[*i - j] = line[*i];
 		(*i)++;
@@ -63,6 +103,9 @@ char	*word_maker(char *line, int *i)
 */
 void	big_if(char *line, t_prompt *prompt, int *i)
 {
+	t_bool	space;
+
+	space = false;
 	while (line[*i])
 	{
 		if (line[*i] == '>')
@@ -74,9 +117,25 @@ void	big_if(char *line, t_prompt *prompt, int *i)
 		else if (!prompt->cmd)
 			cmd_handler(line, prompt, i);
 		else
-			args_handler(line, prompt, i);
+			args_handler(line, prompt, i, space);
+		if (line[*i] && line[*i] == ' ' && prompt->args)
+			space = true;
+		else
+			space = false;
 		while (line[*i] && line[*i] == ' ')
 			(*i)++;
+	}
+}
+
+void	string_tab_display(char **args)
+{
+	int	i;
+
+	i = 0;
+	while (args[i])
+	{
+		ft_printf("arg %d = #%s#\n", i, args[i]);
+		i++;
 	}
 }
 
