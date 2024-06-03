@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/03 16:09:37 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/03 19:44:42 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,21 +52,6 @@ void	handle_sigint(int signal)
 	}
 }
 
-// void	update_signal_env(t_data *data)
-// {
-// 	t_keyval	*kv;
-// 	t_list		*node;
-
-// 	kv = extract_var("?");
-// 	kv->val = ft_itoa(last_signal);
-// 	kv->is_exported = false;
-// 	node = get_key(data, "?");
-// 	if (node == NULL)
-// 		add_var_to_env(data, kv);
-// 	else
-// 		modify_var(kv, node);
-// }
-
 char	*display_prompt(t_data	*data)
 {
 	char	*display;
@@ -75,16 +60,15 @@ char	*display_prompt(t_data	*data)
 
 	tmp = ft_strjoin(BOLD_GREEN"minishell:"BOLD_BLUE"~", data->pwd);
 	display = ft_strjoin(tmp, NORMAL_WHITE"$ ");
-	// update_signal_env(data);
 	line = readline(display);
 	free(tmp);
 	free(display);
 	if (line == NULL)
 	{
 		ft_printf("exit\n");
-		ft_lstclear(&data->env, &ft_free_keyval);
+		// ft_lstclear(&data->env, &ft_free_keyval);
 		// ft_free_data(data);
-		exit(EXIT_SUCCESS);
+		custom_exit(data, EXIT_SUCCESS);
 	}
 	add_history(line);
 	return (line);

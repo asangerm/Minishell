@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:04:27 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/03 18:52:06 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/03 19:40:42 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,22 +88,19 @@ int	ft_open_file_in(t_data *data, t_string *file_in)
 	fd = -1;
 	if (file_in != NULL)
 	{
-		while (file_in->next)
+		while (file_in->next && last_signal != 134)
 		{
-			if (last_signal != 134)
+			if (file_in->type)
+				fd = ft_heredoc(data, file_in->str);
+			else
+				fd = open(file_in->str, O_RDONLY);
+			if (fd == -1)
 			{
-				if (file_in->type)
-					fd = ft_heredoc(data, file_in->str);
-				else
-					fd = open(file_in->str, O_RDONLY);
-				if (fd == -1)
-				{
-					builtins_err_handler(NO_SUCH_FILE, ft_strdup(file_in->str));
-					return (custom_exit(data, EXIT_FAILURE));
-				}
-				close(fd);
-				fd = -1;
+				builtins_err_handler(NO_SUCH_FILE, ft_strdup(file_in->str));
+				return (custom_exit(data, EXIT_FAILURE));
 			}
+			close(fd);
+			fd = -1;
 			file_in = file_in->next;
 		}
 		fd = open_last_in(data, file_in);

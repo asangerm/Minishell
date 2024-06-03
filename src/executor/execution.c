@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:45:15 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/03 18:29:46 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/03 19:33:43 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_redir_n_exec(t_data *data, t_prompt *prompt, int i)
 		if (ft_exe_cmd(data, prompt) == 0)
 		{
 			builtins_err_handler(CMD_NOT_FOUND, ft_strdup(prompt->cmd));
-			exit(127);
+			custom_exit(data, 127);
 		}
 	}
 	return (0);
@@ -59,9 +59,8 @@ int	ft_executor(t_data *data, t_prompt *prompt)
 		else if (pid == 0)
 		{
 			ft_redir_n_exec(data, cpy_prpt, i);
-			ft_free_data(data);
 			free_chain(&prompt);
-			exit(EXIT_SUCCESS);
+			custom_exit(data, EXIT_SUCCESS);
 		}
 		cpy_prpt = cpy_prpt->next;
 		i++;

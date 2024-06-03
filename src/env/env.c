@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/01 17:38:57 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/03 19:24:25 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_initenv(t_data *data, char **env)
 		}
 		i++;
 	}
-	update_shlvl(data);
+	// update_shlvl(data);
 }
 
 void	modify_var(t_keyval *kv, t_list *key)
