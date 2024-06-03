@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
+#    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/31 14:22:14 by nfradet          ###   ########.fr        #
+#    Updated: 2024/06/03 17:07:12 by asangerm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ ENV		 =	env.c			\
 			utils.c
 
 PARSING	 =  handlers_0.c	\
+			extracters_0.c	\
 			parsing_0.c  	\
 			parsing_1.c 	\
 			utils_chain_0.c \
