@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:45:15 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/31 16:17:14 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:29:46 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	ft_redir_n_exec(t_data *data, t_prompt *prompt, int i)
 {
+	if (last_signal == 134)
+		exit(130);
 	last_signal = 0;
 	ft_handle_var_env(data, prompt);
 	if (data->pipes != NULL)
@@ -76,9 +78,13 @@ void	ft_handle_execution(t_data *data, t_prompt *prompt)
 		last_signal = 0;
 		data->is_exit = false;
 		ft_handle_var_env(data, prompt);
-		if (last_signal != 0)
-			return ;
 		ft_redirection_files(ft_open_files(data, prompt));
+		signal(SIGINT, handle_sigint_cmd);
+		if (last_signal == 134)
+		{
+			last_signal = 130;
+			return ;
+		}
 		if (last_signal != 0)
 			return ;
 		ft_exe_builtin(data, prompt->cmd, prompt->args);

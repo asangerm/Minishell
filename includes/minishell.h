@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/01 17:45:33 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/03 18:34:24 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <signal.h>
 
 # define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
+# define HD_ERR "minishell: warning: here-document (wanted `%s')\n"
 # define CMD_NOT_FOUND "%s: command not found\n"
 # define NO_SUCH_FILE "-minishell: %s: No such file or directory\n"
 # define BOLD_GREEN "\033[1;32m"
