@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/03 19:44:42 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:29:05 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,8 @@ char	*display_prompt(t_data	*data)
 	if (line == NULL)
 	{
 		ft_printf("exit\n");
-		// ft_lstclear(&data->env, &ft_free_keyval);
-		// ft_free_data(data);
-		custom_exit(data, EXIT_SUCCESS);
+		ft_free_data(data);
+		exit(EXIT_SUCCESS);
 	}
 	add_history(line);
 	return (line);
@@ -77,25 +76,24 @@ char	*display_prompt(t_data	*data)
 int	main(int argc, char **argv, char **env)
 {
 	char				*line;
-	t_prompt			*prompt;
 	t_data				data;
 
 	(void)argc;
 	(void)argv;
-	prompt = NULL;
 	ft_initenv(&data, env);
 	rl_clear_history();
 	while (1)
 	{
 		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
     	data.pwd = getcwd(NULL, 0);
 		line = display_prompt(&data);
-		parse(line, &prompt, &data);
-		ft_init_nb_cmd(&data, prompt);
+		parse(line, &data.prompt, &data);
+		ft_init_nb_cmd(&data, data.prompt);
 		if (data.nb_cmd >= 1)
-			ft_handle_execution(&data, prompt);
+			ft_handle_execution(&data);
 		// chain_display(&prompt);
-		free_chain(&prompt);
+		free_chain(&(data.prompt));
 		free(data.pwd);
 		dup2(data.inout_save[READ_END], STDIN_FILENO);
 		dup2(data.inout_save[WRITE_END], STDOUT_FILENO);

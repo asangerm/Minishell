@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/01 17:29:19 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:14:03 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	ft_export(t_data *data, t_string *args)
 		{
 			if (export_arg(data, i->str) == 1)
 			{
-				builtins_err_handler(EXPORT_ERR, ft_strdup(i->str));
+				aff_err(EXPORT_ERR, ft_strdup(i->str));
 				custom_exit(data, 1);
 			}
 			i = i->next;

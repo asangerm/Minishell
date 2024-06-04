@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/03 19:24:25 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:30:58 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	ft_initenv(t_data *data, char **env)
 	new = NULL;
 	tmp = NULL;
 	data->env = NULL;
+	data->prompt = NULL;
 	data->paths = NULL;
 	data->is_exit = false;
+	data->pipes = NULL;
 	data->inout_save[READ_END] = dup(STDIN_FILENO);
 	data->inout_save[WRITE_END] = dup(STDOUT_FILENO);
 	while (env[i] != NULL)
@@ -63,7 +65,7 @@ void	ft_initenv(t_data *data, char **env)
 		}
 		i++;
 	}
-	// update_shlvl(data);
+	update_shlvl(data);
 }
 
 void	modify_var(t_keyval *kv, t_list *key)
@@ -127,7 +129,7 @@ int	ft_handle_var_env(t_data *data, t_prompt *prompt)
 			kv = cpy_keyval((t_keyval *)var->content);
 			if (check_exp_args(kv) == 1)
 			{
-				builtins_err_handler(CMD_NOT_FOUND, kv_to_str(kv));
+				aff_err(CMD_NOT_FOUND, kv_to_str(kv));
 				ft_free_keyval(kv);
 				return (custom_exit(data, 127));
 			}

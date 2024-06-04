@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/03 18:34:24 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:27:19 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,16 @@ typedef struct s_pipe
 
 typedef struct s_data
 {
-	char	**paths;
-	int		nb_cmd;
-	t_pipe	*pipes;
-	t_pipe	files_redir;
-	t_list	*env;
-	char	*pwd;
-	int		inout_save[2];
-	t_bool	is_exit;
-	t_bool	is_in_exec;
+	t_prompt	*prompt;
+	char		**paths;
+	int			nb_cmd;
+	t_pipe		*pipes;
+	t_pipe		files_redir;
+	t_list		*env;
+	char		*pwd;
+	int			inout_save[2];
+	t_bool		is_exit;
+	t_bool		is_in_exec;
 }	t_data;
 
 /* Parsing directory */
@@ -116,23 +117,23 @@ char		*get_value(t_list *env, char *key);
 void		ft_cd(t_data *data, t_string *args);
 void		ft_unset(t_data *data, t_string *args);
 void		ft_export(t_data *data, t_string *args);
-int			builtins_err_handler(char *err_msg, char *variable);
+int			aff_err(char *err_msg, char *variable);
 int  	 	ft_exe_builtin(t_data *data, char *cmd, t_string *args);
 
 /* Executor */
-char		**ft_lst_to_tab(t_list *env);
+int			ft_executor(t_data *data);
+char		**lst_to_tab(t_list *env);
 void		ft_create_pipes(t_data *data);
-char		**ft_cmd_to_tab(t_prompt *prompt);
+char		**cmd_to_tab(t_prompt *prompt);
+void		ft_handle_execution(t_data *data);
 void		ft_redirection_files(t_pipe files);
 char		*check_path(char *path, char *cmd);
 int			custom_exit(t_data *data, int status);
 void		ft_redirection_pipes(t_data *data, int i);
 int			ft_exe_cmd(t_data *data, t_prompt *prompt);
-int			ft_executor(t_data *data, t_prompt *prompt);
 t_pipe		ft_open_files(t_data *data, t_prompt *prompt);
 void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
 void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
-void		ft_handle_execution(t_data *data, t_prompt *prompt);
 void		routine_pere(t_data *data, int nb_fork, pid_t last_pid);
 void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
 

@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:04:27 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/03 19:40:42 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:34:01 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	is_hd_input_ok(char *line, char *limiter)
 		return (1);
 	if (line == NULL)
 	{
-		builtins_err_handler(HD_ERR, ft_strdup(limiter));
+		aff_err(HD_ERR, ft_strdup(limiter));
 		return (1);
 	}
 	else if (strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
@@ -57,6 +57,7 @@ int	ft_heredoc(t_data *data, char *limiter)
 		ft_putstr_fd("\n", fd[WRITE_END]);
 		free(line);
 	}
+	signal(SIGINT, handle_sigint_cmd);
 	close(fd[WRITE_END]);
 	return (fd[READ_END]);
 }
@@ -74,7 +75,7 @@ int	open_last_in(t_data *data, t_string *file_in)
 			fd = open(file_in->str, O_RDONLY);
 		if (fd == -1)
 		{
-			builtins_err_handler(NO_SUCH_FILE, ft_strdup(file_in->str));
+			aff_err(NO_SUCH_FILE, ft_strdup(file_in->str));
 			return (custom_exit(data, EXIT_FAILURE));
 		}
 	}
@@ -96,7 +97,7 @@ int	ft_open_file_in(t_data *data, t_string *file_in)
 				fd = open(file_in->str, O_RDONLY);
 			if (fd == -1)
 			{
-				builtins_err_handler(NO_SUCH_FILE, ft_strdup(file_in->str));
+				aff_err(NO_SUCH_FILE, ft_strdup(file_in->str));
 				return (custom_exit(data, EXIT_FAILURE));
 			}
 			close(fd);

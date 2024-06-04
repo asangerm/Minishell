@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:34:55 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/30 17:26:13 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:44:49 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ char	*check_path(char *path, char *cmd)
 	return (NULL);
 }
 
-char	**ft_lst_to_tab(t_list *env)
+char	**lst_to_tab(t_list *env)
 {
 	char	*tmp;
 	char	**tab;
@@ -48,7 +48,7 @@ char	**ft_lst_to_tab(t_list *env)
 	return (tab);
 }
 
-char	**ft_cmd_to_tab(t_prompt *prompt)
+char	**cmd_to_tab(t_prompt *prompt)
 {
 	t_string	*args;
 	char		**tab;
@@ -75,16 +75,13 @@ void	routine_pere(t_data *data, int nb_fork, pid_t last_pid)
 
 	close_pipes_excpt(data->pipes, nb_fork - 1, -1, -1);
 	free(data->pipes);
+	data->pipes = NULL;
 	i = 0;
 	waitpid(last_pid, &status, 0);
 	if (WIFEXITED(status))
-	{
 		last_signal = WEXITSTATUS(status);
-	}
 	else if (WIFSIGNALED(status))
-	{
 		last_signal = 128 + WTERMSIG(status);
-	}
 	while (i < nb_fork - 1)
 	{
 		waitpid(-1, &status, 0);

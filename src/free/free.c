@@ -42,6 +42,7 @@ void	ft_free_tab(char **tab)
 
 void	ft_free_data(t_data *data)
 {
+	free_chain(&(data->prompt));
 	if (data->pipes != NULL)
 		free(data->pipes);
 	ft_free_tab(data->paths);
@@ -49,7 +50,7 @@ void	ft_free_data(t_data *data)
 	free(data->pwd);
 }
 
-int	builtins_err_handler(char *err_msg, char *variable)
+int	aff_err(char *err_msg, char *variable)
 {
 	int	saved_stdout;
 

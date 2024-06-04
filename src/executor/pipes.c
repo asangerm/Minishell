@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/30 13:42:43 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:25:42 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,10 @@ char	*get_path(t_data *data, char *cmd)
 int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 {
 	char	**cmd;
-	char	**env;
 	char	*path;
 	t_list	*tmp;
 
-	data->paths = NULL;
-	env = ft_lst_to_tab(data->env);
-	cmd = ft_cmd_to_tab(prompt);
+	cmd = cmd_to_tab(prompt);
 	tmp = get_key(data, "PATH");
 	if (tmp != NULL)
 	{
@@ -112,10 +109,9 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 	path = get_path(data, prompt->cmd);
 	if (path != NULL)
 	{
-		if (execve(path, cmd, env) == -1)
-			exit(1);
+		if (execve(path, cmd, lst_to_tab(data->env)) == -1)
+			custom_exit(data, 1);
 	}
 	ft_free_tab(cmd);
-	ft_free_tab(env);
 	return (0);
 }
