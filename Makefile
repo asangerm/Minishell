@@ -6,7 +6,7 @@
 #    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/06/03 17:07:12 by asangerm         ###   ########.fr        #
+#    Updated: 2024/06/04 17:27:07 by asangerm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,7 @@ PARSING	 =  handlers_0.c	\
 BUILTINS =  builtins.c		\
 			ft_echo.c		\
 			ft_cd.c			\
+			ft_exit.c		\
 			ft_export.c		\
 			ft_unset.c		\
 			export_utils.c
