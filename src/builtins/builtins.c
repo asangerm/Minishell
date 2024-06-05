@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 19:41:02 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/04 17:13:51 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:48:43 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_is_builtin(t_prompt *prompt)
 		return (1);
 	else if (ft_strncmp(prompt->cmd, "cd", 3) == 0)
 		return (1);
+	else if (ft_strncmp(prompt->cmd, "exit", 5) == 0)
+		return (1);
 	return (0);
 }
 
@@ -47,5 +49,7 @@ int ft_exe_builtin(t_data *data, char *cmd, t_string *args)
         return (ft_echo(args), 1);
 	else if (ft_strncmp(cmd, "cd", ft_maxlen(cmd, "cd")) == 0)
         return (ft_cd(data, args), 1);
+	else if (ft_strncmp(cmd, "exit", ft_maxlen(cmd, "exit")) == 0)
+        return (ft_exit(data, args), 1);
     return (0);
 }

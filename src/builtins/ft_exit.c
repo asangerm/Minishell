@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:08:22 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/04 17:26:41 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/05 16:10:26 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,23 @@ int	ft_strisdigit(char *str)
 
 void	ft_exit(t_data *data, t_string *args)
 {
+	if (data->is_exit == false)
+		ft_putstr_fd("exit\n", 2);
 	data->is_exit = true;
-	ft_putstr_fd("exit ", 2);
-	if (args->str && args->next->str)
+	if (args && args->next)
 	{
 		last_signal = 1;
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 	}
-	else if (args->str && ft_strisdigit(args->str) == 0)
+	else if (args && ft_strisdigit(args->str) == 0)
 	{
-		last_signal = 255;
 		ft_putstr_fd("minishell: exit: ", 2);
 		ft_putstr_fd(args->str, 2);
 		ft_putendl_fd(": numeric argument required", 2);
+		custom_exit(data, 2);
 	}
-	else if (args->str)
-		last_signal = ft_atoi(args->str);
+	else if (args)
+		custom_exit(data, ft_atoi(args->str));
 	else
-		last_signal = 0;
+		custom_exit(data, 0);
 }

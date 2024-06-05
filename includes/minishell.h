@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/05 15:42:42 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:49:03 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ int			ft_is_builtin(t_prompt *prompt);
 t_list		*get_key(t_data *data, char *key);
 char		*get_value(t_list *env, char *key);
 void		ft_cd(t_data *data, t_string *args);
+void		ft_exit(t_data *data, t_string *args);
 void		ft_unset(t_data *data, t_string *args);
 void		ft_export(t_data *data, t_string *args);
 int			aff_err(char *err_msg, char *variable);
