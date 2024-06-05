@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/05 15:49:03 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:45:07 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_indexes
 typedef struct s_data
 {
 	t_prompt	*prompt;
+	pid_t		ppid;
 	char		**paths;
 	int			nb_cmd;
 	t_pipe		*pipes;
@@ -153,6 +154,7 @@ void		ft_free_data(t_data *data);
 char		*word_maker(char *line, int *i);
 char		*double_quote(char *line, int *i);
 char		*simple_quote(char *line, int *i);
+char		*word_maker_env(char *line, int *i);
 
 /* handlers_0.c */
 void		cmd_handler(char *line, t_prompt *prompt, int *i);

@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/04 18:30:58 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:45:41 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,10 @@ void	ft_initenv(t_data *data, char **env)
 	t_list		*new;
 
 	i = 0;
+	
 	new = NULL;
 	tmp = NULL;
+	data->ppid = getppid();
 	data->env = NULL;
 	data->prompt = NULL;
 	data->paths = NULL;
