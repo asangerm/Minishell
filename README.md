@@ -55,6 +55,24 @@ Le projet Minishell est développé par asangerm et nfradet, étudiants à l'éc
 - Les fonctions bonus doivent être dans des fichiers séparés avec un Makefile qui inclut une règle bonus.
 - Utilisation autorisée de la bibliothèque libft.
 
+## Supprimer les leaks de readline
+
+Créez une fichier `valgrind.supp' avec le contenu suivant :
+
+```
+{
+   ignore_libreadline_leaks
+   Memcheck:Leak
+   ...
+   obj:*/libreadline.so.*
+}
+```
+
+Ensuite éxecutez le programme de la sorte :
+```sh
+valgrind --suppressions=valgrind.supp ./minishell
+```
+
 ## Contact
 
 Pour toute question ou problème, vous pouvez nous contacter :
