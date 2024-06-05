@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
+#    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/31 14:22:14 by nfradet          ###   ########.fr        #
+#    Updated: 2024/06/04 17:27:07 by asangerm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ ENV		 =	env.c			\
 			utils.c
 
 PARSING	 =  handlers_0.c	\
+			extracters_0.c	\
 			parsing_0.c  	\
 			parsing_1.c 	\
 			utils_chain_0.c \
@@ -46,6 +47,7 @@ PARSING	 =  handlers_0.c	\
 BUILTINS =  builtins.c		\
 			ft_echo.c		\
 			ft_cd.c			\
+			ft_exit.c		\
 			ft_export.c		\
 			ft_unset.c		\
 			export_utils.c

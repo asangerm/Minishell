@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/01 17:46:16 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/03 17:38:56 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	file_in_handler(char *line, t_prompt *prompt, int *i)
 	(*i)++;
 	type = false;
 	if (line[*i] && line[*i] == '<')
-		{
-			(*i)++;
-			type = true;
-		}
+	{
+		(*i)++;
+		type = true;
+	}
 	while (line[*i] && line[*i] == ' ')
 		(*i)++;
 	word = next_arg(line, i);
@@ -61,7 +61,7 @@ void	file_in_handler(char *line, t_prompt *prompt, int *i)
 		prompt->delim = ft_strdup(word);
 	}
 	new = new_str(word, type);
-	return((void)str_add_back(&(prompt->file_in), new));
+	return ((void)str_add_back(&(prompt->file_in), new));
 }
 
 /*
@@ -85,7 +85,7 @@ void	args_handler(char *line, t_prompt *prompt, int *i, t_bool space)
 
 	word = next_arg(line, i);
 	if (ft_strlen(word) == 0)
-		return;
+		return ;
 	new = new_str(word, space);
 	str_add_back(&(prompt->args), new);
 }

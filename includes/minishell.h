@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/04 18:27:19 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/05 15:42:42 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 
 extern int	last_signal;
 
-typedef enum
+typedef enum s_bool
 {
 	true = 1,
 	false = 0
@@ -48,7 +48,7 @@ typedef struct s_string
 	struct s_string	*next;
 }	t_string;
 
-typedef	struct s_keyval
+typedef struct s_keyval
 {
 	char	*key;
 	char	*val;
@@ -72,6 +72,12 @@ typedef struct s_pipe
 	int	fd[2];
 }	t_pipe;
 
+typedef struct s_indexes
+{
+	int	i;
+	int	j;
+}	t_indexes;
+
 typedef struct s_data
 {
 	t_prompt	*prompt;
@@ -90,7 +96,6 @@ typedef struct s_data
 int			ft_maxlen(char *s1, char *s2);
 void		handle_sigint_cmd(int signal);
 void		aff_env(t_list *env, int type);
-
 
 /* Env directory */
 t_list		*cpy_env(t_data *data);
@@ -132,7 +137,7 @@ int			custom_exit(t_data *data, int status);
 void		ft_redirection_pipes(t_data *data, int i);
 int			ft_exe_cmd(t_data *data, t_prompt *prompt);
 t_pipe		ft_open_files(t_data *data, t_prompt *prompt);
-void		ft_init_nb_cmd(t_data *data, t_prompt * prompt);
+void		ft_init_nb_cmd(t_data *data, t_prompt *prompt);
 void		ft_exec_no_pipe(t_data *data, t_prompt *prompt);
 void		routine_pere(t_data *data, int nb_fork, pid_t last_pid);
 void		close_pipes_excpt(t_pipe *pipes, int nb_pipes, int e1, int e2);
@@ -143,6 +148,11 @@ void		ft_free_keyval(void *kv);
 void		var_display(t_list **var);
 void		ft_free_data(t_data *data);
 
+/* extracter_0.c */
+char		*word_maker(char *line, int *i);
+char		*double_quote(char *line, int *i);
+char		*simple_quote(char *line, int *i);
+
 /* handlers_0.c */
 void		cmd_handler(char *line, t_prompt *prompt, int *i);
 void		var_handler(char *line, t_prompt *prompt, int *i);
@@ -152,19 +162,18 @@ void		file_out_handler(char *line, t_prompt *prompt, int *i);
 
 /* parsing_0.c */
 void		lexer(t_prompt **prompt);
-char		*word_maker(char *line, int *i);
-char		*double_quote(char *line, int *i);
-char		*simple_quote(char *line, int *i);
-void		parse(char *line, t_prompt **prompt,t_data *data);
-void		big_if(char *line, t_prompt *prompt, int *i);
 char		*next_arg(char *line, int *i);
+void		string_tab_display(char **args);
+void		big_if(char *line, t_prompt *prompt, int *i);
+void		parse(char *line, t_prompt **prompt, t_data *data);
 
 /* parsing_1.c */
 char		*ft_strcat(char *str1, char *str2);
 char		*gimme_str(char *line, int j, int i);
-char		*semicolon_handler(char *line, t_data *data, int i, int j);
 char		*word_env_check(char *line, int *i, t_data *data);
-char		**args_cleaner(t_prompt *prompt);
+char		*semicolon_handler(char *line, t_data *data, int i, int j);
+char		*process_dollar(char *line, t_data *data,
+				t_indexes *ind, char *new);
 
 /* utils_chain_0.c */
 t_prompt	*new_prompt(char *line);

@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:49:32 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/31 15:26:41 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/03 17:34:19 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,68 +75,48 @@ char	*gimme_str(char *line, int j, int i)
 	return (newstr);
 }
 
-char	*semicolon_handler(char *line, t_data *data, int i, int j)
+char	*process_dollar(char *line, t_data *data, t_indexes *ind, char *new)
 {
-	char	*new_line;
 	char	*tmp;
 
 	tmp = NULL;
-	new_line = NULL;
-	while (line[i])
+	tmp = gimme_str(line, ind->j, ind->i);
+	new = ft_strcat(new, tmp);
+	if (line[ind->i + 1] && line[ind->i + 1] == '?')
 	{
-		if (line[i] == '$')
-		{
-			tmp = gimme_str(line, j, i);
-			new_line = ft_strcat(new_line, tmp);
-			tmp = word_env_check(line, &i, data);
-			if (tmp != NULL)
-				new_line = ft_strcat(new_line, tmp);
-			j = i;
-		}
-		if ((int)ft_strlen(line) > i)
-			i++;
+		tmp = ft_itoa(last_signal);
+		ind->i += 2;
 	}
-	if (j == 0)
-		return (line);
-	tmp = gimme_str(line, j, i);
-	new_line = ft_strcat(new_line, tmp);
-	return (new_line);
+	else
+		tmp = word_env_check(line, &(ind->i), data);
+	if (tmp != NULL)
+		new = ft_strcat(new, tmp);
+	return (new);
 }
 
-char	**args_cleaner(t_prompt *prompt)
+char	*semicolon_handler(char *line, t_data *data, int i, int j)
 {
-	char		**args;
-	t_string	*tmp;
-	int			count;
-	char		*word;
-	int			i;
+	char		*new_line;
+	char		*tmp;
+	t_indexes	indices;
 
-	tmp = prompt->args;
-	count = 0;
-	if (tmp == NULL)
-		return (NULL);
-	else
-		count++;
-	while (tmp)
+	new_line = NULL;
+	tmp = NULL;
+	indices.i = i;
+	indices.j = j;
+	while (line[indices.i])
 	{
-		if (tmp->type == 1)
-			count++;
-		tmp=tmp->next;
-	}
-	args = malloc(sizeof(char *) * (count + 1));
-	tmp = prompt->args;
-	i = 0;
-	while(tmp)
-	{
-		word = NULL;
-		while ((tmp && tmp->type == 0) || (tmp && word == NULL))
+		if (line[indices.i] == '$')
 		{
-			word = ft_strcat(word, ft_strdup(tmp->str));
-			tmp = tmp->next;
+			new_line = process_dollar(line, data, &indices, new_line);
+			indices.j = indices.i;
 		}
-		args[i] = word;
-		i++;
+		if ((int)ft_strlen(line) > indices.i)
+			indices.i++;
 	}
-	args[i] = (void *)0;
-	return (args);
+	if (indices.j == 0)
+		return (line);
+	tmp = gimme_str(line, indices.j, indices.i);
+	new_line = ft_strcat(new_line, tmp);
+	return (new_line);
 }
