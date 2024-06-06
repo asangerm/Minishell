@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/03 15:18:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/01 17:01:29 by nfradet          ###   ########.fr       */
+/*   Created: 2024/05/30 14:13:44 by nfradet           #+#    #+#             */
+/*   Updated: 2024/05/31 16:25:06 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-size_t	ft_strlen(const char *s)
+int	custom_exit(t_data *data, int status)
 {
-	size_t	i;
-
-	i = 0;
-	while (s != NULL && s[i])
-		i++;
-	return (i);
+	if (data->is_exit == true)
+	{
+		ft_free_data(data);
+		exit(status);
+	}
+	else
+		last_signal = status;
+	return (-1);
 }

@@ -6,56 +6,11 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/01 16:41:08 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:51:54 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*simple_quote(char *line, int *i)
-{
-	int		j;
-	char	*word;
-
-	(*i)++;
-	j = *i;
-	while (line[j] && line[j] != '\'')
-		j++;
-	word = malloc(sizeof(char) * (j - *i + 1));
-	j = *i;
-	while (line[*i] && line[*i] != '\'')
-	{
-		word[*i - j] = line[*i];
-		(*i)++;
-	}
-	word[*i - j] = '\0';
-	(*i)++;
-	return (word);
-}
-
-/*
-	extrait un char * d'un bout de line entre double quotes
-*/
-char	*double_quote(char *line, int *i)
-{
-	int		j;
-	char	*word;
-
-	(*i)++;
-	j = *i;
-	while (line[j] && line[j] != '\"')
-		j++;
-	word = malloc(sizeof(char) * (j - *i + 1));
-	j = *i;
-	while (line[*i] && line[*i] != '\"')
-	{
-		word[*i - j] = line[*i];
-		(*i)++;
-	}
-	word[*i - j] = '\0';
-	(*i)++;
-	return (word);
-}
 
 char	*next_arg(char *line, int *i)
 {
@@ -77,54 +32,31 @@ char	*next_arg(char *line, int *i)
 }
 
 /*
-	extrait un char * d'un bout de line entre deux espaces
-*/
-char	*word_maker(char *line, int *i)
-{
-	char		*word;
-	int			j;
-
-	j = *i;
-	while (line[j] && line[j] != ' ' && line[j] != '\"' && line[j] != '\'')
-		j++;
-	word = malloc(sizeof(char) * (j - *i + 1));
-	j = *i;
-	while (line[*i] && line[*i] != ' ' && line[*i] != '\"' && line[*i] != '\'')
-	{
-		word[*i - j] = line[*i];
-		(*i)++;
-	}
-	word[*i - j] = '\0';
-	return (word);
-}
-
-/*
 	Determine quel type de donnée est le bout de line
 */
-void	big_if(char *line, t_prompt *prompt, int *i)
+int	big_if(char *line, t_prompt *prompt, int *i)
 {
-	t_bool	space;
+	int	error;
 
-	space = false;
+	error = 1;
 	while (line[*i])
 	{
 		if (line[*i] == '>')
-			file_out_handler(line, prompt, i);
+			error = file_out_handler(line, prompt, i);
 		else if (line[*i] == '<')
-			file_in_handler(line, prompt, i);
+			error = file_in_handler(line, prompt, i);
 		else if (!prompt->cmd && test_equal(line, i))
 			var_handler(line, prompt, i);
 		else if (!prompt->cmd)
 			cmd_handler(line, prompt, i);
 		else
-			args_handler(line, prompt, i, space);
-		if (line[*i] && line[*i] == ' ' && prompt->args)
-			space = true;
-		else
-			space = false;
+			args_handler(line, prompt, i);
 		while (line[*i] && line[*i] == ' ')
 			(*i)++;
+		if (error == 0)
+			return (0);
 	}
+	return (1);
 }
 
 void	string_tab_display(char **args)
@@ -139,23 +71,70 @@ void	string_tab_display(char **args)
 	}
 }
 
+int	error_checker(char *line)
+{
+	int	i;
+
+	i = 0;
+	if (line[i] && line[i] == ':' && !line[i + 1])
+		return (0);
+	else if (line[i] && line[i] == '!' && !line[i + 1])
+		return (0);
+	return (1);
+}
+
 /*
 	parcours les prompt pour les découper
 */
-void	lexer(t_prompt **prompt)
+int	lexer(t_prompt **prompt)
 {
 	t_prompt	*tmp;
 	int			i;
+	int			error;
 
 	tmp = *prompt;
+	error = 1;
+	if (!tmp || error_checker(tmp->line) == 0)
+		return (0);
 	while (tmp)
 	{
 		i = 0;
 		while (tmp->line[i] == ' ')
 			i++;
-		big_if(tmp->line, tmp, &i);
+		error = big_if(tmp->line, tmp, &i);
+		if (error == 0)
+			return (0);
 		tmp = tmp->next;
 	}
+	return (1);
+}
+
+int	quote_check(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'')
+		{
+			i++;
+			while (line[i] && line[i] != '\'')
+				i++;
+			if (!line[i])
+				return (0);
+		}
+		else if(line[i] == '\"')
+		{
+			i++;
+			while (line[i] && line[i] != '\"')
+				i++;
+			if (!line[i])
+				return (0);
+		}
+		i++;
+	}
+	return (1);
 }
 
 /*
@@ -164,12 +143,19 @@ void	lexer(t_prompt **prompt)
 	fichiers de sortie et d'entrée de chaque prompt séparé par des
 	pipes
 */
-void	parse(char *line, t_prompt **prompt, t_data *data)
+int	parse(char *line, t_prompt **prompt, t_data *data)
 {
 	char	*new_line;
+	int		error;
 
+	error = 1;
 	new_line = semicolon_handler(line, data, 0, 0);
+	if (!quote_check(new_line))
+		return (ft_printf(QUOTE_ERROR), 0);
+	if (!new_line)
+		return (error);
 	chain_creator(new_line, prompt);
 	free(new_line);
-	lexer(prompt);
+	error = lexer(prompt);
+	return (error);
 }

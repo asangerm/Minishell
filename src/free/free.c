@@ -42,6 +42,7 @@ void	ft_free_tab(char **tab)
 
 void	ft_free_data(t_data *data)
 {
+	free_chain(&(data->prompt));
 	if (data->pipes != NULL)
 		free(data->pipes);
 	ft_free_tab(data->paths);
@@ -49,12 +50,20 @@ void	ft_free_data(t_data *data)
 	free(data->pwd);
 }
 
-int	builtins_err_handler(char *err_msg, char *variable)
+int	aff_err(char *err_msg, char *variable)
 {
+	int	saved_stdout;
+
+	saved_stdout = dup(STDOUT_FILENO);
+	dup2(STDERR_FILENO, STDOUT_FILENO);
 	if (variable != NULL)
+	{
 		ft_printf(err_msg, variable);
+		free(variable);
+	}
 	else
 		ft_printf(err_msg);
+	dup2(saved_stdout, STDOUT_FILENO);
 	return (1);
 }
 

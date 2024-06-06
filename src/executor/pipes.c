@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/28 15:24:11 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:19:07 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,8 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 	char	*path;
 	t_list	*tmp;
 
-	data->paths = NULL;
-	env = ft_lst_to_tab(data->env);
-	cmd = ft_cmd_to_tab(prompt);
+	cmd = cmd_to_tab(prompt);
+	env = lst_to_tab(data->env);
 	tmp = get_key(data, "PATH");
 	if (tmp != NULL)
 	{
@@ -113,9 +112,12 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 	if (path != NULL)
 	{
 		if (execve(path, cmd, env) == -1)
-			return (1);
+		{
+			ft_free_tab(cmd);
+			ft_free_tab(env);
+			custom_exit(data, 1);
+		}
 	}
-	ft_free_tab(cmd);
 	ft_free_tab(env);
-	return (0);
+	return (ft_free_tab(cmd), 0);
 }

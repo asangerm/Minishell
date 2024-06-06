@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:54:28 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/24 18:42:13 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/06 04:21:28 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	tab_display(t_string **tab, char *type)
 		tmp = *tab;
 		while (tmp)
 		{
-			ft_printf("	%s number %d : str=#%s# & type=#%d#\n", type, j, tmp->str, tmp->type);
+			ft_printf("	%s number %d : str=#%s# & type=#%d#\n",
+				type, j, tmp->str, tmp->type);
 			j++;
 			tmp = tmp->next;
 		}
@@ -116,7 +117,7 @@ void	chain_creator(char *line, t_prompt **prompt)
 	char		**split_line;
 	t_prompt	*tmp;
 
-	split_line = ft_split(line, '|');
+	split_line = ft_newsplit(line, '|');
 	i = 0;
 	while (split_line[i])
 	{
@@ -127,7 +128,6 @@ void	chain_creator(char *line, t_prompt **prompt)
 	i = 0;
 	while (split_line[i])
 	{
-		
 		free(split_line[i]);
 		i++;
 	}

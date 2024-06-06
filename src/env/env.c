@@ -6,23 +6,13 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/28 15:21:11 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:45:41 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_strlen_until(char *str, char stop_char)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] != stop_char)
-		i++;
-	return (i);
-}
-
-t_keyval	*extract_var(char *var)
+t_keyval	*extract_var(char *var, t_bool is_exported)
 {
 	int			i;
 	int			len_until;
@@ -32,6 +22,7 @@ t_keyval	*extract_var(char *var)
 	keyval = malloc(sizeof(t_keyval));
 	keyval->val = NULL;
 	keyval->key = malloc(sizeof(char) * (len_until + 1));
+	keyval->is_exported = is_exported;
 	if (keyval->key == NULL)
 		return (free(keyval), NULL);
 	i = 0;
@@ -41,10 +32,10 @@ t_keyval	*extract_var(char *var)
 		i++;
 	}
 	keyval->key[i] = '\0';
-	if (var[i] && var[i + 1] == '\"')
+	if (var[i] && var[i] == '=')
 		i++;
 	if (ft_strlen(var) - len_until > 0)
-		keyval->val = double_quote(var, &i);
+		keyval->val = ft_strdup(&var[i]);
 	return (keyval);
 }
 
@@ -55,16 +46,20 @@ void	ft_initenv(t_data *data, char **env)
 	t_list		*new;
 
 	i = 0;
+	
 	new = NULL;
 	tmp = NULL;
+	data->ppid = getppid();
 	data->env = NULL;
+	data->prompt = NULL;
 	data->paths = NULL;
+	data->is_exit = false;
+	data->pipes = NULL;
 	data->inout_save[READ_END] = dup(STDIN_FILENO);
 	data->inout_save[WRITE_END] = dup(STDOUT_FILENO);
 	while (env[i] != NULL)
 	{
-		tmp = extract_var(env[i]);
-		tmp->is_exported = true;
+		tmp = extract_var(env[i], true);
 		if (tmp && tmp->key)
 		{
 			new = ft_lstnew(tmp);
@@ -72,6 +67,7 @@ void	ft_initenv(t_data *data, char **env)
 		}
 		i++;
 	}
+	update_shlvl(data);
 }
 
 void	modify_var(t_keyval *kv, t_list *key)
@@ -107,6 +103,7 @@ void	add_var_to_env(t_data *data, t_keyval *kv)
 	key = get_key(data, var);
 	if (key != NULL && kv->val != NULL)
 	{
+		kv->is_exported = ((t_keyval *)key->content)->is_exported;
 		modify_var(kv, key);
 		free(var);
 	}
@@ -119,7 +116,7 @@ void	add_var_to_env(t_data *data, t_keyval *kv)
 	}
 }
 
-void	ft_handle_var_env(t_data *data, t_prompt *prompt)
+int	ft_handle_var_env(t_data *data, t_prompt *prompt)
 {
 	t_prompt	*tmp;
 	t_keyval	*kv;
@@ -132,10 +129,16 @@ void	ft_handle_var_env(t_data *data, t_prompt *prompt)
 		while (var != NULL)
 		{
 			kv = cpy_keyval((t_keyval *)var->content);
-			kv->is_exported = ((t_keyval *)var->content)->is_exported;
+			if (check_exp_args(kv) == 1)
+			{
+				aff_err(CMD_NOT_FOUND, kv_to_str(kv));
+				ft_free_keyval(kv);
+				return (custom_exit(data, 127));
+			}
 			add_var_to_env(data, kv);
 			var = var->next;
 		}
 		tmp = tmp->next;
 	}
+	return (0);
 }

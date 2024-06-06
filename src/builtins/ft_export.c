@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/23 17:00:20 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:14:03 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	export_arg(t_data *data, char *arg)
 	char		*var;
 	t_list		*key;
 
-	kv = extract_var(arg);
+	kv = extract_var(arg, true);
 	if (check_exp_args(kv) == 1)
 	{
 		if (kv->key)
@@ -94,7 +94,6 @@ int	export_arg(t_data *data, char *arg)
 			free(kv->val);	
 		return (free(kv), 1);
 	}
-	kv->is_exported = true;
 	var = cut_plus(kv->key);
 	key = get_key(data, var);
 	if (key != NULL && ((t_keyval *)key->content)->is_exported == false)
@@ -131,7 +130,10 @@ void	ft_export(t_data *data, t_string *args)
 		while (i)
 		{
 			if (export_arg(data, i->str) == 1)
-				builtins_err_handler(EXPORT_ERR, i->str);
+			{
+				aff_err(EXPORT_ERR, ft_strdup(i->str));
+				custom_exit(data, 1);
+			}
 			i = i->next;
 		}
 	}

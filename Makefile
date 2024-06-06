@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
+#    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/05/23 16:35:48 by nfradet          ###   ########.fr        #
+#    Updated: 2024/06/06 04:21:09 by asangerm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,13 +29,17 @@ FREE	 =	free.c
 EXECUTOR =	pipes.c			\
 			pipes_utils.c	\
 			files_handler.c	\
+			exec_utils.c			\
 			execution.c
 
 ENV		 =	env.c			\
+			env_utils_2.c	\
 			utils.c
 
 PARSING	 =  handlers_0.c	\
+			extracters_0.c	\
 			parsing_0.c  	\
+			ft_newsplit.c	\
 			parsing_1.c 	\
 			utils_chain_0.c \
 			utils_chain_1.c \
@@ -44,6 +48,7 @@ PARSING	 =  handlers_0.c	\
 BUILTINS =  builtins.c		\
 			ft_echo.c		\
 			ft_cd.c			\
+			ft_exit.c		\
 			ft_export.c		\
 			ft_unset.c		\
 			export_utils.c
