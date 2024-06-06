@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/05 16:15:42 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/06 01:53:16 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,29 @@ int	main(int argc, char **argv, char **env)
 {
 	char				*line;
 	t_data				data;
+	int					error;
 
 	(void)argc;
 	(void)argv;
 	ft_initenv(&data, env);
 	rl_clear_history();
+	error = 1;
 	while (1)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
     	data.pwd = getcwd(NULL, 0);
 		line = display_prompt(&data);
-		parse(line, &data.prompt, &data);
-		
-		ft_init_nb_cmd(&data, data.prompt);
-		if (data.nb_cmd >= 1)
-			ft_handle_execution(&data);
-		chain_display(&(data.prompt));
+		error = parse(line, &data.prompt, &data);
+		if (error == 1)
+		{
+			ft_init_nb_cmd(&data, data.prompt);
+			if (data.nb_cmd >= 1)
+				ft_handle_execution(&data);
+			//chain_display(&(data.prompt));
+		}
+		else
+			last_signal = 2;
 		free_chain(&(data.prompt));
 		free(data.pwd);
 		dup2(data.inout_save[READ_END], STDIN_FILENO);

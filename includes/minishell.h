@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/05 16:45:07 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/06 04:20:38 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,11 @@
 
 # define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
 # define HD_ERR "minishell: warning: here-document (wanted `%s')\n"
+# define SYNTH_ERROR_IN "bash: syntax error near unexpected token `<<'\n"
+# define SYNTH_ERROR_OUT "bash: syntax error near unexpected token `>>'\n"
+# define SYNTH_ERROR_S_IN "bash: syntax error near unexpected token `<'\n"
+# define SYNTH_ERROR_S_OUT "bash: syntax error near unexpected token `>'\n"
+# define SYNTH_ERROR_NEWLINE "bash: syntax error near unexpected token `newline'\n"
 # define CMD_NOT_FOUND "%s: command not found\n"
 # define NO_SUCH_FILE "-minishell: %s: No such file or directory\n"
 # define BOLD_GREEN "\033[1;32m"
@@ -159,16 +164,16 @@ char		*word_maker_env(char *line, int *i);
 /* handlers_0.c */
 void		cmd_handler(char *line, t_prompt *prompt, int *i);
 void		var_handler(char *line, t_prompt *prompt, int *i);
-void		args_handler(char *line, t_prompt *prompt, int *i, t_bool space);
-void		file_in_handler(char *line, t_prompt *prompt, int *i);
-void		file_out_handler(char *line, t_prompt *prompt, int *i);
+void		args_handler(char *line, t_prompt *prompt, int *i);
+int			file_in_handler(char *line, t_prompt *prompt, int *i);
+int		file_out_handler(char *line, t_prompt *prompt, int *i);
 
 /* parsing_0.c */
-void		lexer(t_prompt **prompt);
+int			lexer(t_prompt **prompt);
 char		*next_arg(char *line, int *i);
 void		string_tab_display(char **args);
-void		big_if(char *line, t_prompt *prompt, int *i);
-void		parse(char *line, t_prompt **prompt, t_data *data);
+int			big_if(char *line, t_prompt *prompt, int *i);
+int			parse(char *line, t_prompt **prompt, t_data *data);
 
 /* parsing_1.c */
 char		*ft_strcat(char *str1, char *str2);
@@ -177,6 +182,13 @@ char		*word_env_check(char *line, int *i, t_data *data);
 char		*semicolon_handler(char *line, t_data *data, int i, int j);
 char		*process_dollar(char *line, t_data *data,
 				t_indexes *ind, char *new);
+
+/* ft_newsplit.c */
+void	skip_quote(char *str, int *i, char quote);
+int		ft_newcount_words(char *str, char c);
+char	*ft_newgimme(char *str, int i, int j);
+char	*ft_newcheckwrd(int *j, char *str, char c);
+char	**ft_newsplit(char const *s, char c);
 
 /* utils_chain_0.c */
 t_prompt	*new_prompt(char *line);

@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:54:28 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/03 17:40:14 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/06 04:21:28 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	chain_creator(char *line, t_prompt **prompt)
 	char		**split_line;
 	t_prompt	*tmp;
 
-	split_line = ft_split(line, '|');
+	split_line = ft_newsplit(line, '|');
 	i = 0;
 	while (split_line[i])
 	{
