@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/06 04:38:02 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/06 14:51:54 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,34 @@ int	lexer(t_prompt **prompt)
 	return (1);
 }
 
+int	quote_check(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] == '\'')
+		{
+			i++;
+			while (line[i] && line[i] != '\'')
+				i++;
+			if (!line[i])
+				return (0);
+		}
+		else if(line[i] == '\"')
+		{
+			i++;
+			while (line[i] && line[i] != '\"')
+				i++;
+			if (!line[i])
+				return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
 /*
 	Cette fonction est la fonction qui execute toutes les autres,
 	elle permet de parser, pour le moment elle peut extraire les
@@ -122,6 +150,8 @@ int	parse(char *line, t_prompt **prompt, t_data *data)
 
 	error = 1;
 	new_line = semicolon_handler(line, data, 0, 0);
+	if (!quote_check(new_line))
+		return (ft_printf(QUOTE_ERROR), 0);
 	if (!new_line)
 		return (error);
 	chain_creator(new_line, prompt);
