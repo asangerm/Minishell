@@ -48,6 +48,8 @@ void	ft_free_data(t_data *data)
 	ft_free_tab(data->paths);
 	ft_lstclear(&data->env, &ft_free_keyval);
 	free(data->pwd);
+	if (data->old_pwd != NULL)
+		free(data->old_pwd);
 }
 
 int	aff_err(char *err_msg, char *variable)

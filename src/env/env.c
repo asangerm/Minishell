@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/05 16:45:41 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:50:46 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,11 @@ t_keyval	*extract_var(char *var, t_bool is_exported)
 	return (keyval);
 }
 
-void	ft_initenv(t_data *data, char **env)
+void	ft_init_data(t_data *data, char **env)
 {
-	int			i;
-	t_keyval	*tmp;
-	t_list		*new;
-
-	i = 0;
-	
-	new = NULL;
-	tmp = NULL;
 	data->ppid = getppid();
+	data->old_pwd = NULL;
+	data->pwd = NULL;
 	data->env = NULL;
 	data->prompt = NULL;
 	data->paths = NULL;
@@ -57,6 +51,18 @@ void	ft_initenv(t_data *data, char **env)
 	data->pipes = NULL;
 	data->inout_save[READ_END] = dup(STDIN_FILENO);
 	data->inout_save[WRITE_END] = dup(STDOUT_FILENO);
+	ft_initenv(data, env);
+}
+
+void	ft_initenv(t_data *data, char **env)
+{
+	int			i;
+	t_keyval	*tmp;
+	t_list		*new;
+
+	new = NULL;
+	tmp = NULL;
+	i = 0;
 	while (env[i] != NULL)
 	{
 		tmp = extract_var(env[i], true);

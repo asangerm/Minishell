@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/05 16:45:07 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:49:10 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 # include "../libft/src/libft.h"
 # include <sys/wait.h>
 # include <sys/stat.h>
+# include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>
 # include <readline/readline.h>
@@ -87,6 +88,7 @@ typedef struct s_data
 	t_pipe		*pipes;
 	t_pipe		files_redir;
 	t_list		*env;
+	char		*old_pwd;
 	char		*pwd;
 	int			inout_save[2];
 	t_bool		is_exit;
@@ -105,6 +107,7 @@ t_keyval	*cpy_keyval(t_keyval *kv);
 void		update_shlvl(t_data *data);
 void		ft_initenv(t_data *data, char **env);
 void		modify_var(t_keyval *kv, t_list *key);
+void		ft_init_data(t_data *data, char **env);
 int			ft_strlen_until(char *str, char stop_char);
 void		add_var_to_env(t_data *data, t_keyval *kv);
 t_keyval	*extract_var(char *var, t_bool is_exported);
