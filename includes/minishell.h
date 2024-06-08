@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/06 14:51:10 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/08 18:53:03 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,8 @@
 
 # define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
 # define HD_ERR "minishell: warning: here-document (wanted `%s')\n"
-# define SYNTH_ERROR_IN "bash: syntax error near unexpected token `<<'\n"
-# define SYNTH_ERROR_OUT "bash: syntax error near unexpected token `>>'\n"
-# define SYNTH_ERROR_S_IN "bash: syntax error near unexpected token `<'\n"
-# define SYNTH_ERROR_S_OUT "bash: syntax error near unexpected token `>'\n"
+# define SYNTH_ERROR "bash: syntax error near unexpected token `%s'\n"
 # define QUOTE_ERROR "minishell: error: unclosed quote\n"
-# define SYNTH_ERROR_NEWLINE "bash: syntax error near unexpected token `newline'\n"
 # define CMD_NOT_FOUND "bash: %s: command not found\n"
 # define NO_SUCH_FILE "-minishell: %s: No such file or directory\n"
 # define BOLD_GREEN "\033[1;32m"

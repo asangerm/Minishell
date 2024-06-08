@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:49:32 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/06 04:35:53 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/08 22:48:12 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,24 +104,29 @@ char	*semicolon_handler(char *line, t_data *data, int i, int j)
 	char		*new_line;
 	char		*tmp;
 	t_indexes	indices;
+	int			quote;
 
 	new_line = NULL;
 	tmp = NULL;
 	indices.i = i;
 	indices.j = j;
+	quote = 0;
 	while (line[indices.i])
 	{
+		if (line[indices.i] == '\"')
+			quote++;
+		if (quote % 2 == 0 && line[indices.i] == '\'')
+			skip_quote(line, &(indices.i), '\'');
 		if (line[indices.i] == '$')
 		{
 			new_line = process_dollar(line, data, &indices, new_line);
 			indices.j = indices.i;
 		}
-		if ((int)ft_strlen(line) > indices.i && line[indices.i] != '$')
+		else
 			indices.i++;
 	}
 	if (indices.j == 0)
-		return (line);
+		return (ft_strdup(line));
 	tmp = gimme_str(line, indices.j, indices.i);
-	new_line = ft_strcat(new_line, tmp);
-	return (new_line);
+	return (ft_strcat(new_line, tmp));
 }

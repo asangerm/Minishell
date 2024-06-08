@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/06 14:51:54 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/08 22:00:29 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,26 @@ int	lexer(t_prompt **prompt)
 	return (1);
 }
 
+void	quote_skip(char *line, int	*i, int *valid)
+{
+	if (line[*i] == '\'')
+	{
+		(*i)++;
+		while (line[*i] && line[*i] != '\'')
+			(*i)++;
+		if (line[*i])
+		*valid = 1;
+	}
+	else if(line[*i] == '\"')
+	{
+		(*i)++;
+		while (line[*i] && line[*i] != '\"')
+			(*i)++;
+		if (line[*i])
+		*valid = 1;
+	}
+}
+
 int	quote_check(char *line)
 {
 	int	i;
@@ -137,6 +157,32 @@ int	quote_check(char *line)
 	return (1);
 }
 
+int	pipe_check(char *line)
+{
+	int	i;
+	int	valid;
+
+	i = 0;
+	valid = 0;
+	while (line[i])
+	{
+		quote_skip(line, &i, &valid);
+		if (line[i] != ' ' && line[i] != '|' && line[i] != '<' && line[i] != '>')
+			valid = 1;
+		if (line[i] && line[i] == '|')
+		{
+			if (line[i + 1] && line[i + 1] == '|')
+				if (valid == 0 || (line[i + 2] && line[i + 2] == '|'))
+					return (ft_printf(SYNTH_ERROR, "||"), 0);
+			if (valid == 0)
+				return (ft_printf(SYNTH_ERROR, "|"), 0);
+			valid = 0;
+		}
+		i++;
+	}
+	return (1);
+}
+
 /*
 	Cette fonction est la fonction qui execute toutes les autres,
 	elle permet de parser, pour le moment elle peut extraire les
@@ -149,11 +195,16 @@ int	parse(char *line, t_prompt **prompt, t_data *data)
 	int		error;
 
 	error = 1;
+	if (!quote_check(line))
+		return (ft_printf(QUOTE_ERROR), 0);
 	new_line = semicolon_handler(line, data, 0, 0);
+	//free(line);
+	if (!new_line)
+		return (0);
 	if (!quote_check(new_line))
 		return (ft_printf(QUOTE_ERROR), 0);
-	if (!new_line)
-		return (error);
+	if (!pipe_check(new_line))
+		return (0);
 	chain_creator(new_line, prompt);
 	free(new_line);
 	error = lexer(prompt);

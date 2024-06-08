@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/06 03:31:51 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/08 18:51:07 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,22 @@ char	*next_file(char *line, int *i)
 	if (ft_strncmp(word, ">", 2) == 0)
 	{
 		free(word);
-		return (ft_printf(SYNTH_ERROR_S_OUT), NULL);
+		return (ft_printf(SYNTH_ERROR, '>'), NULL);
 	}
 	else if (ft_strncmp(word, "<", 2) == 0)
 	{
 		free(word);
-		return (ft_printf(SYNTH_ERROR_S_IN), NULL);
+		return (ft_printf(SYNTH_ERROR, "<"), NULL);
 	}
 	else if (ft_strncmp(word, ">>", 2) == 0)
 	{
 		free(word);
-		return (ft_printf(SYNTH_ERROR_OUT), NULL);
+		return (ft_printf(SYNTH_ERROR, ">>"), NULL);
 	}
 	else if (ft_strncmp(word, "<<", 2) == 0)
 	{
 		free(word);
-		return (ft_printf(SYNTH_ERROR_IN), NULL);
+		return (ft_printf(SYNTH_ERROR, "<<"), NULL);
 	}
 	return (word);
 }
@@ -69,13 +69,13 @@ int	file_out_handler(char *line, t_prompt *prompt, int *i)
 	(*i)++;
 	type = false;
 	if (!line[*i] || is_only_space(line, *i))
-		return(ft_printf(SYNTH_ERROR_NEWLINE), 0);
+		return(ft_printf(SYNTH_ERROR, "newline"), 0);
 	if (line[*i] && line[*i] == '>')
 	{
 		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
-			return(ft_printf(SYNTH_ERROR_NEWLINE), 0);
+			return(ft_printf(SYNTH_ERROR, "newline"), 0);
 		if (line[(*i) + 1] && line[(*i) + 1] == '>')
-			return(ft_printf(SYNTH_ERROR_OUT), 0);
+			return(ft_printf(SYNTH_ERROR, ">>"), 0);
 		type = true;
 		(*i)++;
 	}
@@ -106,15 +106,15 @@ int	file_in_handler(char *line, t_prompt *prompt, int *i)
 	(*i)++;
 	type = false;
 	if (!line[*i] || is_only_space(line, *i))
-		return(ft_printf(SYNTH_ERROR_NEWLINE), 0);
+		return(ft_printf(SYNTH_ERROR, "newline"), 0);
 	if ((line[*i] && line[*i] == '>') && (!line[(*i) + 1] || is_only_space(line, (*i) + 1)))
-		return(ft_printf(SYNTH_ERROR_NEWLINE), 0);
+		return(ft_printf(SYNTH_ERROR, "newline"), 0);
 	if (line[*i] && line[*i] == '<')
 	{
 		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
-			return(ft_printf(SYNTH_ERROR_NEWLINE), 0);
+			return(ft_printf(SYNTH_ERROR, "newline"), 0);
 		if (line[(*i) + 1] && line[(*i) + 1] == '<')
-			return(ft_printf(SYNTH_ERROR_IN), 0);
+			return(ft_printf(SYNTH_ERROR, "<<"), 0);
 		(*i)++;
 		type = true;
 	}

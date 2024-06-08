@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/06 01:53:16 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:33:48 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	main(int argc, char **argv, char **env)
 			ft_init_nb_cmd(&data, data.prompt);
 			if (data.nb_cmd >= 1)
 				ft_handle_execution(&data);
-			//chain_display(&(data.prompt));
+			chain_display(&(data.prompt));
 		}
 		else
 			last_signal = 2;

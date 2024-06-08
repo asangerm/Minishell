@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/06 04:02:12 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/06 04:23:18 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/08 21:42:16 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	skip_quote(char *str, int *i, char quote)
 {
+	//ft_printf("%d\n", *i);
 	(*i)++;
 	while (str[*i] && str[*i] != quote)
 		(*i)++;
