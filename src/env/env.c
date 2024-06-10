@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/07 15:50:46 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/10 17:37:11 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ t_keyval	*extract_var(char *var, t_bool is_exported)
 
 void	ft_init_data(t_data *data, char **env)
 {
+	last_signal = 0;
 	data->ppid = getppid();
 	data->old_pwd = NULL;
 	data->pwd = NULL;

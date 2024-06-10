@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   extracters_0.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:58:06 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/08 21:53:12 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:21:12 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ char	*word_maker(char *line, int *i)
 	int			j;
 
 	j = *i;
-	while (line[j] && line[j] != ' ' && line[j] != '\"' && line[j] != '\'')
+	while (line[j] && line[j] != ' ' && line[j] != '\"' && line[j] != '\'' && line[j] != '<' && line[j] != '>')
 		j++;
 	word = malloc(sizeof(char) * (j - *i + 1));
 	j = *i;
-	while (line[*i] && line[*i] != ' ' && line[*i] != '\"' && line[*i] != '\'')
+	while (line[*i] && line[*i] != ' ' && line[*i] != '\"' && line[*i] != '\'' && line[*i] != '<' && line[*i] != '>')
 	{
 		word[*i - j] = line[*i];
 		(*i)++;

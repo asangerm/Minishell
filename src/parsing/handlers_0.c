@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/10 17:03:04 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:35:54 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	is_only_space(char *line, int i)
 {
 	while (line[i])
 	{
+		if (line[i] == '>' || line[i] == '<')
+			return (1);
 		if (line[i] != ' ')
 			return (0);
 		i++;
@@ -37,7 +39,7 @@ char	*next_file(char *line, int *i)
 	if (ft_strncmp(word, ">", 2) == 0)
 	{
 		free(word);
-		return (ft_printf(SYNTH_ERROR, '>'), NULL);
+		return (ft_printf(SYNTH_ERROR, ">"), NULL);
 	}
 	else if (ft_strncmp(word, "<", 2) == 0)
 	{

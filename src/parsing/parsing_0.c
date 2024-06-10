@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/10 17:25:47 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/10 18:17:34 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*next_arg(char *line, int *i)
 	char		*str;
 
 	str = NULL;
-	while (line[*i] && line[*i] != ' ')
+	while (line[*i] && line[*i] != ' ' && line[*i] != '<' && line[*i] != '>')
 	{
 		if (line[*i] == '\"')
 			word = double_quote(line, i);
@@ -197,6 +197,8 @@ int	parse(char *line, t_prompt **prompt, t_data *data)
 {
 	char	*new_line;
 
+	if (line[0] == '\0')
+		return (last_signal);
 	if (!quote_check(line))
 		return (ft_printf(QUOTE_ERROR), 2);
 	new_line = semicolon_handler(line, data, 0, 0);
