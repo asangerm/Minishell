@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/08 22:00:29 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:25:47 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	big_if(char *line, t_prompt *prompt, int *i)
 {
 	int	error;
 
-	error = 1;
+	error = 0;
 	while (line[*i])
 	{
 		if (line[*i] == '>')
@@ -53,10 +53,10 @@ int	big_if(char *line, t_prompt *prompt, int *i)
 			args_handler(line, prompt, i);
 		while (line[*i] && line[*i] == ' ')
 			(*i)++;
-		if (error == 0)
-			return (0);
+		if (error != 0)
+			return (error);
 	}
-	return (1);
+	return (error);
 }
 
 void	string_tab_display(char **args)
@@ -77,10 +77,12 @@ int	error_checker(char *line)
 
 	i = 0;
 	if (line[i] && line[i] == ':' && !line[i + 1])
-		return (0);
+		return (10);
+	else if (line[i] && line[i] == '#' && !line[i + 1])
+		return (10);
 	else if (line[i] && line[i] == '!' && !line[i + 1])
-		return (0);
-	return (1);
+		return (1);
+	return (0);
 }
 
 /*
@@ -93,20 +95,22 @@ int	lexer(t_prompt **prompt)
 	int			error;
 
 	tmp = *prompt;
-	error = 1;
-	if (!tmp || error_checker(tmp->line) == 0)
+	error = error_checker(tmp->line);
+	if (error == 10)
 		return (0);
+	if (error != 0)
+		return (error);
 	while (tmp)
 	{
 		i = 0;
 		while (tmp->line[i] == ' ')
 			i++;
 		error = big_if(tmp->line, tmp, &i);
-		if (error == 0)
-			return (0);
+		if (error != 0)
+			return (error);
 		tmp = tmp->next;
 	}
-	return (1);
+	return (error);
 }
 
 void	quote_skip(char *line, int	*i, int *valid)
@@ -192,21 +196,17 @@ int	pipe_check(char *line)
 int	parse(char *line, t_prompt **prompt, t_data *data)
 {
 	char	*new_line;
-	int		error;
 
-	error = 1;
 	if (!quote_check(line))
-		return (ft_printf(QUOTE_ERROR), 0);
+		return (ft_printf(QUOTE_ERROR), 2);
 	new_line = semicolon_handler(line, data, 0, 0);
-	//free(line);
 	if (!new_line)
-		return (0);
+		return (last_signal);
 	if (!quote_check(new_line))
-		return (ft_printf(QUOTE_ERROR), 0);
+		return (ft_printf(QUOTE_ERROR), 2);
 	if (!pipe_check(new_line))
-		return (0);
+		return (2);
 	chain_creator(new_line, prompt);
 	free(new_line);
-	error = lexer(prompt);
-	return (error);
+	return (lexer(prompt));
 }

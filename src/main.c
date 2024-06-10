@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/08 21:33:48 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:25:32 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,29 +77,25 @@ int	main(int argc, char **argv, char **env)
 {
 	char				*line;
 	t_data				data;
-	int					error;
 
 	(void)argc;
 	(void)argv;
 	ft_initenv(&data, env);
 	rl_clear_history();
-	error = 1;
 	while (1)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
     	data.pwd = getcwd(NULL, 0);
 		line = display_prompt(&data);
-		error = parse(line, &data.prompt, &data);
-		if (error == 1)
+		last_signal = parse(line, &data.prompt, &data);
+		if (last_signal == 0)
 		{
 			ft_init_nb_cmd(&data, data.prompt);
 			if (data.nb_cmd >= 1)
 				ft_handle_execution(&data);
-			chain_display(&(data.prompt));
+			//chain_display(&(data.prompt));
 		}
-		else
-			last_signal = 2;
 		free_chain(&(data.prompt));
 		free(data.pwd);
 		dup2(data.inout_save[READ_END], STDIN_FILENO);

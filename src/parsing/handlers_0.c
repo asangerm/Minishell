@@ -6,7 +6,7 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/08 18:51:07 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:03:04 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,22 @@ int	file_out_handler(char *line, t_prompt *prompt, int *i)
 	(*i)++;
 	type = false;
 	if (!line[*i] || is_only_space(line, *i))
-		return(ft_printf(SYNTH_ERROR, "newline"), 0);
+		return(ft_printf(SYNTH_ERROR, "newline"), 2);
 	if (line[*i] && line[*i] == '>')
 	{
 		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
-			return(ft_printf(SYNTH_ERROR, "newline"), 0);
+			return(ft_printf(SYNTH_ERROR, "newline"), 2);
 		if (line[(*i) + 1] && line[(*i) + 1] == '>')
-			return(ft_printf(SYNTH_ERROR, ">>"), 0);
+			return(ft_printf(SYNTH_ERROR, ">>"), 2);
 		type = true;
 		(*i)++;
 	}
 	space_skipper(line, i);
 	word = next_file(line, i);
 	if (word == NULL)
-		return (0);
+		return (2);
 	new = new_str(word, type);
-	return (str_add_back(&(prompt->file_out), new), 1);
+	return (str_add_back(&(prompt->file_out), new), 0);
 }
 
 void	delim_set(t_prompt *prompt, char *word)
@@ -106,26 +106,26 @@ int	file_in_handler(char *line, t_prompt *prompt, int *i)
 	(*i)++;
 	type = false;
 	if (!line[*i] || is_only_space(line, *i))
-		return(ft_printf(SYNTH_ERROR, "newline"), 0);
+		return(ft_printf(SYNTH_ERROR, "newline"), 2);
 	if ((line[*i] && line[*i] == '>') && (!line[(*i) + 1] || is_only_space(line, (*i) + 1)))
-		return(ft_printf(SYNTH_ERROR, "newline"), 0);
+		return(ft_printf(SYNTH_ERROR, "newline"), 2);
 	if (line[*i] && line[*i] == '<')
 	{
 		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
-			return(ft_printf(SYNTH_ERROR, "newline"), 0);
+			return(ft_printf(SYNTH_ERROR, "newline"), 2);
 		if (line[(*i) + 1] && line[(*i) + 1] == '<')
-			return(ft_printf(SYNTH_ERROR, "<<"), 0);
+			return(ft_printf(SYNTH_ERROR, "<<"), 2);
 		(*i)++;
 		type = true;
 	}
 	space_skipper(line, i);
 	word = next_file(line, i);
 	if (word == NULL)
-		return (0);
+		return (2);
 	if (type == true)
 		delim_set(prompt, word);
 	new = new_str(word, type);
-	return (str_add_back(&(prompt->file_in), new), 1);
+	return (str_add_back(&(prompt->file_in), new), 0);
 }
 
 /*
