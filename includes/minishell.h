@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/07 15:49:10 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/10 16:45:02 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <sys/types.h>
 # include <unistd.h>
 # include <signal.h>
+# include <termios.h>
 
 # define EXPORT_ERR "minishell: syntax error near unexpected token `%s'\n"
 # define HD_ERR "minishell: warning: here-document (wanted `%s')\n"

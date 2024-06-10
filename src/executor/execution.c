@@ -6,11 +6,17 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:45:15 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/04 18:31:25 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/10 16:44:52 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_sigquit(int sig)
+{
+	if (sig == SIGQUIT)
+		aff_err("Quit (core dumped)\n", NULL);
+}
 
 int	ft_redir_n_exec(t_data *data, t_prompt *prompt, int i)
 {
@@ -52,7 +58,9 @@ int	ft_executor(t_data *data)
 	cpy_prpt = data->prompt;
 	while (cpy_prpt)
 	{
+		signal(SIGQUIT, SIG_IGN);
 		data->files_redir = ft_open_files(data, cpy_prpt);
+		signal(SIGQUIT, handle_sigquit);
 		pid = fork();
 		if (pid == -1)
 			exit(EXIT_FAILURE);
