@@ -6,7 +6,7 @@
 #    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/06/04 17:27:07 by asangerm         ###   ########.fr        #
+#    Updated: 2024/06/06 04:21:09 by asangerm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ ENV		 =	env.c			\
 PARSING	 =  handlers_0.c	\
 			extracters_0.c	\
 			parsing_0.c  	\
+			ft_newsplit.c	\
 			parsing_1.c 	\
 			utils_chain_0.c \
 			utils_chain_1.c \

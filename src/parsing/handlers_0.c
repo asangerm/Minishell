@@ -6,16 +6,61 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/03 17:38:56 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/10 17:03:04 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+void	space_skipper(char *line, int *i)
+{
+	while (line[*i] && line[*i] == ' ')
+		(*i)++;
+}
+
+int	is_only_space(char *line, int i)
+{
+	while (line[i])
+	{
+		if (line[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+char	*next_file(char *line, int *i)
+{
+	char *word;
+
+	word = next_arg(line, i);
+	if (ft_strncmp(word, ">", 2) == 0)
+	{
+		free(word);
+		return (ft_printf(SYNTH_ERROR, '>'), NULL);
+	}
+	else if (ft_strncmp(word, "<", 2) == 0)
+	{
+		free(word);
+		return (ft_printf(SYNTH_ERROR, "<"), NULL);
+	}
+	else if (ft_strncmp(word, ">>", 2) == 0)
+	{
+		free(word);
+		return (ft_printf(SYNTH_ERROR, ">>"), NULL);
+	}
+	else if (ft_strncmp(word, "<<", 2) == 0)
+	{
+		free(word);
+		return (ft_printf(SYNTH_ERROR, "<<"), NULL);
+	}
+	return (word);
+}
+
 /*
 	Ajoute un t_string file_out au prompt
 */
-void	file_out_handler(char *line, t_prompt *prompt, int *i)
+int	file_out_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
 	t_string	*new;
@@ -23,22 +68,36 @@ void	file_out_handler(char *line, t_prompt *prompt, int *i)
 
 	(*i)++;
 	type = false;
+	if (!line[*i] || is_only_space(line, *i))
+		return(ft_printf(SYNTH_ERROR, "newline"), 2);
 	if (line[*i] && line[*i] == '>')
 	{
+		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
+			return(ft_printf(SYNTH_ERROR, "newline"), 2);
+		if (line[(*i) + 1] && line[(*i) + 1] == '>')
+			return(ft_printf(SYNTH_ERROR, ">>"), 2);
 		type = true;
 		(*i)++;
 	}
-	while (line[*i] && line[*i] == ' ')
-		(*i)++;
-	word = next_arg(line, i);
+	space_skipper(line, i);
+	word = next_file(line, i);
+	if (word == NULL)
+		return (2);
 	new = new_str(word, type);
-	str_add_back(&(prompt->file_out), new);
+	return (str_add_back(&(prompt->file_out), new), 0);
+}
+
+void	delim_set(t_prompt *prompt, char *word)
+{
+	if (prompt->delim)
+		free(prompt->delim);
+	prompt->delim = ft_strdup(word);
 }
 
 /*
 	Ajoute un t_string file_in au prompt
 */
-void	file_in_handler(char *line, t_prompt *prompt, int *i)
+int	file_in_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
 	t_string	*new;
@@ -46,22 +105,27 @@ void	file_in_handler(char *line, t_prompt *prompt, int *i)
 
 	(*i)++;
 	type = false;
+	if (!line[*i] || is_only_space(line, *i))
+		return(ft_printf(SYNTH_ERROR, "newline"), 2);
+	if ((line[*i] && line[*i] == '>') && (!line[(*i) + 1] || is_only_space(line, (*i) + 1)))
+		return(ft_printf(SYNTH_ERROR, "newline"), 2);
 	if (line[*i] && line[*i] == '<')
 	{
+		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
+			return(ft_printf(SYNTH_ERROR, "newline"), 2);
+		if (line[(*i) + 1] && line[(*i) + 1] == '<')
+			return(ft_printf(SYNTH_ERROR, "<<"), 2);
 		(*i)++;
 		type = true;
 	}
-	while (line[*i] && line[*i] == ' ')
-		(*i)++;
-	word = next_arg(line, i);
+	space_skipper(line, i);
+	word = next_file(line, i);
+	if (word == NULL)
+		return (2);
 	if (type == true)
-	{
-		if (prompt->delim)
-			free(prompt->delim);
-		prompt->delim = ft_strdup(word);
-	}
+		delim_set(prompt, word);
 	new = new_str(word, type);
-	return ((void)str_add_back(&(prompt->file_in), new));
+	return (str_add_back(&(prompt->file_in), new), 0);
 }
 
 /*
@@ -78,7 +142,7 @@ void	cmd_handler(char *line, t_prompt *prompt, int *i)
 /*
 	Ajoute un t_string args au prompt
 */
-void	args_handler(char *line, t_prompt *prompt, int *i, t_bool space)
+void	args_handler(char *line, t_prompt *prompt, int *i)
 {
 	t_string	*new;
 	char		*word;
@@ -86,7 +150,7 @@ void	args_handler(char *line, t_prompt *prompt, int *i, t_bool space)
 	word = next_arg(line, i);
 	if (ft_strlen(word) == 0)
 		return ;
-	new = new_str(word, space);
+	new = new_str(word, 0);
 	str_add_back(&(prompt->args), new);
 }
 
