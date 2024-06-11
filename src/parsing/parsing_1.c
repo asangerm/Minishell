@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:49:32 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/08 22:48:12 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/11 02:10:39 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,17 @@ char	*process_dollar(char *line, t_data *data, t_indexes *ind, char *new)
 		tmp = ft_itoa(data->ppid);
 		ind->i += 2;
 	}
+	else if (!line[ind->i + 1] || (!ft_isalpha(line[ind->i + 1]) && line[ind->i + 1] != '_'))
+	{
+		ind->j = ind->i;
+		ind->i++;
+		return (new);
+	}
 	else
 		tmp = word_env_check(line, &(ind->i), data);
 	if (tmp != NULL)
 		new = ft_strcat(new, tmp);
+	ind->j = ind->i;
 	return (new);
 }
 
@@ -118,15 +125,12 @@ char	*semicolon_handler(char *line, t_data *data, int i, int j)
 		if (quote % 2 == 0 && line[indices.i] == '\'')
 			skip_quote(line, &(indices.i), '\'');
 		if (line[indices.i] == '$')
-		{
 			new_line = process_dollar(line, data, &indices, new_line);
-			indices.j = indices.i;
-		}
 		else
 			indices.i++;
 	}
 	if (indices.j == 0)
-		return (ft_strdup(line));
+		return (line);
 	tmp = gimme_str(line, indices.j, indices.i);
 	return (ft_strcat(new_line, tmp));
 }

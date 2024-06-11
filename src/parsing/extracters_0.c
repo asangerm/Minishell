@@ -6,11 +6,25 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/03 16:58:06 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/10 18:21:12 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/11 02:19:51 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_in(char *str, char c)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (c == str[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 char	*simple_quote(char *line, int *i)
 {
@@ -63,14 +77,16 @@ char	*double_quote(char *line, int *i)
 char	*word_maker(char *line, int *i)
 {
 	char		*word;
+	char		*str;
 	int			j;
 
+	str = " \'\"<>";
 	j = *i;
-	while (line[j] && line[j] != ' ' && line[j] != '\"' && line[j] != '\'' && line[j] != '<' && line[j] != '>')
+	while (line[j] && !is_in(str, line[j]))
 		j++;
 	word = malloc(sizeof(char) * (j - *i + 1));
 	j = *i;
-	while (line[*i] && line[*i] != ' ' && line[*i] != '\"' && line[*i] != '\'' && line[*i] != '<' && line[*i] != '>')
+	while (line[*i] && !is_in(str, line[*i]))
 	{
 		word[*i - j] = line[*i];
 		(*i)++;
@@ -82,14 +98,16 @@ char	*word_maker(char *line, int *i)
 char	*word_maker_env(char *line, int *i)
 {
 	char		*word;
+	char		*str;
 	int			j;
 
+	str = "$[]{}\'\" =?%!@*/<>.#-+:()&^";
 	j = *i;
-	while (line[j] && line[j] != ' ' && line[j] != '\"' && line[j] != '\'' && line[j] != '=' && line[j] != '$')
+	while (line[j] && !is_in(str, line[j]))
 		j++;
 	word = malloc(sizeof(char) * (j - *i + 1));
 	j = *i;
-	while (line[*i] && line[*i] != ' ' && line[*i] != '\"' && line[*i] != '\'' && line[*i] != '=' && line[*i] != '$')
+	while (line[*i] && !is_in(str, line[*i]))
 	{
 		word[*i - j] = line[*i];
 		(*i)++;
