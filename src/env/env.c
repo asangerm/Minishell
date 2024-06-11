@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/10 17:37:11 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/11 17:35:25 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void	modify_var(t_keyval *kv, t_list *key)
 		ft_strlcat(new_val, kv->val, len + 1);
 		free(((t_keyval *)key->content)->val);
 		((t_keyval *)key->content)->val = new_val;
+		ft_free_keyval(kv);
 	}
 	else
 	{

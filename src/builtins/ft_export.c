@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/11 16:38:05 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/11 17:45:18 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,24 +81,24 @@ char	*cut_plus(char *key)
 
 int	export_arg(t_data *data, char *arg)
 {
-	t_keyval	*kv;
 	char		*var;
 	t_list		*key;
+	t_keyval	*kv;
 
 	kv = extract_var(arg, true);
 	if (check_exp_args(kv) == 1)
-	{
-		if (kv->val)
-			free(kv->val);	
-		return (free(kv->key), free(kv), 1);
-	}
+		return (ft_free_keyval(kv), 1);
 	var = cut_plus(kv->key);
 	key = get_key(data, var);
-	if (key != NULL && ((t_keyval *)key->content)->is_exported == false)
+	if (key != NULL )
 	{
-		// if (kv->val != NULL)
-		ft_free_keyval(kv);
+		if (kv->val != NULL)
+		{
+			free(((t_keyval *)key->content)->val);
+			((t_keyval *)key->content)->val = ft_strdup(kv->val);
+		}
 		((t_keyval *)key->content)->is_exported = true;
+		ft_free_keyval(kv);
 	}
 	else
 		add_var_to_env(data, kv);
