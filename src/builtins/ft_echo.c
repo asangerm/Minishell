@@ -6,11 +6,28 @@
 /*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:35:49 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/03 17:36:50 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/11 17:06:04 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	option_check(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[0] != '-')
+		return (0);
+	i++;
+	while (str[i] && str[i] == 'n')
+	{
+		i++;
+	}
+	if (str[i] == '\0')
+		return (1);
+	return (0);
+}
 
 void	ft_echo(t_string *args)
 {
@@ -21,7 +38,7 @@ void	ft_echo(t_string *args)
 	tmp = args;
 	if (args == NULL)
 		return((void)ft_printf("\n"));
-	if (ft_strncmp("-n", args->str, 3) == 0)
+	while (tmp && option_check(tmp->str))
 	{
 		n = 1;
 		tmp = tmp->next;
