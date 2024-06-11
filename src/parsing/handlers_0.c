@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/11 00:47:47 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/11 16:22:07 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,20 +163,12 @@ void	args_handler(char *line, t_prompt *prompt, int *i)
 void	var_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
-	char		**splitted;
 	t_list		*new;
 	t_keyval	*kv;
 
 	word = next_arg(line, i);
-	splitted = split_var(word, 0, 0);
+	kv = extract_var(word, false);
 	free(word);
-	kv = malloc(sizeof(t_keyval));
-	kv->key = ft_strdup(splitted[0]);
-	kv->val = ft_strdup(splitted[1]);
-	kv->is_exported = false;
 	new = ft_lstnew((void *)kv);
 	ft_lstadd_back(&(prompt->var), new);
-	free(splitted[0]);
-	free(splitted[1]);
-	free(splitted);
 }

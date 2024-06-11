@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/10 17:32:55 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/11 16:27:54 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		signal(SIGINT, handle_sigint);
 		signal(SIGQUIT, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
 		init_pwd(&data);
 		line = display_prompt(&data);
 		last_signal = parse(line, &data.prompt, &data);
@@ -111,7 +112,7 @@ int	main(int argc, char **argv, char **env)
 			ft_init_nb_cmd(&data, data.prompt);
 			if (data.nb_cmd >= 1)
 				ft_handle_execution(&data);
-			//chain_display(&(data.prompt));
+			chain_display(&(data.prompt));
 		}
 		free_chain(&(data.prompt));
 		dup2(data.inout_save[READ_END], STDIN_FILENO);

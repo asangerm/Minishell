@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_chain_1.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 16:54:28 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/06 04:21:28 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/11 16:22:16 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**split_var(char *word, int i, int j)
 	}
 	key[i] = '\0';
 	i++;
-	val = word_maker(word, &i);
+	val = next_arg(word, &i);
 	splitted[0] = key;
 	splitted[1] = val;
 	return (splitted);
