@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_0.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/12 15:01:22 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:39:30 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,8 @@ int	pipe_check(char *line)
 	while (line[i])
 	{
 		quote_skip(line, &i, &valid);
-		if (line[i] != ' ' && line[i] != '|' && line[i] != '<' && line[i] != '>')
+		if (line[i] != ' ' && line[i] != '|' && \
+			line[i] != '<' && line[i] != '>')
 			valid = 1;
 		if (line[i] && line[i] == '|')
 		{

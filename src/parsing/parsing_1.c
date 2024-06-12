@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_1.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:49:32 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/12 14:58:55 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:53:51 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,7 @@ char	*process_dollar(char *line, t_data *data, t_indexes *ind, char *new)
 {
 	char	*tmp;
 
-	tmp = NULL;
-	tmp = gimme_str(line, ind->j, ind->i);
-	new = ft_strcat(new, tmp);
+	new = ft_strcat(new, gimme_str(line, ind->j, ind->i));
 	if (line[ind->i + 1] && line[ind->i + 1] == '?')
 	{
 		tmp = ft_itoa(g_last_signal);
@@ -92,11 +90,11 @@ char	*process_dollar(char *line, t_data *data, t_indexes *ind, char *new)
 		tmp = ft_itoa(data->ppid);
 		ind->i += 2;
 	}
-	else if (!line[ind->i + 1] || (!ft_isalpha(line[ind->i + 1]) && line[ind->i + 1] != '_'))
+	else if (!line[ind->i + 1] || (!ft_isalpha(line[ind->i + 1]) && \
+			line[ind->i + 1] != '_'))
 	{
 		ind->j = ind->i;
-		ind->i++;
-		return (new);
+		return (ind->i++, new);
 	}
 	else
 		tmp = word_env_check(line, &(ind->i), data);

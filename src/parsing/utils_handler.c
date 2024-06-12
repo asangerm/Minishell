@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 15:07:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/12 15:10:52 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:47:01 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,14 @@ void	cmd_handler(char *line, t_prompt *prompt, int *i)
 
 	word = next_arg(line, i);
 	prompt->cmd = word;
+}
+
+int	the_weeknd(char *line, int *i)
+{
+	if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
+		return (ft_printf(SYNTH_ERROR, "newline"), 2);
+	if (line[(*i) + 1] && line[(*i) + 1] == '<')
+		return (ft_printf(SYNTH_ERROR, "<<"), 2);
+	(*i)++;
+	return (0);
 }
