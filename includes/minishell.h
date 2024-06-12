@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/12 15:10:15 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:47:29 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,7 @@ char		*ft_newcheckwrd(int *j, char *str, char c);
 char		**ft_newsplit(char const *s, char c);
 
 /* utils_handler.c */
+int			the_weeknd(char *line, int *i);
 int			is_only_space(char *line, int i);
 void		space_skipper(char *line, int *i);
 void		delim_set(t_prompt *prompt, char *word);

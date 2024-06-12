@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handlers_0.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
+/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/12 15:08:02 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:54:15 by asangerm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ char	*next_file(char *line, int *i)
 int	file_out_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
-	t_string	*new;
 	t_bool		type;
 
 	(*i)++;
 	type = false;
 	if (!line[*i] || is_only_space(line, *i))
 		return (ft_printf(SYNTH_ERROR, "newline"), 2);
-	if ((line[*i] && line[*i] == '<') || !line[(*i) + 1] || is_only_space(line, (*i) + 1))
+	if ((line[*i] && line[*i] == '<') || !line[(*i) + 1] || \
+		is_only_space(line, (*i) + 1))
 		return (ft_printf(SYNTH_ERROR, "newline"), 2);
 	if (line[*i] && line[*i] == '>')
 	{
@@ -68,8 +68,7 @@ int	file_out_handler(char *line, t_prompt *prompt, int *i)
 	word = next_file(line, i);
 	if (word == NULL)
 		return (2);
-	new = new_str(word, type);
-	return (str_add_back(&(prompt->file_out), new), 0);
+	return (str_add_back(&(prompt->file_out), new_str(word, type)), 0);
 }
 
 /*
@@ -78,22 +77,19 @@ int	file_out_handler(char *line, t_prompt *prompt, int *i)
 int	file_in_handler(char *line, t_prompt *prompt, int *i)
 {
 	char		*word;
-	t_string	*new;
 	t_bool		type;
 
 	(*i)++;
 	type = false;
 	if (!line[*i] || is_only_space(line, *i))
 		return (ft_printf(SYNTH_ERROR, "newline"), 2);
-	if ((line[*i] && line[*i] == '>') || !line[(*i) + 1] || is_only_space(line, (*i) + 1))
+	if ((line[*i] && line[*i] == '>') || !line[(*i) + 1] || \
+		is_only_space(line, (*i) + 1))
 		return (ft_printf(SYNTH_ERROR, "newline"), 2);
 	if (line[*i] && line[*i] == '<')
 	{
-		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
-			return (ft_printf(SYNTH_ERROR, "newline"), 2);
-		if (line[(*i) + 1] && line[(*i) + 1] == '<')
-			return (ft_printf(SYNTH_ERROR, "<<"), 2);
-		(*i)++;
+		if (the_weeknd(line, i) == 2)
+			return (2);
 		type = true;
 	}
 	space_skipper(line, i);
@@ -102,8 +98,7 @@ int	file_in_handler(char *line, t_prompt *prompt, int *i)
 		return (2);
 	if (type == true)
 		delim_set(prompt, word);
-	new = new_str(word, type);
-	return (str_add_back(&(prompt->file_in), new), 0);
+	return (str_add_back(&(prompt->file_in), new_str(word, type)), 0);
 }
 
 /*
