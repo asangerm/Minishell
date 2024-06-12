@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/12 15:06:19 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:32:22 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,17 @@ char	*display_prompt(t_data	*data)
 	return (line);
 }
 
+void	parse_n_exec(t_data *data, char *line)
+{
+	g_last_signal = parse(line, &(data->prompt), data);
+	if (g_last_signal == 0)
+	{
+		ft_init_nb_cmd(data, data->prompt);
+		if (data->nb_cmd >= 1)
+			ft_handle_execution(data);
+	}
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char				*line;
@@ -70,13 +81,7 @@ int	main(int argc, char **argv, char **env)
 	{
 		init_pwd(&data);
 		line = display_prompt(&data);
-		g_last_signal = parse(line, &data.prompt, &data);
-		if (g_last_signal == 0)
-		{
-			ft_init_nb_cmd(&data, data.prompt);
-			if (data.nb_cmd >= 1)
-				ft_handle_execution(&data);
-		}
+		parse_n_exec(&data, line);
 		free_chain(&(data.prompt));
 		dup2(data.inout_save[READ_END], STDIN_FILENO);
 		dup2(data.inout_save[WRITE_END], STDOUT_FILENO);
