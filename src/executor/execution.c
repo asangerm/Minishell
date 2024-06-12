@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 13:45:15 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/10 16:44:52 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:38:29 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	handle_sigquit(int sig)
 
 int	ft_redir_n_exec(t_data *data, t_prompt *prompt, int i)
 {
-	if (last_signal == 134)
+	if (g_last_signal == 134)
 		custom_exit(data, 130);
-	last_signal = 0;
+	g_last_signal = 0;
 	ft_handle_var_env(data, prompt);
 	if (data->pipes != NULL)
 		ft_redirection_pipes(data, i);
@@ -81,21 +81,21 @@ void	ft_handle_execution(t_data *data)
 	signal(SIGINT, handle_sigint_cmd);
 	if (data->nb_cmd == 1 && ft_is_builtin(data->prompt) == 1)
 	{
-		last_signal = 0;
+		g_last_signal = 0;
 		data->is_exit = false;
 		ft_handle_var_env(data, data->prompt);
-		if (last_signal != 0)
+		if (g_last_signal != 0)
 			return ;
 		ft_redirection_files(ft_open_files(data, data->prompt));
-		if (last_signal == 134)
-			last_signal = 130;
-		if (last_signal != 0)
+		if (g_last_signal == 134)
+			g_last_signal = 130;
+		if (g_last_signal != 0)
 			return ;
 		ft_exe_builtin(data, data->prompt->cmd, data->prompt->args);
 	}
 	else
 	{
-		last_signal = 0;
+		g_last_signal = 0;
 		data->is_exit = true;
 		ft_executor(data);
 	}

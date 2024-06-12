@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:13:43 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/23 17:00:23 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:36:09 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ char	*get_value(t_list *env, char *key)
 	i = env;
 	while (i && key)
 	{
-		kv = ((t_keyval*)i->content);
+		kv = ((t_keyval *)i->content);
 		if (ft_strncmp(kv->key, key, ft_maxlen(kv->key, key)) == 0)
 			return (kv->val);
 		i = i->next;

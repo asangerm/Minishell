@@ -6,36 +6,15 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:24:30 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/11 16:22:07 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:08:02 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	space_skipper(char *line, int *i)
-{
-	while (line[*i] && line[*i] == ' ')
-		(*i)++;
-}
-
-int	is_only_space(char *line, int i)
-{
-	if (line[i] != ' ')
-		return (0);
-	while (line[i])
-	{
-		if (line[i] == '>' || line[i] == '<')
-			return (1);
-		if (line[i] != ' ')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
 char	*next_file(char *line, int *i)
 {
-	char *word;
+	char	*word;
 
 	word = next_arg(line, i);
 	if (ft_strncmp(word, ">", 2) == 0)
@@ -73,15 +52,15 @@ int	file_out_handler(char *line, t_prompt *prompt, int *i)
 	(*i)++;
 	type = false;
 	if (!line[*i] || is_only_space(line, *i))
-		return(ft_printf(SYNTH_ERROR, "newline"), 2);
+		return (ft_printf(SYNTH_ERROR, "newline"), 2);
 	if ((line[*i] && line[*i] == '<') || !line[(*i) + 1] || is_only_space(line, (*i) + 1))
-		return(ft_printf(SYNTH_ERROR, "newline"), 2);
+		return (ft_printf(SYNTH_ERROR, "newline"), 2);
 	if (line[*i] && line[*i] == '>')
 	{
 		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
-			return(ft_printf(SYNTH_ERROR, "newline"), 2);
+			return (ft_printf(SYNTH_ERROR, "newline"), 2);
 		if (line[(*i) + 1] && line[(*i) + 1] == '>')
-			return(ft_printf(SYNTH_ERROR, ">>"), 2);
+			return (ft_printf(SYNTH_ERROR, ">>"), 2);
 		type = true;
 		(*i)++;
 	}
@@ -91,13 +70,6 @@ int	file_out_handler(char *line, t_prompt *prompt, int *i)
 		return (2);
 	new = new_str(word, type);
 	return (str_add_back(&(prompt->file_out), new), 0);
-}
-
-void	delim_set(t_prompt *prompt, char *word)
-{
-	if (prompt->delim)
-		free(prompt->delim);
-	prompt->delim = ft_strdup(word);
 }
 
 /*
@@ -112,15 +84,15 @@ int	file_in_handler(char *line, t_prompt *prompt, int *i)
 	(*i)++;
 	type = false;
 	if (!line[*i] || is_only_space(line, *i))
-		return(ft_printf(SYNTH_ERROR, "newline"), 2);
+		return (ft_printf(SYNTH_ERROR, "newline"), 2);
 	if ((line[*i] && line[*i] == '>') || !line[(*i) + 1] || is_only_space(line, (*i) + 1))
-		return(ft_printf(SYNTH_ERROR, "newline"), 2);
+		return (ft_printf(SYNTH_ERROR, "newline"), 2);
 	if (line[*i] && line[*i] == '<')
 	{
 		if (!line[(*i) + 1] || is_only_space(line, (*i) + 1))
-			return(ft_printf(SYNTH_ERROR, "newline"), 2);
+			return (ft_printf(SYNTH_ERROR, "newline"), 2);
 		if (line[(*i) + 1] && line[(*i) + 1] == '<')
-			return(ft_printf(SYNTH_ERROR, "<<"), 2);
+			return (ft_printf(SYNTH_ERROR, "<<"), 2);
 		(*i)++;
 		type = true;
 	}
@@ -132,17 +104,6 @@ int	file_in_handler(char *line, t_prompt *prompt, int *i)
 		delim_set(prompt, word);
 	new = new_str(word, type);
 	return (str_add_back(&(prompt->file_in), new), 0);
-}
-
-/*
-	Ajoute une cmd au prompt
-*/
-void	cmd_handler(char *line, t_prompt *prompt, int *i)
-{
-	char	*word;
-
-	word = next_arg(line, i);
-	prompt->cmd = word;
 }
 
 /*

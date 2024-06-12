@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 12:48:22 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/01 17:28:32 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:32:01 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,31 @@ void	update_shlvl(t_data *data)
 	}
 	else
 		add_var_to_env(data, extract_var("SHLVL=1", true));
+}
+
+t_keyval	*extract_var(char *var, t_bool is_exported)
+{
+	int			i;
+	int			len_until;
+	t_keyval	*keyval;
+
+	len_until = ft_strlen_until(var, '=');
+	keyval = malloc(sizeof(t_keyval));
+	keyval->val = NULL;
+	keyval->key = malloc(sizeof(char) * (len_until + 1));
+	keyval->is_exported = is_exported;
+	if (keyval->key == NULL)
+		return (free(keyval), NULL);
+	i = 0;
+	while (var[i] && var[i] != '=')
+	{
+		keyval->key[i] = var[i];
+		i++;
+	}
+	keyval->key[i] = '\0';
+	if (var[i] && var[i] == '=')
+		i++;
+	if (ft_strlen(var) - len_until > 0)
+		keyval->val = ft_strdup(&var[i]);
+	return (keyval);
 }

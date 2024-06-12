@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 18:49:32 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/11 02:42:30 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:58:55 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ char	*process_dollar(char *line, t_data *data, t_indexes *ind, char *new)
 	new = ft_strcat(new, tmp);
 	if (line[ind->i + 1] && line[ind->i + 1] == '?')
 	{
-		tmp = ft_itoa(last_signal);
+		tmp = ft_itoa(g_last_signal);
 		ind->i += 2;
 	}
 	else if (line[ind->i + 1] && line[ind->i + 1] == '$')

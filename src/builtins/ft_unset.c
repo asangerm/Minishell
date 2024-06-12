@@ -17,7 +17,7 @@ void	del_node(t_list **head, t_list *node)
 	t_list	*prev;
 
 	if (node == NULL)
-		return;
+		return ;
 	if ((*head) == node)
 		(*head) = node->next;
 	else

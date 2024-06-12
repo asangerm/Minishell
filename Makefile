@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+         #
+#    By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/24 11:25:47 by asangerm          #+#    #+#              #
-#    Updated: 2024/06/06 04:21:09 by asangerm         ###   ########.fr        #
+#    Updated: 2024/06/12 15:10:32 by nfradet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,13 @@ CC		=	cc
 CFLAGS	=	-Wall -Werror -Wextra
 
 # Directories
-VPATH   =   src src/parsing src/env src/builtins src/free src/executor
+VPATH   =   src src/parsing src/env src/builtins src/init src/executor
 OBJ_DIR	=	obj/
 LIB_DIR	=	libft/
 
 # .c and .o files
-FREE	 =	free.c
+INIT	 =	init.c			\
+			free.c
 
 EXECUTOR =	pipes.c			\
 			pipes_utils.c	\
@@ -43,7 +44,9 @@ PARSING	 =  handlers_0.c	\
 			parsing_1.c 	\
 			utils_chain_0.c \
 			utils_chain_1.c \
-			utils_str_0.c
+			utils_str_0.c	\
+			utils_parsing.c	\
+			utils_handler.c
 
 BUILTINS =  builtins.c		\
 			ft_echo.c		\
@@ -56,7 +59,7 @@ BUILTINS =  builtins.c		\
 SRC		 =	$(PARSING)		\
 			$(ENV)			\
 			$(BUILTINS) 	\
-			$(FREE) 		\
+			$(INIT) 		\
 			$(EXECUTOR)		\
 			main.c
 

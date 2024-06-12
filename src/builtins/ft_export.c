@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/11 17:45:18 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:34:17 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_list	*get_key(t_data *data, char *key)
 	i = data->env;
 	while (i && key)
 	{
-		str = ((t_keyval*)i->content)->key;
+		str = ((t_keyval *)i->content)->key;
 		if (ft_strncmp(str, key, ft_maxlen(str, key)) == 0)
 			return (i);
 		i = i->next;

@@ -3,40 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/11 17:02:37 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/12 15:06:19 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	last_signal;
-
-void	print_prompt(char **prompt)
-{
-	int	i;
-
-	i = 0;
-	while (prompt[i])
-	{
-		ft_printf("arg %d = %s\n", i, prompt[i]);
-		i++;
-	}
-}
-
-void	aff_str(void *str)
-{
-	ft_printf("%s\n", (char *)str);
-}
+int	g_last_signal;
 
 void	handle_sigint_cmd(int signal)
 {
 	if (signal == SIGINT)
 	{
 		write(1, "\n", 1);
-		last_signal = 130;
+		g_last_signal = 130;
 	}
 }
 
@@ -48,7 +31,7 @@ void	handle_sigint(int signal)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		last_signal = 130;
+		g_last_signal = 130;
 	}
 }
 
@@ -73,46 +56,26 @@ char	*display_prompt(t_data	*data)
 	return (line);
 }
 
-void	init_pwd(t_data *data)
-{
-	if (data->pwd != NULL)
-	{
-		if (data->old_pwd != NULL)
-			free(data->old_pwd);
-		data->old_pwd = ft_strdup(data->pwd);
-		free(data->pwd);
-	}
-   	data->pwd = getcwd(NULL, 0);
-	if (data->pwd == NULL)
-	{
-		data->pwd = data->old_pwd;
-		data->old_pwd = NULL;
-	}
-}
-
 int	main(int argc, char **argv, char **env)
 {
 	char				*line;
 	t_data				data;
 
-	(void)argc;
-	(void)argv;
+	(void )argv;
+	if (argc > 1)
+		return (aff_err("minishell :Too many arguments\n", NULL), 1);
 	ft_init_data(&data, env);
 	rl_clear_history();
 	while (1)
 	{
-		signal(SIGINT, handle_sigint);
-		signal(SIGQUIT, SIG_IGN);
-		signal(SIGTSTP, SIG_IGN);
 		init_pwd(&data);
 		line = display_prompt(&data);
-		last_signal = parse(line, &data.prompt, &data);
-		if (last_signal == 0)
+		g_last_signal = parse(line, &data.prompt, &data);
+		if (g_last_signal == 0)
 		{
 			ft_init_nb_cmd(&data, data.prompt);
 			if (data.nb_cmd >= 1)
 				ft_handle_execution(&data);
-			//chain_display(&(data.prompt));
 		}
 		free_chain(&(data.prompt));
 		dup2(data.inout_save[READ_END], STDIN_FILENO);

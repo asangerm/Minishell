@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:35:49 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/11 17:06:04 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/12 14:33:55 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_echo(t_string *args)
 	n = 0;
 	tmp = args;
 	if (args == NULL)
-		return((void)ft_printf("\n"));
+		return ((void )ft_printf("\n"));
 	while (tmp && option_check(tmp->str))
 	{
 		n = 1;
@@ -52,5 +52,5 @@ void	ft_echo(t_string *args)
 	}
 	if (n == 0)
 		ft_printf("\n");
-	return;
+	return ;
 }

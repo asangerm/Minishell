@@ -6,30 +6,11 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 16:20:09 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/11 16:22:23 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 15:01:22 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*next_arg(char *line, int *i)
-{
-	char		*word;
-	char		*str;
-
-	str = NULL;
-	while (line[*i] && line[*i] != ' ' && line[*i] != '<' && line[*i] != '>')
-	{
-		if (line[*i] == '\"')
-			word = double_quote(line, i);
-		else if (line[*i] == '\'')
-			word = simple_quote(line, i);
-		else
-			word = word_maker(line, i);
-		str = ft_strcat(str, word);
-	}
-	return (str);
-}
 
 /*
 	Determine quel type de donnée est le bout de line
@@ -57,32 +38,6 @@ int	big_if(char *line, t_prompt *prompt, int *i)
 			return (error);
 	}
 	return (error);
-}
-
-void	string_tab_display(char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		ft_printf("arg %d = #%s#\n", i, args[i]);
-		i++;
-	}
-}
-
-int	error_checker(char *line)
-{
-	int	i;
-
-	i = 0;
-	if (line[i] && line[i] == ':' && !line[i + 1])
-		return (10);
-	else if (line[i] && line[i] == '#' && !line[i + 1])
-		return (10);
-	else if (line[i] && line[i] == '!' && !line[i + 1])
-		return (1);
-	return (0);
 }
 
 /*
@@ -113,26 +68,6 @@ int	lexer(t_prompt **prompt)
 	return (error);
 }
 
-void	quote_skip(char *line, int	*i, int *valid)
-{
-	if (line[*i] == '\'')
-	{
-		(*i)++;
-		while (line[*i] && line[*i] != '\'')
-			(*i)++;
-		if (line[*i])
-		*valid = 1;
-	}
-	else if(line[*i] == '\"')
-	{
-		(*i)++;
-		while (line[*i] && line[*i] != '\"')
-			(*i)++;
-		if (line[*i])
-		*valid = 1;
-	}
-}
-
 int	quote_check(char *line)
 {
 	int	i;
@@ -148,7 +83,7 @@ int	quote_check(char *line)
 			if (!line[i])
 				return (0);
 		}
-		else if(line[i] == '\"')
+		else if (line[i] == '\"')
 		{
 			i++;
 			while (line[i] && line[i] != '\"')
@@ -198,12 +133,12 @@ int	parse(char *line, t_prompt **prompt, t_data *data)
 	char	*new_line;
 
 	if (line[0] == '\0')
-		return (last_signal);
+		return (g_last_signal);
 	if (!quote_check(line))
 		return (ft_printf(QUOTE_ERROR), 2);
 	new_line = semicolon_handler(line, data, 0, 0);
 	if (!new_line)
-		return (last_signal);
+		return (g_last_signal);
 	if (!quote_check(new_line))
 		return (ft_printf(QUOTE_ERROR), 2);
 	if (!pipe_check(new_line))

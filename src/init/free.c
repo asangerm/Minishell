@@ -82,7 +82,8 @@ void	var_display(t_list **var)
 		while (tmp)
 		{
 			kv = (t_keyval *)tmp->content;
-			ft_printf("	Variable number %d =\n		key = #%s#\n		val = #%s#\n", j, kv->key, kv->val);
+			ft_printf("	Variable number %d =\n		\
+			key = #%s#\n		val = #%s#\n", j, kv->key, kv->val);
 			j++;
 			tmp = tmp->next;
 		}

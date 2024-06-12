@@ -6,68 +6,18 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 15:04:27 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/04 17:34:01 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:38:36 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	handle_sigint_heredoc(int signal)
-{
-	if (signal == SIGINT)
-	{
-		write(1, "\n", 1);
-		close(STDIN_FILENO);
-		last_signal = 134;
-	}
-}
-
-int	is_hd_input_ok(char *line, char *limiter)
-{
-	if (last_signal == 134)
-		return (1);
-	if (line == NULL)
-	{
-		aff_err(HD_ERR, ft_strdup(limiter));
-		return (1);
-	}
-	else if (strncmp(line, limiter, ft_strlen(limiter) + 1) == 0)
-	{
-		free(line);
-		return (1);
-	}
-	return (0);
-}
-
-int	ft_heredoc(t_data *data, char *limiter)
-{
-	int		fd[2];
-	char	*line;
-
-	(void)data;
-	if (pipe(fd) == -1)
-		return (-1);
-	while (1)
-	{
-		signal(SIGINT, handle_sigint_heredoc);
-		line = readline("> ");
-		if (is_hd_input_ok(line, limiter) == 1)
-			break ;
-		ft_putstr_fd(line, fd[WRITE_END]);
-		ft_putstr_fd("\n", fd[WRITE_END]);
-		free(line);
-	}
-	signal(SIGINT, handle_sigint_cmd);
-	close(fd[WRITE_END]);
-	return (fd[READ_END]);
-}
 
 int	open_last_in(t_data *data, t_string *file_in)
 {
 	int	fd;
 
 	fd = -1;
-	if (last_signal != 134)
+	if (g_last_signal != 134)
 	{
 		if (file_in->type)
 			fd = ft_heredoc(data, file_in->str);
@@ -89,7 +39,7 @@ int	ft_open_file_in(t_data *data, t_string *file_in)
 	fd = -1;
 	if (file_in != NULL)
 	{
-		while (file_in->next && last_signal != 134)
+		while (file_in->next && g_last_signal != 134)
 		{
 			if (file_in->type)
 				fd = ft_heredoc(data, file_in->str);
@@ -157,4 +107,3 @@ void	ft_redirection_files(t_pipe files)
 		close(files.fd[WRITE_END]);
 	}
 }
-

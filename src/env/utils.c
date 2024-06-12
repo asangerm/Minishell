@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:15:54 by nfradet           #+#    #+#             */
-/*   Updated: 2024/05/30 14:03:36 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:33:31 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	aff_env(t_list *env, int type)
 	lst = env;
 	while (lst)
 	{
-		kv = (t_keyval*)lst->content;
+		kv = (t_keyval *)lst->content;
 		if (type == 1 && kv->is_exported == true)
 		{
 			if (kv && kv->val != NULL && kv->key != NULL)
@@ -36,7 +36,7 @@ void	aff_env(t_list *env, int type)
 		}
 		else if (type == 2 && kv->is_exported == true)
 		{
-			if (kv->val != NULL && kv->val[0] ==  '\0')
+			if (kv->val != NULL && kv->val[0] == '\0')
 				ft_printf("declare -x %s=\"\"\n", kv->key);
 			else if (kv->val == NULL)
 				ft_printf("declare -x %s\n", kv->key);
@@ -74,7 +74,7 @@ t_keyval	*cpy_keyval(t_keyval *kv)
 		cpy->key = ft_strdup(kv->key);
 	if (kv->val != NULL)
 		cpy->val = ft_strdup(kv->val);
-	cpy->is_exported = kv->is_exported;		
+	cpy->is_exported = kv->is_exported;
 	return (cpy);
 }
 

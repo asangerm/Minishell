@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/04 17:08:22 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/05 16:10:26 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:37:30 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_exit(t_data *data, t_string *args)
 	data->is_exit = true;
 	if (args && args->next)
 	{
-		last_signal = 1;
+		g_last_signal = 1;
 		ft_putendl_fd("minishell: exit: too many arguments", 2);
 	}
 	else if (args && ft_strisdigit(args->str) == 0)

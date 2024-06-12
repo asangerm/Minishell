@@ -6,76 +6,11 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 17:10:33 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/11 17:35:25 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:42:48 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_keyval	*extract_var(char *var, t_bool is_exported)
-{
-	int			i;
-	int			len_until;
-	t_keyval	*keyval;
-
-	len_until = ft_strlen_until(var, '=');
-	keyval = malloc(sizeof(t_keyval));
-	keyval->val = NULL;
-	keyval->key = malloc(sizeof(char) * (len_until + 1));
-	keyval->is_exported = is_exported;
-	if (keyval->key == NULL)
-		return (free(keyval), NULL);
-	i = 0;
-	while (var[i] && var[i] != '=')
-	{
-		keyval->key[i] = var[i];
-		i++;
-	}
-	keyval->key[i] = '\0';
-	if (var[i] && var[i] == '=')
-		i++;
-	if (ft_strlen(var) - len_until > 0)
-		keyval->val = ft_strdup(&var[i]);
-	return (keyval);
-}
-
-void	ft_init_data(t_data *data, char **env)
-{
-	last_signal = 0;
-	data->ppid = getppid();
-	data->old_pwd = NULL;
-	data->pwd = NULL;
-	data->env = NULL;
-	data->prompt = NULL;
-	data->paths = NULL;
-	data->is_exit = false;
-	data->pipes = NULL;
-	data->inout_save[READ_END] = dup(STDIN_FILENO);
-	data->inout_save[WRITE_END] = dup(STDOUT_FILENO);
-	ft_initenv(data, env);
-}
-
-void	ft_initenv(t_data *data, char **env)
-{
-	int			i;
-	t_keyval	*tmp;
-	t_list		*new;
-
-	new = NULL;
-	tmp = NULL;
-	i = 0;
-	while (env[i] != NULL)
-	{
-		tmp = extract_var(env[i], true);
-		if (tmp && tmp->key)
-		{
-			new = ft_lstnew(tmp);
-			ft_lstadd_back(&(data->env), new);
-		}
-		i++;
-	}
-	update_shlvl(data);
-}
 
 void	modify_var(t_keyval *kv, t_list *key)
 {
@@ -97,8 +32,8 @@ void	modify_var(t_keyval *kv, t_list *key)
 	}
 	else
 	{
-		ft_free_keyval((t_keyval*)key->content);
-		key->content = (void*)kv;
+		ft_free_keyval((t_keyval *)key->content);
+		key->content = (void *)kv;
 	}
 }
 
@@ -119,7 +54,7 @@ void	add_var_to_env(t_data *data, t_keyval *kv)
 	{
 		free(kv->key);
 		kv->key = var;
-		key = ft_lstnew((void*)kv);
+		key = ft_lstnew((void *)kv);
 		ft_lstadd_back(&data->env, key);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/05 16:19:07 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 14:24:45 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	ft_exe_cmd(t_data *data, t_prompt *prompt)
 	if (tmp != NULL)
 	{
 		ft_free_tab(data->paths);
-		data->paths = ft_split(((t_keyval*)tmp->content)->val, ':');
+		data->paths = ft_split(((t_keyval *)tmp->content)->val, ':');
 	}
 	path = get_path(data, prompt->cmd);
 	if (path != NULL)
