@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:29:48 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/12 15:47:29 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/12 16:54:09 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,9 @@ typedef struct s_data
 	t_bool		is_exit;
 	t_bool		is_in_exec;
 }	t_data;
+
+
+void	aff_tab(char **tab);
 
 /* Parsing directory */
 int			ft_maxlen(char *s1, char *s2);

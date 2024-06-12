@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 15:27:39 by asangerm          #+#    #+#             */
-/*   Updated: 2024/06/12 15:32:22 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 17:19:37 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	parse_n_exec(t_data *data, char *line)
 	}
 }
 
+
 int	main(int argc, char **argv, char **env)
 {
 	char				*line;
@@ -79,6 +80,9 @@ int	main(int argc, char **argv, char **env)
 	rl_clear_history();
 	while (1)
 	{
+		signal(SIGINT, handle_sigint);
+		signal(SIGQUIT, SIG_IGN);
+		signal(SIGTSTP, SIG_IGN);
 		init_pwd(&data);
 		line = display_prompt(&data);
 		parse_n_exec(&data, line);

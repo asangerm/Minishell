@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_str_0.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asangerm <asangerm@student.42.fr>          +#+  +:+       +#+        */
+/*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 15:43:02 by asangerm          #+#    #+#             */
-/*   Updated: 2024/05/26 22:55:12 by asangerm         ###   ########.fr       */
+/*   Updated: 2024/06/12 17:05:13 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,15 @@ void	free_str(t_string **str)
 
 int	lst_str_len(t_string *str)
 {
-	int	len;
+	int			len;
+	t_string	*cpy;
 
 	len = 0;
-	while (str)
+	cpy = str;
+	while (cpy)
 	{
-		len++;
-		str = str->next;
+		len += 1;
+		cpy = cpy->next;
 	}
 	return (len);
 }

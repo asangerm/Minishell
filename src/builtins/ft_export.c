@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:44:38 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/12 14:34:17 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 16:27:56 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,15 +90,15 @@ int	export_arg(t_data *data, char *arg)
 		return (ft_free_keyval(kv), 1);
 	var = cut_plus(kv->key);
 	key = get_key(data, var);
-	if (key != NULL )
+	if (key != NULL)
 	{
 		if (kv->val != NULL)
+			modify_var(kv, key);
+		else
 		{
-			free(((t_keyval *)key->content)->val);
-			((t_keyval *)key->content)->val = ft_strdup(kv->val);
-		}
-		((t_keyval *)key->content)->is_exported = true;
-		ft_free_keyval(kv);
+			((t_keyval *)key->content)->is_exported = true;
+			ft_free_keyval(kv);
+		}	
 	}
 	else
 		add_var_to_env(data, kv);

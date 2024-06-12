@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 18:34:55 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/12 14:39:10 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 17:11:38 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,8 @@ char	**lst_to_tab(t_list *env)
 	tab = malloc(sizeof(char *) * (ft_lstsize(env) + 1));
 	while (lst && i < ft_lstsize(env))
 	{
-		tmp = ft_strjoin(((t_keyval *)env->content)->key, "=");
-		tab[i] = ft_strjoin(tmp, ((t_keyval *)env->content)->val);
+		tmp = ft_strjoin(((t_keyval *)lst->content)->key, "=");
+		tab[i] = ft_strjoin(tmp, ((t_keyval *)lst->content)->val);
 		free(tmp);
 		lst = lst->next;
 		i++;
@@ -50,18 +50,18 @@ char	**lst_to_tab(t_list *env)
 
 char	**cmd_to_tab(t_prompt *prompt)
 {
-	t_string	*args;
+	t_string	*arg;
 	char		**tab;
 	int			i;
 
-	args = prompt->args;
-	tab = malloc(sizeof(char *) * (lst_str_len(prompt->args) + 2));
+	arg = prompt->args;
+	tab = malloc(sizeof(char *) * (lst_str_len(arg) + 2));
 	tab[0] = ft_strdup(prompt->cmd);
 	i = 1;
-	while (args)
+	while (arg != NULL && i < lst_str_len(prompt->args) + 2)
 	{
-		tab[i] = ft_strdup(args->str);
-		args = args->next;
+		tab[i] = ft_strdup(arg->str);
+		arg = arg->next;
 		i++;
 	}
 	tab[i] = NULL;

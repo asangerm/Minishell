@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 14:41:47 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/12 14:51:58 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 17:19:32 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void	init_pwd(t_data *data)
 {
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
-	signal(SIGTSTP, SIG_IGN);
 	if (data->pwd != NULL)
 	{
 		if (data->old_pwd != NULL)

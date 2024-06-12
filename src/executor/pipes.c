@@ -6,7 +6,7 @@
 /*   By: nfradet <nfradet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 16:05:16 by nfradet           #+#    #+#             */
-/*   Updated: 2024/06/12 14:24:45 by nfradet          ###   ########.fr       */
+/*   Updated: 2024/06/12 17:11:42 by nfradet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,18 @@ char	*get_path(t_data *data, char *cmd)
 		i++;
 	}
 	return (NULL);
+}
+
+void	aff_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		ft_printf("%s\n", tab[i]);
+		i++;
+	}
 }
 
 int	ft_exe_cmd(t_data *data, t_prompt *prompt)
